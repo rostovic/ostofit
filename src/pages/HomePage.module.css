@@ -1,0 +1,37 @@
+.login_form {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.input {
+  height: 2rem;
+  text-align: center;
+  width: 10rem;
+  border-radius: 25px;
+  border-color: grey;
+  border: 1px solid;
+}
+
+.button {
+  color: white;
+  background-color: blue;
+  border-radius: 25px;
+  height: 3rem;
+  width: 15rem;
+  border-color: black;
+  border: 5px solid;
+}
+
+.button:hover {
+  background-color: darkblue;
+}
+
+.wrap {
+  flex-direction: column;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+}

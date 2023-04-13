@@ -27,7 +27,7 @@ const router = createBrowserRouter([
     element: <Kek />,
     children: [
       {
-        path: "/dashboard/kurac",
+        path: "/dashboard/ovca",
         element: <Dashboard />,
       },
     ],

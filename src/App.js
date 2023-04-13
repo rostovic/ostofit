@@ -1,48 +1,49 @@
 import {
   createBrowserRouter,
-  createRoutesFromElements,
-  redirect,
-  Route,
+  Navigate,
+  Outlet,
   RouterProvider,
 } from "react-router-dom";
 import "./App.css";
-import Header from "./headerfooter/Header";
-import HomePage from "./pages/HomePage";
-import Dashboard from "./pages/Dashboard";
 import AuthContextProvider, { AuthContext } from "./context/auth-context";
+import Login from "./pages/Login";
 import { useContext } from "react";
+import Homepage from "./pages/Homepage";
 
-const Kek = () => {
-  console.log("kek");
-  return redirect("/dashboard/kurac");
+const Root = () => {
+  const authCtx = useContext(AuthContext)
+
+  if(!authCtx.isLoggedIn) {
+    return <Login />;
+  }
+
+  return (
+    <div
+      style={{
+        height: "100vh",
+        maxWidth: "1200px",
+        margin: "auto",
+      }}
+    >
+      <Outlet />
+    </div>
+  );
 };
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <HomePage />,
+    element: <Root />,
+    children: [{ path: "/", element: <Homepage /> }],
   },
-  {
-    path: "/dashboard",
-    element: <Kek />,
-    children: [
-      {
-        path: "/dashboard/ovca",
-        element: <Dashboard />,
-      },
-    ],
-  },
-  ,
-]);
 
-// const router = createBrowserRouter(
-//   createRoutesFromElements(
-//     <Route path="/" element={<HomePage />}>
-//       <Route path="dashboard" element={<Dashboard />} />
-//       {/* ... etc. */}
-//     </Route>
-//   )
-// );
+  {
+    path: "/*",
+    element: (
+     <Navigate  to="/" />
+    ),
+  },
+]);
 
 function App() {
   return (

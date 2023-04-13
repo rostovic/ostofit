@@ -28,7 +28,7 @@ export const login = (username, password) => {
     data: {
       isValidCredentials: true,
       userDetails: { ...userDetails, username: user.username },
-      redirect: "/dashboard",
+      redirect: "/",
     },
   };
 };

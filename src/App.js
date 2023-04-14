@@ -8,12 +8,12 @@ import "./App.css";
 import AuthContextProvider, { AuthContext } from "./context/auth-context";
 import Login from "./pages/Login";
 import { useContext } from "react";
-import Homepage from "./pages/Homepage";
+import Homepage from "./pages/HomePage";
 
 const Root = () => {
-  const authCtx = useContext(AuthContext)
+  const authCtx = useContext(AuthContext);
 
-  if(!authCtx.isLoggedIn) {
+  if (!authCtx.isLoggedIn) {
     return <Login />;
   }
 
@@ -39,9 +39,7 @@ const router = createBrowserRouter([
 
   {
     path: "/*",
-    element: (
-     <Navigate  to="/" />
-    ),
+    element: <Navigate to="/" />,
   },
 ]);
 

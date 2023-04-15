@@ -11,11 +11,11 @@ const Homepage = () => {
     <>
       <div>
         <p>{`Hello ${firstName} ${lastName}`}</p>
-        <container className={classes.container}>
+        <div className={classes.container}>
           <div style={{ width: "300px" }}>
             <VideoCard />
           </div>
-        </container>
+        </div>
       </div>
       <button onClick={logout}>Logout</button>
     </>

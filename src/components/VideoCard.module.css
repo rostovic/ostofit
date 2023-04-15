@@ -25,7 +25,6 @@
   display: flex;
   flex: 1;
   flex-direction: column;
-  background-color: red;
 }
 
 .footerLeft p {
@@ -34,6 +33,8 @@
 
 .footerRight {
   display: flex;
+  height: 35%;
+  align-self: flex-end;
 }
 
 .footerUser {
@@ -41,4 +42,25 @@
   align-items: center;
   gap: 8px;
   margin-top: 12px;
+}
+
+.subscribeButton {
+  margin-bottom: 6px;
+  color: white;
+  font-size: 10px;
+  background-color: black;
+  box-shadow: none;
+  border-radius: 20px;
+}
+
+.subscribeButton:hover {
+  background-color: red;
+}
+
+.videoTitle {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.videoClip {
 }

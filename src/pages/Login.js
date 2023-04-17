@@ -81,12 +81,12 @@ const Login = () => {
 
   return (
     <main>
-      <div className={classes.loginMainDiv}>
+      <div className={classes.wrapper}>
         <div className={classes.imageDiv}>
           <img src="https://media.istockphoto.com/id/1322158059/photo/dumbbell-water-bottle-towel-on-the-bench-in-the-gym.jpg?s=612x612&w=0&k=20&c=CIdh6LPGwU6U6lbvKCdd7LcppidaYwcDawXJI-b0yGE="></img>
         </div>
-        <div className={`${classes.loginContainer}`}>
-          <Form onSubmit={formSubmissionHandler} className={classes.login_form}>
+        <div className={classes.loginContainer}>
+          <Form onSubmit={formSubmissionHandler}>
             <input
               className={classes.input}
               ref={usernameInputRef}

@@ -48,7 +48,6 @@ const Login = () => {
     if (!loginResponse.data.isValidCredentials) {
       return;
     }
-
     ctx.setIsLoggedIn(true);
     ctx.setUserData(loginResponse.data.userDetails);
     navigate(loginResponse.data.redirect);
@@ -81,33 +80,38 @@ const Login = () => {
   };
 
   return (
-    <>
-      <div className={`${classes.wrap}`}>
-        <Form onSubmit={formSubmissionHandler} className={classes.login_form}>
-          <input
-            className={classes.input}
-            ref={usernameInputRef}
-            id="email"
-            type="text"
-            name="email"
-            placeholder="Username or email..."
-            onFocus={resetErrors}
-          ></input>
-          {renderError("username")}
-          <input
-            className={classes.input}
-            ref={passwordInputRef}
-            id="password"
-            type="password"
-            name="password"
-            placeholder="Password..."
-            onFocus={resetErrors}
-          ></input>
-          {renderError("password")}
-          <button className={`${classes.button}`}>Log In</button>
-        </Form>
+    <main>
+      <div className={classes.loginMainDiv}>
+        <div className={classes.imageDiv}>
+          <img src="https://media.istockphoto.com/id/1322158059/photo/dumbbell-water-bottle-towel-on-the-bench-in-the-gym.jpg?s=612x612&w=0&k=20&c=CIdh6LPGwU6U6lbvKCdd7LcppidaYwcDawXJI-b0yGE="></img>
+        </div>
+        <div className={`${classes.loginContainer}`}>
+          <Form onSubmit={formSubmissionHandler} className={classes.login_form}>
+            <input
+              className={classes.input}
+              ref={usernameInputRef}
+              id="email"
+              type="text"
+              name="email"
+              placeholder="Username or email..."
+              onFocus={resetErrors}
+            ></input>
+            {renderError("username")}
+            <input
+              className={classes.input}
+              ref={passwordInputRef}
+              id="password"
+              type="password"
+              name="password"
+              placeholder="Password..."
+              onFocus={resetErrors}
+            ></input>
+            {renderError("password")}
+            <button className={`${classes.button}`}>Log In</button>
+          </Form>
+        </div>
       </div>
-    </>
+    </main>
   );
 };
 

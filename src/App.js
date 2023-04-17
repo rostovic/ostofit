@@ -23,6 +23,7 @@ const Root = () => {
         height: "100vh",
         maxWidth: "1200px",
         margin: "auto",
+        backgroundColor: "black",
       }}
     >
       <Outlet />

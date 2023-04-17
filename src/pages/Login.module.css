@@ -22,16 +22,49 @@
   height: 3rem;
   width: 15rem;
   border-color: black;
-  border: 5px solid;
+  border: 1px solid;
 }
 
 .button:hover {
   background-color: darkblue;
 }
 
-.wrap {
+.loginContainer {
+  background-color: black;
   flex-direction: column;
+  display: flex;
+  justify-content: center;
+  border: 2px solid grey;
+  border-radius: 25px;
+  height: 50vh;
+}
+
+.loginMainDiv {
+  display: flex;
+  justify-self: center;
+  background-color: green;
+  gap: 50px;
+  align-items: center;
+}
+
+main {
   height: 100vh;
   display: flex;
   justify-content: center;
+  align-items: center;
+}
+
+.imageDiv {
+  display: flex;
+  /* flex-direction: column;
+  flex: 1; */
+  width: 300px;
+  background-color: red;
+  min-height: 60vh;
+}
+
+img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
 }

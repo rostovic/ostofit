@@ -1,14 +1,14 @@
-import { Button } from "@mui/material";
 import { Avatar } from "@mui/material";
 import classes from "./VideoCard.module.css";
+import SubscribeButton from "./SubscribeButton";
 
 const VideoCard = () => {
   return (
     <div className={classes.videoCard}>
-      <div>
-        <video className={classes.videoClip} loop autoPlay>
+      <div style={{ backgroundColor: "red", display: "flex", flex: 1 }}>
+        <video className={classes.videoClip} muted loop autoPlay>
           <source
-            src="http://techslides.com/demos/sample-videos/small.mp4"
+            src="https://assets.codepen.io/6093409/river.mp4"
             type="video/mp4"
           />
         </video>
@@ -23,9 +23,7 @@ const VideoCard = () => {
             </div>
           </div>
           <div className={classes.footerRight}>
-            <Button variant="contained" className={classes.subscribeButton}>
-              SUBSCRIBE
-            </Button>
+            <SubscribeButton />
           </div>
         </div>
       </div>

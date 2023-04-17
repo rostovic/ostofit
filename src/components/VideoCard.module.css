@@ -6,6 +6,7 @@
   border: 1px solid;
   border-radius: 10px;
   position: relative;
+  overflow: hidden;
 }
 
 .videoFooter {
@@ -33,7 +34,6 @@
 
 .footerRight {
   display: flex;
-  height: 35%;
   align-self: flex-end;
 }
 
@@ -44,20 +44,13 @@
   margin-top: 12px;
 }
 
-.subscribeButton {
-  margin-bottom: 6px;
-  color: white;
-  font-size: 10px;
-  background-color: black;
-  box-shadow: none;
-  border-radius: 20px;
-}
-
-.subscribeButton:hover {
-  background-color: red;
-}
-
 .videoTitle {
   font-size: 14px;
   font-weight: 500;
+}
+
+.videoClip {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }

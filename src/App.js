@@ -9,24 +9,32 @@ import AuthContextProvider, { AuthContext } from "./context/auth-context";
 import Login from "./pages/Login";
 import { useContext } from "react";
 import Homepage from "./pages/HomePage";
+import LayoutLeft from "./components/LayoutLeft";
+import LayoutRight from "./components/LayoutRight";
 
 const Root = () => {
   const authCtx = useContext(AuthContext);
 
   if (!authCtx.isLoggedIn) {
-    return <Login />;
+    return <Navigate to="/" />;
   }
 
   return (
-    <div
-      style={{
-        height: "100vh",
-        maxWidth: "1200px",
-        margin: "auto",
-        backgroundColor: "black",
-      }}
-    >
-      <Outlet />
+    // root div
+    <div style={{ height: "100%", display: "flex" }}>
+      <LayoutLeft />
+      <div
+        style={{
+          flex: 1,
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
+        <div style={{ width: "1000px", backgroundColor: "#fafafa" }}>
+          <Outlet />
+        </div>
+      </div>
+      <LayoutRight />
     </div>
   );
 };
@@ -34,8 +42,12 @@ const Root = () => {
 const router = createBrowserRouter([
   {
     path: "/",
+    element: <Login />,
+  },
+  {
+    path: "/home",
     element: <Root />,
-    children: [{ path: "/", element: <Homepage /> }],
+    children: [{ path: "/home", element: <Homepage /> }],
   },
 
   {

@@ -1,5 +1,3 @@
-
-
 .input {
   height: 2rem;
   text-align: center;
@@ -37,9 +35,8 @@ main {
 
 .imageDiv {
   display: flex;
-  flex:1;
-  background-color: red;
-  aspect-ratio: 10/16 ;
+  flex: 1;
+  aspect-ratio: 10/16;
 }
 
 img {
@@ -50,7 +47,7 @@ img {
 
 .loginContainer {
   display: flex;
-  flex:1;
+  flex: 1;
   justify-content: center;
   align-items: center;
 }
@@ -62,8 +59,8 @@ Form {
   align-items: center;
   height: 80%;
   gap: 1rem;
-  background-color: lightgray;
+  background-color: white;
   padding: 8px;
-  border-radius: 16px;
+  border-radius: 25px;
+  border: 2px solid;
 }
-

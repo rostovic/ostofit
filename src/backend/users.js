@@ -1,4 +1,4 @@
-import { getUserById, getUserDetailsById } from "./userDetails";
+import { getUserDetailsById } from "./userDetails";
 import { userVideos } from "./userVideos";
 
 const users = [

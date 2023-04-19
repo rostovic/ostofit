@@ -9,19 +9,19 @@ export const userDetails = [
     id: 2,
     firstName: "Matko",
     lastName: "Crkva",
-    followers: [],
+    followers: [1],
   },
   {
     id: 3,
     firstName: "Matteo",
     lastName: "Lukavac",
-    followers: [],
+    followers: [4],
   },
   {
     id: 4,
     firstName: "Roberto",
     lastName: "Di Baggio",
-    followers: [],
+    followers: [3],
   },
 ];
 

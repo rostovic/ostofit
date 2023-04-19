@@ -8,7 +8,7 @@ import { getFollowerVideos } from "../backend/users";
 const Homepage = () => {
   const { userData, logout } = useContext(AuthContext);
   const { firstName, lastName } = userData;
-  const followerVideos = getFollowerVideos(1);
+  const followerVideos = getFollowerVideos(userData.id);
 
   return (
     <div className={classes.container}>

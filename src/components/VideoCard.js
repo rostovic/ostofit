@@ -1,12 +1,44 @@
 import { Avatar } from "@mui/material";
 import classes from "./VideoCard.module.css";
 import SubscribeButton from "./SubscribeButton";
+import { useState, useEffect, useRef } from "react";
 
-const VideoCard = ({ videoDetails, name }) => {
+const VideoCard = ({ videoDetails, name, observer }) => {
+  const videoRef = useRef();
+  const [playVideo, setPlayVideo] = useState(false);
+  const handlePlayVideo = (e) => {
+    setPlayVideo((current) => !current);
+  };
+
+  useEffect(() => {
+    if (!videoRef.current) {
+      return;
+    }
+    if (playVideo) {
+      videoRef.current.play();
+    } else {
+      videoRef.current.pause();
+    }
+  }, [playVideo]);
+
+  useEffect(() => {
+    console.log("kek");
+    if (!observer) {
+      return;
+    }
+    observer.observe(videoRef.current);
+    return () => observer.unobserve(videoRef.current);
+  }, [observer]);
+
   return (
     <div className={classes.videoCard}>
       <div style={{ display: "flex", flex: 1 }}>
-        <video className={classes.videoClip} muted loop autoPlay>
+        <video
+          className={classes.videoClip}
+          loop
+          onClick={handlePlayVideo}
+          ref={videoRef}
+        >
           <source src={videoDetails.url} type="video/mp4" />
         </video>
       </div>

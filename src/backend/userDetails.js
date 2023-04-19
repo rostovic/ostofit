@@ -3,7 +3,7 @@ export const userDetails = [
     id: 1,
     firstName: "Emil",
     lastName: "Jerkovic",
-    followers: [2, 3, 4],
+    followers: [1, 2, 3, 4],
   },
   {
     id: 2,

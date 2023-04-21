@@ -52,7 +52,7 @@ export const login = (username, password) => {
 export const getFollowerVideos = (userId) => {
   //filtrirati ko followa
   const userDetails = getUserDetailsById(userId);
-  const followerIds = userDetails.followers.map((userId) => userId);
+  const followerIds = userDetails.following.map((userId) => userId);
   const videosPerUser = followerIds.map((id) => {
     const { firstName, lastName } = getUserDetailsById(id);
     return {
@@ -63,4 +63,18 @@ export const getFollowerVideos = (userId) => {
     };
   });
   return videosPerUser;
+};
+
+export const getAllFollowers = (userId) => {
+  const userDetails = getUserDetailsById(userId);
+  const followerIds = userDetails.following.map((userId) => userId);
+  const allFollowers = followerIds.map((id) => {
+    const { firstName, lastName } = getUserDetailsById(id);
+    return {
+      firstName,
+      lastName,
+      id,
+    };
+  });
+  return allFollowers;
 };

@@ -35,9 +35,9 @@ const LayoutLeft = () => {
             navigation("/followers");
           }}
         >
-          Pratitelji
+          Followers
         </p>
-        <p>Zahtjevi</p>
+        <p>Requests</p>
       </div>
     </div>
   );

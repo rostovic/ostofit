@@ -12,7 +12,7 @@ import Homepage from "./pages/HomePage";
 import LayoutLeft from "./components/LayoutLeft";
 import LayoutRight from "./components/LayoutRight";
 import TopNavigation from "./components/TopNavigation";
-import Test from "./components/Test";
+import Followers from "./components/Followers";
 
 const Root = () => {
   const authCtx = useContext(AuthContext);
@@ -54,7 +54,7 @@ const router = createBrowserRouter([
     element: <Root />,
     children: [
       { path: "/home", element: <Homepage /> },
-      { path: "/random", element: <Test /> },
+      { path: "/followers", element: <Followers /> },
     ],
   },
 

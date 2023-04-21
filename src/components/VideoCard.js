@@ -37,7 +37,6 @@ const VideoCard = ({ videoDetails, name, observerRef }) => {
           loop
           onClick={handlePlayVideo}
           ref={videoRef}
-          muted
         >
           <source src={videoDetails.url} type="video/mp4" />
         </video>

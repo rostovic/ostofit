@@ -3,7 +3,7 @@ import classes from "./VideoCard.module.css";
 import SubscribeButton from "./SubscribeButton";
 import { useState, useEffect, useRef } from "react";
 
-const VideoCard = ({ videoDetails, name, observer }) => {
+const VideoCard = ({ videoDetails, name, observerRef }) => {
   const videoRef = useRef();
   const [playVideo, setPlayVideo] = useState(false);
   const handlePlayVideo = (e) => {
@@ -22,13 +22,12 @@ const VideoCard = ({ videoDetails, name, observer }) => {
   }, [playVideo]);
 
   useEffect(() => {
-    console.log("kek");
-    if (!observer) {
+    if (!observerRef.current) {
       return;
     }
-    observer.observe(videoRef.current);
-    return () => observer.unobserve(videoRef.current);
-  }, [observer]);
+    observerRef.current.observe(videoRef.current);
+    // return () => observerRef.current.unobserve(videoRef.current);
+  }, [observerRef.current]);
 
   return (
     <div className={classes.videoCard}>
@@ -38,6 +37,7 @@ const VideoCard = ({ videoDetails, name, observer }) => {
           loop
           onClick={handlePlayVideo}
           ref={videoRef}
+          muted
         >
           <source src={videoDetails.url} type="video/mp4" />
         </video>

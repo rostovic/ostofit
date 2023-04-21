@@ -6,14 +6,15 @@ import { TextField } from "@mui/material";
 import { getFollowerVideos } from "../backend/users";
 
 const Homepage = () => {
-  const [observer, setObserver] = useState(null);
+  const [isObserverReady, setIsObserverReady] = useState(false);
+  const observerRef = useRef();
   const { userData, logout } = useContext(AuthContext);
   const { firstName, lastName } = userData;
   const followerVideos = getFollowerVideos(userData.id);
   const videoRef = useRef();
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
+    observerRef.current = new IntersectionObserver(
       (entries, observer) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
@@ -25,7 +26,10 @@ const Homepage = () => {
       },
       { rootMargin: "-50% 0px -50% 0px", threshold: 0 }
     );
-    setObserver(observer);
+    setIsObserverReady(true);
+    return () => {
+      observerRef.current.disconnect();
+    };
   }, []);
 
   return (
@@ -53,7 +57,7 @@ const Homepage = () => {
             videoDetails={user.videos[0]}
             key={user.videos[0].url}
             name={user.firstName + " " + user.lastName}
-            observer={observer}
+            observerRef={observerRef}
           />
         ))}
       </div>

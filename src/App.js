@@ -11,49 +11,57 @@ import { useContext } from "react";
 import Homepage from "./pages/HomePage";
 import LayoutLeft from "./components/LayoutLeft";
 import LayoutRight from "./components/LayoutRight";
+import TopNavigation from "./components/TopNavigation";
+import Test from "./components/Test";
 
 const Root = () => {
   const authCtx = useContext(AuthContext);
 
   if (!authCtx.isLoggedIn) {
-    return <Navigate to="/" />;
+    return <Navigate to="/login" />;
   }
 
   return (
     // root div
-    <div style={{ height: "100%", display: "flex" }}>
-      <LayoutLeft />
-      <div
-        style={{
-          flex: 1,
-          display: "flex",
-          justifyContent: "center",
-        }}
-      >
-        <div style={{ width: "1000px", backgroundColor: "#fafafa" }}>
-          <Outlet />
+    <div style={{ height: "100%", display: "flex", flexDirection: "column" }}>
+      <TopNavigation />
+      <div style={{ display: "flex" }}>
+        <LayoutLeft />
+        <div
+          style={{
+            flex: 1,
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
+          <div style={{ width: "1000px", backgroundColor: "#fafafa" }}>
+            <Outlet />
+          </div>
         </div>
+        <LayoutRight />
       </div>
-      <LayoutRight />
     </div>
   );
 };
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: "/login",
     element: <Login />,
   },
   {
-    path: "/home",
+    path: "/",
     element: <Root />,
-    children: [{ path: "/home", element: <Homepage /> }],
+    children: [
+      { path: "/home", element: <Homepage /> },
+      { path: "/random", element: <Test /> },
+    ],
   },
 
-  {
-    path: "/*",
-    element: <Navigate to="/" />,
-  },
+  // {
+  //   path: "/*",
+  //   element: <Navigate to="/" />,
+  // },
 ]);
 
 function App() {

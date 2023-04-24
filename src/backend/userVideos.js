@@ -2,8 +2,8 @@ export const userVideos = [
   {
     videos: [
       {
-        url: "https://streamff.com/uploads/oHhqM372dM.mp4",
-        title: "NEPOSTOJECI PENAL!!!!!!!",
+        url: "https://clips.clippit.tv/rkaklx/360.mp4",
+        title: "SOOOON GOOAAAAAAAAAAAALLLLLLLLL!!!",
       },
     ],
     id: 1,
@@ -29,8 +29,8 @@ export const userVideos = [
   {
     videos: [
       {
-        url: "https://streamff.com/uploads/37odQKnRW5.mp4",
-        title: "Milan GOOOOOOOL!!!!!",
+        url: "https://clips.clippit.tv/rkaklx/360.mp4",
+        title: "SOOOON GOOAAAAAAAAAAAALLLLLLLLL!!!",
       },
     ],
     id: 4,

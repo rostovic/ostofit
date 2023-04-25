@@ -1,5 +1,5 @@
 .followerDiv {
-  background-color: green;
+  background-color: lightblue;
   border-radius: 25px;
   align-self: center;
   display: flex;
@@ -12,8 +12,15 @@
 .followerDiv:hover {
   background: red;
 }
-
 .followerDiv p {
   margin: 0;
   padding: 0;
+}
+
+.followerDiv:hover span {
+  display: none;
+}
+
+.followerDiv:hover:before {
+  content: "Remove follower!";
 }

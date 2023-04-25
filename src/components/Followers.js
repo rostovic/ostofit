@@ -11,14 +11,25 @@ const Followers = () => {
 
   return (
     <>
-      <p onClick={() => navigate(-1)}>Back</p>
-      <div style={{ height: "100px", width: "100%" }}>
+      <div style={{ height: "100%", width: "100%" }}>
         <div
           style={{
             display: "flex",
+            padding: "24px",
+            justifyContent: "center",
           }}
         >
-          <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "2px",
+              justifyContent: "center",
+              border: "3px solid lightblue",
+              borderRadius: "25px",
+              padding: 24,
+            }}
+          >
             {allFollowers.map(
               (user) => (
                 console.log(user),

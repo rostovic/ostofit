@@ -30,18 +30,13 @@ const Followers = () => {
               padding: 24,
             }}
           >
-            {allFollowers.map(
-              (user) => (
-                console.log(user),
-                (
-                  <Follower
-                    name={user.firstName + " " + user.lastName}
-                    id={user.id}
-                    key={user.id}
-                  />
-                )
-              )
-            )}
+            {allFollowers.map((user) => (
+              <Follower
+                name={user.firstName + " " + user.lastName}
+                id={user.id}
+                key={user.id}
+              />
+            ))}
           </div>
         </div>
       </div>

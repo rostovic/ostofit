@@ -25,7 +25,7 @@ const Follower = ({ name, id }) => {
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
-        <span>Following you!</span>
+        <span>{isHovered ? "Remove follower!" : "Following you!"}</span>
         {isHovered ? (
           <ClearIcon
             sx={{

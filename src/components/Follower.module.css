@@ -9,18 +9,11 @@
   padding-inline: 12px;
 }
 
-.followerDiv:hover {
-  background: red;
-}
 .followerDiv p {
   margin: 0;
   padding: 0;
 }
 
-.followerDiv:hover span {
-  display: none;
-}
-
-.followerDiv:hover:before {
-  content: "Remove follower!";
+.followerDiv:hover {
+  background: red;
 }

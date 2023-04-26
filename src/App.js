@@ -3,16 +3,25 @@ import {
   Navigate,
   Outlet,
   RouterProvider,
+  useNavigate,
 } from "react-router-dom";
 import "./App.css";
 import AuthContextProvider, { AuthContext } from "./context/auth-context";
 import Login from "./pages/Login";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import Homepage from "./pages/HomePage";
 import LayoutLeft from "./components/LayoutLeft";
 import LayoutRight from "./components/LayoutRight";
 import TopNavigation from "./components/TopNavigation";
 import Followers from "./components/Followers";
+
+const NonAuthRoot = () => {
+  const authCtx = useContext(AuthContext);
+  if (authCtx.isLoggedIn) {
+    return <Navigate to="/" />;
+  }
+  return <Login />;
+};
 
 const Root = () => {
   const authCtx = useContext(AuthContext);
@@ -22,7 +31,6 @@ const Root = () => {
   }
 
   return (
-    // root div
     <div style={{ height: "100%", display: "flex", flexDirection: "column" }}>
       <TopNavigation />
       <div style={{ display: "flex" }}>
@@ -46,10 +54,6 @@ const Root = () => {
 
 const router = createBrowserRouter([
   {
-    path: "/login",
-    element: <Login />,
-  },
-  {
     path: "/",
     element: <Root />,
     children: [
@@ -57,7 +61,7 @@ const router = createBrowserRouter([
       { path: "/followers", element: <Followers /> },
     ],
   },
-
+  { path: "/login", element: <NonAuthRoot /> },
   // {
   //   path: "/*",
   //   element: <Navigate to="/" />,

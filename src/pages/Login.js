@@ -48,8 +48,8 @@ const Login = () => {
     if (!loginResponse.data.isValidCredentials) {
       return;
     }
-    ctx.setIsLoggedIn(true);
-    ctx.setUserData(loginResponse.data.userDetails);
+
+    ctx.login(loginResponse.data.userDetails);
     navigate(loginResponse.data.redirect);
   };
 

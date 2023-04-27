@@ -1,35 +1,34 @@
 import {
-  createBrowserRouter,
+  Link,
   Navigate,
   Outlet,
   RouterProvider,
+  createBrowserRouter,
+  useLocation,
   useNavigate,
+  useNavigation,
+  useParams,
 } from "react-router-dom";
 import "./App.css";
 import AuthContextProvider, { AuthContext } from "./context/auth-context";
-import Login from "./pages/Login";
 import { useContext, useEffect } from "react";
-import Homepage from "./pages/HomePage";
 import LayoutLeft from "./components/LayoutLeft";
 import LayoutRight from "./components/LayoutRight";
 import TopNavigation from "./components/TopNavigation";
+import Login from "./pages/Login";
+import HomePage from "./pages/HomePage";
 import Followers from "./components/Followers";
 
-const NonAuthRoot = () => {
-  const authCtx = useContext(AuthContext);
-  if (authCtx.isLoggedIn) {
-    return <Navigate to="/" />;
-  }
-  return <Login />;
-};
+export const MainLayout = () => {
+  const navigate = useNavigate();
+  const {pathname} = useLocation();
 
-const Root = () => {
-  const authCtx = useContext(AuthContext);
+  useEffect(() => {
+    if(pathname === "/") {
+      navigate("home")
+    }
 
-  if (!authCtx.isLoggedIn) {
-    return <Navigate to="/login" />;
-  }
-
+  }, [pathname])
   return (
     <div style={{ height: "100%", display: "flex", flexDirection: "column" }}>
       <TopNavigation />
@@ -52,28 +51,81 @@ const Root = () => {
   );
 };
 
-const router = createBrowserRouter([
+const UserPage = () => {
+  const { id } = useParams();
+  return (
+    <div>
+      User id: {id} <br />
+    </div>
+  );
+};
+
+const nonAuthRouter = createBrowserRouter([
+  { path: "/login", element: <Login /> },
   {
-    path: "/",
-    element: <Root />,
-    children: [
-      { path: "/home", element: <Homepage /> },
-      { path: "/followers", element: <Followers /> },
-    ],
+    path: "/otherRoute",
+    element: (
+      <div>
+        <div>Some random non auth page.</div>
+        <Link to={"/"}>To login</Link>
+      </div>
+    ),
   },
-  { path: "/login", element: <NonAuthRoot /> },
-  // {
-  //   path: "/*",
-  //   element: <Navigate to="/" />,
-  // },
+  { path: "/*", element: <Navigate to="login" /> },
 ]);
 
-function App() {
+const authRouter = createBrowserRouter([
+  {
+    path: "/",
+    element: <MainLayout />,
+    children: [
+      {
+        path: "home",
+        element: <HomePage />,
+      },
+      {
+        path: "home/page1",
+        element: <div>Page 1</div>,
+      },
+      {
+        path: "followers",
+        element: <Followers />,
+      },
+      {
+        path: "followers/:id/",
+        element: <UserPage />,
+      },
+    ],
+  },
+  {
+    path: "/*",
+    element: <Navigate to="home" />,
+  },
+]);
+
+const Root = () => {
+  const authCtx = useContext(AuthContext);
+  let router;
+
+  if (authCtx.isLoadingUserData) {
+    return;
+  }
+
+  if (!authCtx.isLoggedIn) {
+    router = nonAuthRouter;
+  } else {
+    router = authRouter;
+  }
+
+  return <RouterProvider router={router} />;
+};
+
+const App = () => {
   return (
     <AuthContextProvider>
-      <RouterProvider router={router} />
+      <Root />
     </AuthContextProvider>
   );
-}
+};
 
 export default App;

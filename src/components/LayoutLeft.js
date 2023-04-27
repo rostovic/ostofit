@@ -32,7 +32,7 @@ const LayoutLeft = () => {
         </div>
         <p
           onClick={() => {
-            navigation("/followers");
+            navigation("followers");
           }}
         >
           Followers

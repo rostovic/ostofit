@@ -1,7 +1,9 @@
+import { Replay } from "@mui/icons-material";
 import React, { useEffect, useState } from "react";
 
 export const AuthContext = React.createContext({
   isLoggedIn: false,
+  isLoadingUserData: true,
   userData: {
     id: null,
     firstName: "",
@@ -15,22 +17,26 @@ export const AuthContext = React.createContext({
 const AuthContextProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userData, setUserData] = useState(null);
+  const [isLoadingUserData, setIsLoadingUserData] = useState(true);
 
   useEffect(() => {
     try {
       const userData = localStorage.getItem("userData");
       if (!userData) {
+        setIsLoadingUserData(false)
         return;
       }
-
+      
       const userDataParsed = JSON.parse(userData);
       setUserData(userDataParsed);
       setIsLoggedIn(true);
+      setIsLoadingUserData(false)
     } catch (error) {
+      setIsLoadingUserData(false)
       logout();
     }
   }, []);
-  // console.log(userData, isLoggedIn);
+
   const logout = () => {
     localStorage.removeItem("userData");
     setIsLoggedIn(false);
@@ -54,6 +60,7 @@ const AuthContextProvider = ({ children }) => {
     setUserData,
     logout,
     login,
+    isLoadingUserData
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

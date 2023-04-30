@@ -4,20 +4,53 @@ import SubscribeButton from "./SubscribeButton";
 import { useState, useEffect, useRef } from "react";
 import VolumeOffIcon from "@mui/icons-material/VolumeOff";
 import VolumeUpIcon from "@mui/icons-material/VolumeUp";
+import RestartAltIcon from "@mui/icons-material/RestartAlt";
+import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 
 const VideoCard = ({ videoDetails, name, observerRef }) => {
   const videoRef = useRef();
   const [playVideo, setPlayVideo] = useState(false);
   const [muted, setMuted] = useState(true);
+
   const handlePlayVideo = () => {
-    videoRef.current.muted = !muted;
-    setPlayVideo((current) => !current);
-    setMuted((current) => !current);
+    if (!videoRef.current.paused) {
+      videoRef.current.muted = true;
+      setPlayVideo(false);
+      setMuted(true);
+      return;
+    }
+
+    videoRef.current.muted = false;
+    setPlayVideo(true);
+    setMuted(false);
   };
+
   const handleMuteUnmute = () => {
     videoRef.current.muted = !muted;
     setMuted((current) => !current);
   };
+
+  const handleRestart = () => {
+    videoRef.current.currentTime = 0;
+  };
+
+  useEffect(() => {
+    const handlePlayEvent = () => {
+      setPlayVideo(true);
+    };
+
+    const handlePauseEvent = () => {
+      setPlayVideo(false);
+    };
+
+    videoRef.current?.addEventListener("play", handlePlayEvent);
+    videoRef.current?.addEventListener("pause", handlePauseEvent);
+
+    return () => {
+      videoRef.current?.removeEventListener("play", handlePlayEvent);
+      videoRef.current?.removeEventListener("pause", handlePauseEvent);
+    };
+  }, [videoRef.current]);
 
   useEffect(() => {
     if (!videoRef.current) {
@@ -39,7 +72,7 @@ const VideoCard = ({ videoDetails, name, observerRef }) => {
 
   return (
     <div className={classes.videoCard}>
-      <div style={{ display: "flex", flex: 1 }}>
+      <div style={{ display: "flex", flex: 1, position: "relative" }}>
         <video
           className={classes.videoClip}
           loop
@@ -49,6 +82,37 @@ const VideoCard = ({ videoDetails, name, observerRef }) => {
         >
           <source src={videoDetails.url} type="video/mp4" />
         </video>
+
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            pointerEvents: "none",
+          }}
+          className={
+            playVideo
+              ? `${classes.playVideoClass}`
+              : `${classes.pauseVideoClass}`
+          }
+        >
+          <PlayArrowIcon
+            sx={{
+              color: "white",
+              height: "100px",
+              width: "100px",
+              backgroundColor: "transparent",
+              backdropFilter: "blur(10px)",
+              borderRadius: "50%",
+              border: "2px solid white",
+            }}
+          />
+        </div>
       </div>
       <div className={classes.videoFooter}>
         <div className={classes.footerContainer}>
@@ -60,30 +124,41 @@ const VideoCard = ({ videoDetails, name, observerRef }) => {
             </div>
           </div>
           <div className={classes.footerRight}>
-            {muted ? (
-              <VolumeOffIcon
+            <div style={{ display: "flex", justifyContent: "right" }}>
+              <RestartAltIcon
                 sx={{
                   cursor: "pointer",
-                  alignSelf: "flex-end",
+                  "&:hover": {
+                    color: "red",
+                  },
+                }}
+                onClick={handleRestart}
+              />
+              {muted ? (
+                <VolumeOffIcon
+                  sx={{
+                    cursor: "pointer",
+                    alignSelf: "flex-end",
 
-                  "&:hover": {
-                    color: "red",
-                  },
-                }}
-                onClick={handleMuteUnmute}
-              />
-            ) : (
-              <VolumeUpIcon
-                sx={{
-                  cursor: "pointer",
-                  alignSelf: "flex-end",
-                  "&:hover": {
-                    color: "red",
-                  },
-                }}
-                onClick={handleMuteUnmute}
-              />
-            )}
+                    "&:hover": {
+                      color: "red",
+                    },
+                  }}
+                  onClick={handleMuteUnmute}
+                />
+              ) : (
+                <VolumeUpIcon
+                  sx={{
+                    cursor: "pointer",
+                    alignSelf: "flex-end",
+                    "&:hover": {
+                      color: "red",
+                    },
+                  }}
+                  onClick={handleMuteUnmute}
+                />
+              )}{" "}
+            </div>
             <SubscribeButton />
           </div>
         </div>

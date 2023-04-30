@@ -67,7 +67,7 @@ export const getFollowerVideos = (userId) => {
 
 export const getAllFollowers = (userId) => {
   const userDetails = getUserDetailsById(userId);
-  const followerIds = userDetails.following.map((userId) => userId);
+  const followerIds = userDetails.followers.map((userId) => userId);
   const allFollowers = followerIds.map((id) => {
     const { firstName, lastName } = getUserDetailsById(id);
     return {
@@ -77,4 +77,30 @@ export const getAllFollowers = (userId) => {
     };
   });
   return allFollowers;
+};
+
+export const getAllFollowing = (userId) => {
+  const userDetails = getUserDetailsById(userId);
+  const followingIds = userDetails.following.map((userId) => userId);
+  const allFollowing = followingIds.map((id) => {
+    const { firstName, lastName } = getUserDetailsById(id);
+    return {
+      firstName,
+      lastName,
+      id,
+    };
+  });
+  return allFollowing;
+};
+
+export const getNumberOfFollowers = (userId) => {
+  const userDetails = getUserDetailsById(userId);
+  const number = userDetails.followers.length;
+  return number;
+};
+
+export const getNumberOfFollowing = (userId) => {
+  const userDetails = getUserDetailsById(userId);
+  const number = userDetails.following.length;
+  return number;
 };

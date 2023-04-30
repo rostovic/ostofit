@@ -15,7 +15,7 @@ const Homepage = () => {
 
   useEffect(() => {
     observerRef.current = new IntersectionObserver(
-      (entries, observer) => {
+      (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.play();

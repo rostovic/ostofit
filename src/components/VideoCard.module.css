@@ -38,6 +38,9 @@
 .footerRight {
   display: flex;
   align-self: flex-end;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
 }
 
 .footerUser {

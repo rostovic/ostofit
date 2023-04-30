@@ -1,0 +1,45 @@
+.buttonSidebar {
+  background-color: #fafafa;
+  border: 0px;
+  font-size: 20px;
+  padding: 18px;
+}
+
+.buttonSidebar:hover {
+  background-color: rgb(237, 232, 232);
+  border-radius: 25px;
+  cursor: pointer;
+}
+
+.buttonSidebar p {
+  font-size: 12px;
+}
+
+.userDiv {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  border-radius: 25px;
+  padding: 8px;
+  height: 35px;
+}
+
+.userDiv:hover {
+  background-color: #ede8e8;
+}
+
+.mainLayout {
+  display: flex;
+  flex: 1;
+  background-color: #fafafa;
+  flex-direction: column;
+  align-items: center;
+}
+
+.contentDiv {
+  display: flex;
+  gap: 10;
+  margin-top: 24px;
+  flex-direction: column;
+}

@@ -18,19 +18,24 @@ import TopNavigation from "./components/TopNavigation";
 import Login from "./pages/Login";
 import HomePage from "./pages/HomePage";
 import Followers from "./components/Followers";
+import Following from "./components/Following";
 
 export const MainLayout = () => {
   const navigate = useNavigate();
-  const {pathname} = useLocation();
+  const { pathname } = useLocation();
 
   useEffect(() => {
-    if(pathname === "/") {
-      navigate("home")
+    if (pathname === "/") {
+      navigate("home");
     }
-
-  }, [pathname])
+  }, [pathname]);
   return (
-    <div style={{ height: "100%", display: "flex", flexDirection: "column" }}>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+      }}
+    >
       <TopNavigation />
       <div style={{ display: "flex" }}>
         <LayoutLeft />
@@ -41,7 +46,12 @@ export const MainLayout = () => {
             justifyContent: "center",
           }}
         >
-          <div style={{ width: "1000px", backgroundColor: "#fafafa" }}>
+          <div
+            style={{
+              width: "1000px",
+              backgroundColor: "#fafafa",
+            }}
+          >
             <Outlet />
           </div>
         </div>
@@ -90,6 +100,10 @@ const authRouter = createBrowserRouter([
       {
         path: "followers",
         element: <Followers />,
+      },
+      {
+        path: "following",
+        element: <Following />,
       },
       {
         path: "followers/:id/",

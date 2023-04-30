@@ -4,18 +4,18 @@ import classes from "./Follower.module.css";
 import { useState } from "react";
 import ClearIcon from "@mui/icons-material/Clear";
 
-const Follower = ({ name, id }) => {
+const Follower = ({ name, id, action }) => {
   const [isHovered, setIsHovered] = useState(false);
+  const renderText = () => {
+    if (action === "followers") {
+      return <span>{isHovered ? "Remove follower!" : "Following you!"}</span>;
+    }
+
+    return <span>{isHovered ? "Stop following!" : "Following!"}</span>;
+  };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        gap: "20px",
-        width: "500px",
-      }}
-    >
+    <div className={classes.singleFollower}>
       <Avatar />
       <p id={id} style={{ flex: 1 }}>
         {name}
@@ -25,7 +25,7 @@ const Follower = ({ name, id }) => {
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
-        <span>{isHovered ? "Remove follower!" : "Following you!"}</span>
+        {renderText()}
         {isHovered ? (
           <ClearIcon
             sx={{

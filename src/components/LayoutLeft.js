@@ -19,7 +19,12 @@ const LayoutLeft = () => {
   return (
     <div className={classes.mainLayout}>
       <div className={classes.contentDiv}>
-        <div className={classes.userDiv}>
+        <div
+          className={classes.userDiv}
+          onClick={() => {
+            navigation(`profile`);
+          }}
+        >
           <Avatar sx={{ height: 35, width: 35 }} />
           <p style={{ fontWeight: 500 }}>{firstName + " " + lastName}</p>
         </div>
@@ -42,8 +47,6 @@ const LayoutLeft = () => {
           >
             <Groups2RoundedIcon sx={{ height: 50, width: 50 }} />
           </Badge>
-
-          {/* <p>{"[" + followers + "]" + " " + "Followers"}</p> */}
         </button>
 
         <button
@@ -63,7 +66,6 @@ const LayoutLeft = () => {
           >
             <PeopleOutlineRoundedIcon sx={{ height: 50, width: 50 }} />
           </Badge>
-          {/* {"[" + following + "]" + " " + "Following"} */}
         </button>
         <button className={classes.buttonSidebar}>
           <Badge

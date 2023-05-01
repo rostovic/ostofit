@@ -7,7 +7,7 @@ import VolumeUpIcon from "@mui/icons-material/VolumeUp";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 
-const VideoCard = ({ videoDetails, name, observerRef }) => {
+const VideoCard = ({ videoDetails, name, observerRef, isCompact = false }) => {
   const videoRef = useRef();
   const [playVideo, setPlayVideo] = useState(false);
   const [muted, setMuted] = useState(true);
@@ -64,11 +64,11 @@ const VideoCard = ({ videoDetails, name, observerRef }) => {
   }, [playVideo]);
 
   useEffect(() => {
-    if (!observerRef.current) {
+    if (!observerRef?.current) {
       return;
     }
     observerRef.current.observe(videoRef.current);
-  }, [observerRef.current]);
+  }, [observerRef?.current]);
 
   return (
     <div className={classes.videoCard}>
@@ -104,8 +104,8 @@ const VideoCard = ({ videoDetails, name, observerRef }) => {
           <PlayArrowIcon
             sx={{
               color: "white",
-              height: "100px",
-              width: "100px",
+              height: isCompact ? "25px" : "100px",
+              width: isCompact ? "25px" : "100px",
               backgroundColor: "transparent",
               backdropFilter: "blur(10px)",
               borderRadius: "50%",
@@ -117,11 +117,19 @@ const VideoCard = ({ videoDetails, name, observerRef }) => {
       <div className={classes.videoFooter}>
         <div className={classes.footerContainer}>
           <div className={classes.footerLeft}>
-            <p className={classes.videoTitle}>{videoDetails.title}</p>
-            <div className={classes.footerUser}>
-              <Avatar sx={{ height: 35, width: 35 }} />
-              <p>{name}</p>
-            </div>
+            <p
+              className={
+                isCompact ? classes.compactVideoTitle : classes.videoTitle
+              }
+            >
+              {videoDetails.title}
+            </p>
+            {isCompact ? null : (
+              <div className={classes.footerUser}>
+                <Avatar sx={{ height: 35, width: 35 }} />
+                <p>{name}</p>
+              </div>
+            )}
           </div>
           <div className={classes.footerRight}>
             <div style={{ display: "flex", justifyContent: "right" }}>
@@ -159,7 +167,7 @@ const VideoCard = ({ videoDetails, name, observerRef }) => {
                 />
               )}{" "}
             </div>
-            <SubscribeButton />
+            {isCompact ? null : <SubscribeButton />}
           </div>
         </div>
       </div>

@@ -56,6 +56,12 @@
   color: rgb(0, 0, 0);
 }
 
+.compactVideoTitle {
+  font-size: 12px;
+  font-weight: bold;
+  color: rgb(0, 0, 0);
+}
+
 .videoClip {
   width: 100%;
   height: 100%;

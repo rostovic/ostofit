@@ -6,7 +6,6 @@ import {
   createBrowserRouter,
   useLocation,
   useNavigate,
-  useNavigation,
   useParams,
 } from "react-router-dom";
 import "./App.css";
@@ -19,6 +18,8 @@ import Login from "./pages/Login";
 import HomePage from "./pages/HomePage";
 import Followers from "./components/Followers";
 import Following from "./components/Following";
+import Profile from "./components/Profile";
+import MyProfilePage from "./pages/MyProfilePage";
 
 export const MainLayout = () => {
   const navigate = useNavigate();
@@ -108,6 +109,14 @@ const authRouter = createBrowserRouter([
       {
         path: "followers/:id/",
         element: <UserPage />,
+      },
+      {
+        path: "profile",
+        element: <MyProfilePage />,
+      },
+      {
+        path: "profile/:id/",
+        element: <Profile />,
       },
     ],
   },

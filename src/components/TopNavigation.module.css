@@ -1,0 +1,28 @@
+.mainDiv {
+  display: flex;
+  height: 75px;
+  width: 100%;
+  align-items: center;
+}
+
+.buttonDiv {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+}
+
+.searchDiv {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  height: 75px;
+  justify-content: center;
+  align-items: center;
+}
+
+.rightDiv {
+  display: flex;
+  flex: 1;
+  height: 75px;
+  justify-content: center;
+}

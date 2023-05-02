@@ -20,13 +20,11 @@ const SubscribeButton = (isSubscribed = false) => {
           backgroundColor: "red",
         },
       }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
       {isSubscribed ? (
-        <div
-          className={classes.subscribedButtonStyle}
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
-        >
+        <div className={classes.subscribedButtonStyle}>
           {isHovered ? <p>UNSUBSCRIBE?</p> : <p>SUBSCRIBED</p>}
           {isHovered ? (
             <ClearIcon sx={{ height: 14, width: 14 }} />

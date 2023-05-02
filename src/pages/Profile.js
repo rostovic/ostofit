@@ -16,8 +16,6 @@ const Profile = () => {
   const userImageUrl = getUserImage(+param.id);
   const authContext = useContext(AuthContext);
   const { id } = authContext.userData;
-  const isUserSubscribed = isSubscribed(id, +param.id);
-  console.log(isUserSubscribed);
 
   return (
     <div>
@@ -31,7 +29,7 @@ const Profile = () => {
       <div className={classes.contentDiv}>
         {userVideos.map((video) => (
           <div key={video.url} className={classes.videoCardDiv}>
-            <VideoCard videoDetails={video} name={"kek"} isCompact={true} />
+            <VideoCard videoDetails={video} isCompact={true} />
           </div>
         ))}
       </div>

@@ -12,7 +12,7 @@ import Groups2RoundedIcon from "@mui/icons-material/Groups2Rounded";
 const LayoutLeft = () => {
   const navigation = useNavigate();
   const authContext = useContext(AuthContext);
-  const { firstName, lastName, id } = authContext.userData;
+  const { firstName, lastName, id, profilePicUrl } = authContext.userData;
   const followers = getNumberOfFollowers(id);
   const following = getNumberOfFollowing(id);
 
@@ -25,7 +25,7 @@ const LayoutLeft = () => {
             navigation(`profile`);
           }}
         >
-          <Avatar sx={{ height: 35, width: 35 }} />
+          <Avatar src={profilePicUrl} sx={{ height: 35, width: 35 }} />
           <p style={{ fontWeight: 500 }}>{firstName + " " + lastName}</p>
         </div>
         <div style={{ height: 25 }}></div>

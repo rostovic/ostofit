@@ -6,8 +6,17 @@ import VolumeOffIcon from "@mui/icons-material/VolumeOff";
 import VolumeUpIcon from "@mui/icons-material/VolumeUp";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
+import { useNavigate } from "react-router-dom";
 
-const VideoCard = ({ videoDetails, name, observerRef, isCompact = false }) => {
+const VideoCard = ({
+  videoDetails,
+  name,
+  id,
+  observerRef,
+  avatarUrl,
+  isCompact = false,
+}) => {
+  const navigation = useNavigate();
   const videoRef = useRef();
   const [playVideo, setPlayVideo] = useState(false);
   const [muted, setMuted] = useState(true);
@@ -126,8 +135,17 @@ const VideoCard = ({ videoDetails, name, observerRef, isCompact = false }) => {
             </p>
             {isCompact ? null : (
               <div className={classes.footerUser}>
-                <Avatar sx={{ height: 35, width: 35 }} />
-                <p>{name}</p>
+                <Avatar
+                  src={avatarUrl}
+                  sx={{ height: 35, width: 35, cursor: "pointer" }}
+                />
+                <p
+                  onClick={() => {
+                    navigation(`/profile/${id}`);
+                  }}
+                >
+                  {name}
+                </p>
               </div>
             )}
           </div>

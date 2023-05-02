@@ -1,6 +1,12 @@
 import { Button } from "@mui/material";
+import CheckIcon from "@mui/icons-material/Check";
+import classes from "./SubscribeButton.module.css";
+import ClearIcon from "@mui/icons-material/Clear";
+import { useState } from "react";
 
-const SubscribeButton = () => {
+const SubscribeButton = (isSubscribed = false) => {
+  const [isHovered, setIsHovered] = useState(false);
+
   return (
     <Button
       variant="contained"
@@ -15,7 +21,24 @@ const SubscribeButton = () => {
         },
       }}
     >
-      SUBSCRIBE
+      {isSubscribed ? (
+        <div
+          className={classes.subscribedButtonStyle}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        >
+          {isHovered ? <p>UNSUBSCRIBE?</p> : <p>SUBSCRIBED</p>}
+          {isHovered ? (
+            <ClearIcon sx={{ height: 14, width: 14 }} />
+          ) : (
+            <CheckIcon sx={{ height: 14, width: 14 }} />
+          )}
+        </div>
+      ) : (
+        <div className={classes.notSubcribedButtonStyle}>
+          <p>SUBSCRIBE</p>
+        </div>
+      )}
     </Button>
   );
 };

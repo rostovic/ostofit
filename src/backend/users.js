@@ -50,15 +50,15 @@ export const login = (username, password) => {
 };
 
 export const getFollowerVideos = (userId) => {
-  //filtrirati ko followa
   const userDetails = getUserDetailsById(userId);
   const followerIds = userDetails.following.map((userId) => userId);
   const videosPerUser = followerIds.map((id) => {
-    const { firstName, lastName } = getUserDetailsById(id);
+    const { firstName, lastName, profilePicUrl } = getUserDetailsById(id);
     return {
       firstName,
       lastName,
       id,
+      profilePicUrl,
       videos: userVideos.filter((user) => user.id === id)[0].videos,
     };
   });
@@ -69,11 +69,12 @@ export const getAllFollowers = (userId) => {
   const userDetails = getUserDetailsById(userId);
   const followerIds = userDetails.followers.map((userId) => userId);
   const allFollowers = followerIds.map((id) => {
-    const { firstName, lastName } = getUserDetailsById(id);
+    const { firstName, lastName, profilePicUrl } = getUserDetailsById(id);
     return {
       firstName,
       lastName,
       id,
+      profilePicUrl,
     };
   });
   return allFollowers;
@@ -83,11 +84,12 @@ export const getAllFollowing = (userId) => {
   const userDetails = getUserDetailsById(userId);
   const followingIds = userDetails.following.map((userId) => userId);
   const allFollowing = followingIds.map((id) => {
-    const { firstName, lastName } = getUserDetailsById(id);
+    const { firstName, lastName, profilePicUrl } = getUserDetailsById(id);
     return {
       firstName,
       lastName,
       id,
+      profilePicUrl,
     };
   });
   return allFollowing;

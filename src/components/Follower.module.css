@@ -16,6 +16,7 @@
 
 .followerDiv:hover {
   background: red;
+  cursor: pointer;
 }
 
 .singleFollower {
@@ -23,4 +24,14 @@
   align-items: center;
   gap: 20px;
   width: 500px;
+}
+
+.singleFollower p {
+  flex: 1;
+}
+
+.singleFollower p:hover {
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: underline;
 }

@@ -16,6 +16,7 @@ const Followers = () => {
             name={user.firstName + " " + user.lastName}
             id={user.id}
             key={user.id}
+            avatarUrl={user.profilePicUrl}
             action="followers"
           />
         ))}

@@ -57,6 +57,8 @@ const Homepage = () => {
             videoDetails={user.videos[0]}
             key={user.videos[0].url}
             name={user.firstName + " " + user.lastName}
+            id={user.id}
+            avatarUrl={user.profilePicUrl}
             observerRef={observerRef}
           />
         ))}

@@ -18,7 +18,7 @@ import Login from "./pages/Login";
 import HomePage from "./pages/HomePage";
 import Followers from "./components/Followers";
 import Following from "./components/Following";
-import Profile from "./components/Profile";
+import Profile from "./pages/Profile";
 import MyProfilePage from "./pages/MyProfilePage";
 
 export const MainLayout = () => {
@@ -115,7 +115,7 @@ const authRouter = createBrowserRouter([
         element: <MyProfilePage />,
       },
       {
-        path: "profile/:id/",
+        path: "profile/:id",
         element: <Profile />,
       },
     ],

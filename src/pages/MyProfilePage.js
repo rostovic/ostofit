@@ -7,44 +7,18 @@ import { getAllVideosForUser } from "../backend/userVideos";
 
 const MyProfilePage = () => {
   const authContext = useContext(AuthContext);
-  const { firstName, lastName, id } = authContext.userData;
+  const { firstName, lastName, id, profilePicUrl } = authContext.userData;
   const userVideos = getAllVideosForUser(id);
 
   return (
     <div>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          flexDirection: "column",
-          gap: 10,
-        }}
-      >
-        <Avatar sx={{ height: 150, width: 150 }} />
-        <p style={{ fontWeight: 700, fontSize: "20px" }}>
-          {firstName + " " + lastName}
-        </p>
+      <div className={classes.mainDiv}>
+        <Avatar src={profilePicUrl} sx={{ height: 150, width: 150 }} />
+        <p className={classes.nameText}>{firstName + " " + lastName}</p>
       </div>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          flexWrap: "wrap",
-          marginTop: "16px",
-        }}
-      >
+      <div className={classes.contentDiv}>
         {userVideos.map((video) => (
-          <div
-            key={video.url}
-            style={{
-              aspectRatio: 9 / 16,
-              width: "30%",
-              paddingInline: "12px",
-              paddingBottom: "24px",
-              display: "flex",
-            }}
-          >
+          <div key={video.url} className={classes.videoCardDiv}>
             <VideoCard videoDetails={video} name={"kek"} isCompact={true} />
           </div>
         ))}

@@ -3,8 +3,10 @@ import CheckIcon from "@mui/icons-material/Check";
 import classes from "./Follower.module.css";
 import { useState } from "react";
 import ClearIcon from "@mui/icons-material/Clear";
+import { useNavigate } from "react-router-dom";
 
-const Follower = ({ name, id, action }) => {
+const Follower = ({ name, id, action, avatarUrl }) => {
+  const navigation = useNavigate();
   const [isHovered, setIsHovered] = useState(false);
   const renderText = () => {
     if (action === "followers") {
@@ -16,8 +18,19 @@ const Follower = ({ name, id, action }) => {
 
   return (
     <div className={classes.singleFollower}>
-      <Avatar />
-      <p id={id} style={{ flex: 1 }}>
+      <Avatar
+        src={avatarUrl}
+        sx={{ cursor: "pointer" }}
+        onClick={() => {
+          navigation(`/profile/${id}`);
+        }}
+      />
+      <p
+        id={id}
+        onClick={() => {
+          navigation(`/profile/${id}`);
+        }}
+      >
         {name}
       </p>
       <div

@@ -18,6 +18,7 @@ const Following = () => {
             key={user.id}
             avatarUrl={user.profilePicUrl}
             action="following"
+            username={user.username}
           />
         ))}
       </div>

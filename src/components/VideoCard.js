@@ -14,6 +14,7 @@ const VideoCard = ({
   id,
   observerRef,
   avatarUrl,
+  username,
   isCompact = false,
 }) => {
   const navigation = useNavigate();
@@ -138,10 +139,13 @@ const VideoCard = ({
                 <Avatar
                   src={avatarUrl}
                   sx={{ height: 35, width: 35, cursor: "pointer" }}
+                  onClick={() => {
+                    navigation(`/profile/${username}`);
+                  }}
                 />
                 <p
                   onClick={() => {
-                    navigation(`/profile/${id}`);
+                    navigation(`/profile/${username}`);
                   }}
                 >
                   {name}

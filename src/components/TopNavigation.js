@@ -4,15 +4,17 @@ import classes from "./TopNavigation.module.css";
 import TextField from "@mui/material/TextField";
 import SearchIcon from "@mui/icons-material/Search";
 import InputAdornment from "@mui/material/InputAdornment";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { getAllUsersThatStartWith } from "../backend/userDetails";
 import ListItemDropdown from "./ListItemDropdown";
+import { AuthContext } from "../context/auth-context";
 
 const TopNavigation = () => {
+  const { userData } = useContext(AuthContext);
   const navigation = useNavigate();
   const [isSearching, setIsSearching] = useState(false);
   const [users, setUsers] = useState("");
-  const textInputValue = useRef();
+
   const closeSearchDropdownList = (e) => {
     setIsSearching(false);
     setUsers("");
@@ -20,13 +22,12 @@ const TopNavigation = () => {
   };
 
   const handleSearch = (e) => {
-    let searchedUser = e.target.value;
     if (e.target.value.length === 0) {
       setIsSearching(false);
       setUsers("");
       return;
     }
-    setUsers(getAllUsersThatStartWith(e.target.value));
+    setUsers(getAllUsersThatStartWith(e.target.value, userData.id));
     setIsSearching(true);
   };
 
@@ -44,8 +45,9 @@ const TopNavigation = () => {
       </div>
       <div className={classes.searchDiv}>
         <TextField
+          sx={{ height: 50 }}
+          fullWidth
           placeholder="Search user..."
-          sx={{ width: "300px", marginTop: users.length === 0 ? "" : "75px" }}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
@@ -56,35 +58,45 @@ const TopNavigation = () => {
           id="search-bar"
           variant="standard"
           onChange={handleSearch}
-          ref={textInputValue}
+          onBlur={() => setIsSearching(false)}
         />
 
         {users.length > 0 && isSearching ? (
           <div
             style={{
-              position: "relative",
-              display: "inline-block",
-              border: "1px solid grey",
-              borderRadius: "25px",
-              padding: "10px",
+              left: 0,
+              top: 50,
+              position: "absolute",
               width: "300px",
               zIndex: 1,
-              backgroundColor: "white",
             }}
           >
-            <ul
-              style={{ listStyleType: "none", margin: 0, padding: 0, gap: 10 }}
+            <div
+              style={{
+                backgroundColor: "white",
+                border: "1px solid grey",
+                borderRadius: "25px",
+              }}
             >
-              {users.map((user) => (
-                <ListItemDropdown
-                  key={user.id}
-                  id={user.id}
-                  avatarUrl={user.profilePicUrl}
-                  username={user.username}
-                  closeSearchDropdownList={closeSearchDropdownList}
-                />
-              ))}
-            </ul>
+              <ul
+                style={{
+                  listStyleType: "none",
+                  margin: 0,
+                  padding: 0,
+                  gap: 10,
+                }}
+              >
+                {users.map((user) => (
+                  <ListItemDropdown
+                    key={user.id}
+                    id={user.id}
+                    avatarUrl={user.profilePicUrl}
+                    username={user.username}
+                    closeSearchDropdownList={closeSearchDropdownList}
+                  />
+                ))}
+              </ul>
+            </div>
           </div>
         ) : (
           ""

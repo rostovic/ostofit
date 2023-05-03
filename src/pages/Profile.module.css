@@ -10,6 +10,7 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  gap: 5px;
 }
 
 .contentDiv {
@@ -25,4 +26,10 @@
   width: 30%;
   padding-inline: 12px;
   padding-bottom: 24px;
+}
+
+.userDiv {
+  display: flex;
+  align-items: center;
+  position: relative;
 }

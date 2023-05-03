@@ -16,7 +16,7 @@ export const userDetails = [
     profilePicUrl: null,
     followers: [1],
     following: [1],
-    username: "sgodmatko",
+    username: "godmatko",
   },
   {
     id: 3,
@@ -49,9 +49,13 @@ export const isSubscribed = (idUser, idSub) => {
   return isSubscribed;
 };
 
-export const getAllUsersThatStartWith = (username) => {
-  const users = userDetails.filter((userObj) =>
-    userObj.username.startsWith(username)
+export const getAllUsersThatStartWith = (username, id) => {
+  const users = userDetails.filter(
+    (userObj) => userObj.username.startsWith(username) && userObj.id !== id
   );
   return users;
+};
+
+export const getUserDetailsByUsername = (username) => {
+  return userDetails.find((userObj) => userObj.username === username);
 };

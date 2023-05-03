@@ -5,7 +5,7 @@ import { useState } from "react";
 import ClearIcon from "@mui/icons-material/Clear";
 import { useNavigate } from "react-router-dom";
 
-const Follower = ({ name, id, action, avatarUrl }) => {
+const Follower = ({ name, id, action, avatarUrl, username }) => {
   const navigation = useNavigate();
   const [isHovered, setIsHovered] = useState(false);
   const renderText = () => {
@@ -22,13 +22,13 @@ const Follower = ({ name, id, action, avatarUrl }) => {
         src={avatarUrl}
         sx={{ cursor: "pointer" }}
         onClick={() => {
-          navigation(`/profile/${id}`);
+          navigation(`/profile/${username}`);
         }}
       />
       <p
         id={id}
         onClick={() => {
-          navigation(`/profile/${id}`);
+          navigation(`/profile/${username}`);
         }}
       >
         {name}

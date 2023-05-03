@@ -115,7 +115,7 @@ const authRouter = createBrowserRouter([
         element: <MyProfilePage />,
       },
       {
-        path: "profile/:id",
+        path: "profile/:username",
         element: <Profile />,
       },
     ],

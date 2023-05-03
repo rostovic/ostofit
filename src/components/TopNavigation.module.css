@@ -18,6 +18,8 @@
   height: 75px;
   justify-content: center;
   align-items: center;
+  position: relative;
+  max-width: 300px;
 }
 
 .rightDiv {

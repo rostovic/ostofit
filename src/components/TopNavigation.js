@@ -1,10 +1,10 @@
-import { Avatar, Button, List } from "@mui/material";
+import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import classes from "./TopNavigation.module.css";
 import TextField from "@mui/material/TextField";
 import SearchIcon from "@mui/icons-material/Search";
 import InputAdornment from "@mui/material/InputAdornment";
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useState } from "react";
 import { getAllUsersThatStartWith } from "../backend/userDetails";
 import ListItemDropdown from "./ListItemDropdown";
 import { AuthContext } from "../context/auth-context";
@@ -15,7 +15,7 @@ const TopNavigation = () => {
   const [isSearching, setIsSearching] = useState(false);
   const [users, setUsers] = useState("");
 
-  const closeSearchDropdownList = (e) => {
+  const closeSearchDropdownList = () => {
     setIsSearching(false);
     setUsers("");
     document.getElementById("search-bar").value = "";
@@ -35,7 +35,12 @@ const TopNavigation = () => {
     <div className={classes.mainDiv}>
       <div className={classes.buttonDiv}>
         <Button
-          variant="contained"
+          sx={{
+            "&:hover": {
+              backgroundColor: "transparent",
+              border: "1px solid lightblue",
+            },
+          }}
           onClick={() => {
             navigation("home");
           }}
@@ -58,34 +63,14 @@ const TopNavigation = () => {
           id="search-bar"
           variant="standard"
           onChange={handleSearch}
-          onBlur={() => setIsSearching(false)}
+          onBlur={() => {
+            setIsSearching(false);
+          }}
         />
-
-        {users.length > 0 && isSearching ? (
-          <div
-            style={{
-              left: 0,
-              top: 50,
-              position: "absolute",
-              width: "300px",
-              zIndex: 1,
-            }}
-          >
-            <div
-              style={{
-                backgroundColor: "white",
-                border: "1px solid grey",
-                borderRadius: "25px",
-              }}
-            >
-              <ul
-                style={{
-                  listStyleType: "none",
-                  margin: 0,
-                  padding: 0,
-                  gap: 10,
-                }}
-              >
+        {users.length > 0 && isSearching && (
+          <div className={classes.popUpSearchDiv}>
+            <div className={classes.divList}>
+              <ul className={classes.listStyle}>
                 {users.map((user) => (
                   <ListItemDropdown
                     key={user.id}
@@ -98,8 +83,6 @@ const TopNavigation = () => {
               </ul>
             </div>
           </div>
-        ) : (
-          ""
         )}
       </div>
       <div className={classes.rightDiv}></div>

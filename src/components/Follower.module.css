@@ -35,3 +35,20 @@
   cursor: pointer;
   text-decoration: underline;
 }
+
+.requestDiv {
+  align-self: center;
+  display: flex;
+  align-items: center;
+}
+
+.iconStyle {
+  color: white;
+  border-radius: 25px;
+  transition: all 0.25s;
+}
+
+.iconStyle:hover {
+  scale: 1.25;
+  cursor: pointer;
+}

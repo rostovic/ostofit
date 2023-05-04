@@ -3,11 +3,11 @@ import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/auth-context";
 import classes from "./LayoutLeft.module.css";
-import { getNumberOfFollowers, getNumberOfFollowing } from "../backend/users";
-import GroupAddRoundedIcon from "@mui/icons-material/GroupAddRounded";
-import PeopleOutlineRoundedIcon from "@mui/icons-material/PeopleOutlineRounded";
-import { Badge } from "@mui/material";
-import Groups2RoundedIcon from "@mui/icons-material/Groups2Rounded";
+import {
+  getNumberOfFollowers,
+  getNumberOfFollowing,
+  getNumberOfRequests,
+} from "../backend/users";
 
 const LayoutLeft = () => {
   const navigation = useNavigate();
@@ -15,6 +15,7 @@ const LayoutLeft = () => {
   const { firstName, lastName, id, profilePicUrl } = authContext.userData;
   const followers = getNumberOfFollowers(id);
   const following = getNumberOfFollowing(id);
+  const requests = getNumberOfRequests(id);
 
   return (
     <div className={classes.mainLayout}>
@@ -28,58 +29,48 @@ const LayoutLeft = () => {
           <Avatar src={profilePicUrl} sx={{ height: 35, width: 35 }} />
           <p style={{ fontWeight: 500 }}>{firstName + " " + lastName}</p>
         </div>
-        <div style={{ height: 25 }}></div>
-
-        <button
-          className={classes.buttonSidebar}
-          onClick={() => {
-            navigation("followers");
+        <div
+          style={{
+            marginTop: "25px",
+            display: "flex",
+            alignItems: "center",
+            gap: 10,
           }}
         >
-          <Badge
-            badgeContent={followers}
-            sx={{
-              "& .MuiBadge-badge": {
-                color: "white",
-                backgroundColor: "red",
-              },
-            }}
-          >
-            <Groups2RoundedIcon sx={{ height: 50, width: 50 }} />
-          </Badge>
-        </button>
-
-        <button
-          className={classes.buttonSidebar}
-          onClick={() => {
-            navigation("following");
-          }}
-        >
-          <Badge
-            badgeContent={following}
-            sx={{
-              "& .MuiBadge-badge": {
-                color: "white",
-                backgroundColor: "red",
-              },
-            }}
-          >
-            <PeopleOutlineRoundedIcon sx={{ height: 50, width: 50 }} />
-          </Badge>
-        </button>
-        <button className={classes.buttonSidebar}>
-          <Badge
-            badgeContent={"0"}
-            sx={{
-              "& .MuiBadge-badge": {
-                color: "white",
-                backgroundColor: "red",
-              },
-            }}
-          >
-            <GroupAddRoundedIcon sx={{ height: 50, width: 50 }} />
-          </Badge>
-        </button>
+          <div className={classes.followersDiv}>
+            <p
+              className={classes.followerNumber}
+              onClick={() => {
+                navigation("requests");
+              }}
+            >
+              {requests}
+            </p>
+            <p className={classes.followerText}>requests</p>
+          </div>
+          <div className={classes.followersDiv}>
+            <p
+              className={classes.followerNumber}
+              onClick={() => {
+                navigation("followers");
+              }}
+            >
+              {followers}
+            </p>
+            <p className={classes.followerText}>followers</p>
+          </div>
+          <div className={classes.followersDiv}>
+            <p
+              className={classes.followerNumber}
+              onClick={() => {
+                navigation("following");
+              }}
+            >
+              {following}
+            </p>
+            <p className={classes.followerText}>following</p>
+          </div>
+        </div>
       </div>
     </div>
   );

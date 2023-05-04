@@ -4,7 +4,7 @@ import classes from "./SubscribeButton.module.css";
 import ClearIcon from "@mui/icons-material/Clear";
 import { useState } from "react";
 
-const SubscribeButton = (isSubscribed = false) => {
+const SubscribeButton = ({ isSubscribed = false }) => {
   const [isHovered, setIsHovered] = useState(false);
 
   return (

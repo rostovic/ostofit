@@ -20,6 +20,7 @@ import Followers from "./components/Followers";
 import Following from "./components/Following";
 import Profile from "./pages/Profile";
 import MyProfilePage from "./pages/MyProfilePage";
+import Requests from "./components/Requests";
 
 export const MainLayout = () => {
   const navigate = useNavigate();
@@ -117,6 +118,10 @@ const authRouter = createBrowserRouter([
       {
         path: "profile/:username",
         element: <Profile />,
+      },
+      {
+        path: "requests",
+        element: <Requests />,
       },
     ],
   },

@@ -12,24 +12,13 @@ const ListItemDropdown = ({ avatarUrl, username, closeSearchDropdownList }) => {
         alignItems: "center",
         paddingLeft: 10,
       }}
+      onMouseDown={() => {
+        navigation(`/profile/${username}`);
+        closeSearchDropdownList();
+      }}
     >
-      <Avatar
-        style={{ cursor: "pointer" }}
-        src={avatarUrl}
-        onClick={() => {
-          navigation(`/profile/${username}`);
-          closeSearchDropdownList();
-        }}
-      />
-      <p
-        className={classes.usernameTextStyle}
-        onClick={() => {
-          navigation(`/profile/${username}`);
-          closeSearchDropdownList();
-        }}
-      >
-        {username}
-      </p>
+      <Avatar style={{ cursor: "pointer" }} src={avatarUrl} />
+      <p className={classes.usernameTextStyle}>{username}</p>
     </li>
   );
 };

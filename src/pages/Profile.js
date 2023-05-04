@@ -1,22 +1,30 @@
 import { useParams } from "react-router-dom";
 import classes from "./Profile.module.css";
-import { getUserDetailsByUsername } from "../backend/userDetails";
+import {
+  getUserDetailsByUsername,
+  getUserProfileImage,
+  isSubscribed,
+} from "../backend/userDetails";
 import { getAllVideosForUser } from "../backend/userVideos";
 import { Avatar } from "@mui/material";
 import VideoCard from "../components/VideoCard";
-import { getUserImage } from "../backend/userImage";
 import SubscribeButton from "../components/SubscribeButton";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import { useContext } from "react";
+import { AuthContext } from "../context/auth-context";
 
 const Profile = () => {
+  const { userData } = useContext(AuthContext);
   const param = useParams();
   const userDetails = getUserDetailsByUsername(param.username);
   if (!userDetails) {
     return;
   }
+
   const { firstName, lastName, id: idUser } = userDetails;
   const userVideos = getAllVideosForUser(+idUser);
-  const userImageUrl = getUserImage(+idUser);
+  const userImageUrl = getUserProfileImage(+idUser);
+  const isSubscribedToUser = isSubscribed(userData.id, +idUser);
 
   return (
     <div>
@@ -30,7 +38,7 @@ const Profile = () => {
         </div>
 
         <div style={{ marginTop: "10px" }}>
-          <SubscribeButton />
+          <SubscribeButton isSubscribed={isSubscribedToUser} />
         </div>
       </div>
       <div className={classes.contentDiv}>

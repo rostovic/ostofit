@@ -9,6 +9,23 @@ const Follower = ({ name, id, action, avatarUrl, username }) => {
   const navigation = useNavigate();
   const [isHovered, setIsHovered] = useState(false);
   const renderText = () => {
+    if (action === "requests") {
+      return (
+        <div style={{ display: "flex", gap: 15 }}>
+          <CheckIcon
+            className={classes.iconStyle}
+            sx={{ backgroundColor: "green" }}
+            fontSize="large"
+          />
+          <ClearIcon
+            className={classes.iconStyle}
+            sx={{ backgroundColor: "red" }}
+            fontSize="large"
+          />
+        </div>
+      );
+    }
+
     if (action === "followers") {
       return <span>{isHovered ? "Remove follower!" : "Following you!"}</span>;
     }
@@ -34,24 +51,13 @@ const Follower = ({ name, id, action, avatarUrl, username }) => {
         {name}
       </p>
       <div
-        className={classes.followerDiv}
+        className={
+          action === "requests" ? classes.requestDiv : classes.followerDiv
+        }
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
         {renderText()}
-        {isHovered ? (
-          <ClearIcon
-            sx={{
-              color: "white",
-            }}
-          />
-        ) : (
-          <CheckIcon
-            sx={{
-              color: "white",
-            }}
-          />
-        )}
       </div>
     </div>
   );

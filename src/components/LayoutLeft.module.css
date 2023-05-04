@@ -18,6 +18,7 @@
 .userDiv {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 10px;
   cursor: pointer;
   border-radius: 25px;
@@ -42,4 +43,32 @@
   gap: 10;
   margin-top: 24px;
   flex-direction: column;
+}
+
+.followersDiv {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 80px;
+}
+
+.followerNumber {
+  margin: 0;
+  padding: 0;
+  font-size: 28px;
+  color: #333333;
+  font-weight: 700;
+}
+
+.followerNumber:hover {
+  cursor: pointer;
+  scale: 1.1;
+  text-decoration: underline;
+}
+
+.followerText {
+  margin: 0;
+  padding: 0;
+  font-size: 14px;
 }

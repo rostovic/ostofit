@@ -43,6 +43,10 @@ export const userVideos = [
     ],
     id: 4,
   },
+  {
+    videos: [],
+    id: 5,
+  },
 ];
 
 export const getAllVideosForUser = (id) => {

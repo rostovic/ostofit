@@ -22,6 +22,12 @@ const users = [
     password: "123",
     id: 4,
   },
+
+  {
+    username: "spanko",
+    password: "123",
+    id: 5,
+  },
 ];
 
 export const login = (username, password) => {
@@ -101,6 +107,23 @@ export const getAllFollowing = (userId) => {
   return allFollowing;
 };
 
+export const getAllRequests = (userId) => {
+  const userDetails = getUserDetailsById(userId);
+  const followerIds = userDetails.requests.map((userId) => userId);
+  const allRequests = followerIds.map((id) => {
+    const { firstName, lastName, profilePicUrl, username } =
+      getUserDetailsById(id);
+    return {
+      firstName,
+      lastName,
+      id,
+      profilePicUrl,
+      username,
+    };
+  });
+  return allRequests;
+};
+
 export const getNumberOfFollowers = (userId) => {
   const userDetails = getUserDetailsById(userId);
   const number = userDetails.followers.length;
@@ -110,5 +133,11 @@ export const getNumberOfFollowers = (userId) => {
 export const getNumberOfFollowing = (userId) => {
   const userDetails = getUserDetailsById(userId);
   const number = userDetails.following.length;
+  return number;
+};
+
+export const getNumberOfRequests = (userId) => {
+  const userDetails = getUserDetailsById(userId);
+  const number = userDetails.requests.length;
   return number;
 };

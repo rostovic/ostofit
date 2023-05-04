@@ -4,6 +4,7 @@ import { useContext } from "react";
 import { Avatar } from "@mui/material";
 import VideoCard from "../components/VideoCard";
 import { getAllVideosForUser } from "../backend/userVideos";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 
 const MyProfilePage = () => {
   const authContext = useContext(AuthContext);
@@ -14,7 +15,12 @@ const MyProfilePage = () => {
     <div>
       <div className={classes.mainDiv}>
         <Avatar src={profilePicUrl} sx={{ height: 150, width: 150 }} />
-        <p className={classes.nameText}>{firstName + " " + lastName}</p>
+        <div className={classes.userDiv}>
+          <p className={classes.nameText}>{firstName + " " + lastName}</p>
+          <CheckCircleIcon
+            sx={{ color: "blue", position: "absolute", right: "-30px" }}
+          />
+        </div>
       </div>
       <div className={classes.contentDiv}>
         {userVideos.map((video) => (

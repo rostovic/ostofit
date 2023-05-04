@@ -27,3 +27,9 @@
   padding-inline: 12px;
   padding-bottom: 24px;
 }
+
+.userDiv {
+  display: flex;
+  align-items: center;
+  position: relative;
+}

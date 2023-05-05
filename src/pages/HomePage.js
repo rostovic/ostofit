@@ -9,7 +9,7 @@ const Homepage = () => {
   const observerRef = useRef();
   const { userData, logout } = useContext(AuthContext);
   const { firstName, lastName } = userData;
-  const followerVideos = getFollowerVideos(userData.id);
+  const followers = getFollowerVideos(userData.id);
   const videoRef = useRef();
 
   useEffect(() => {
@@ -49,7 +49,7 @@ const Homepage = () => {
         }}
         ref={videoRef}
       >
-        {followerVideos.map((user) =>
+        {followers.map((user) =>
           user.videos.map((video) => (
             <VideoCard
               videoDetails={video}

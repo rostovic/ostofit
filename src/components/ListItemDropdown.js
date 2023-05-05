@@ -18,7 +18,7 @@ const ListItemDropdown = ({ avatarUrl, username, closeSearchDropdownList }) => {
       }}
     >
       <Avatar style={{ cursor: "pointer" }} src={avatarUrl} />
-      <p className={classes.usernameTextStyle}>{username}</p>
+      <p className={classes.usernameTextStyle}>@{username}</p>
     </li>
   );
 };

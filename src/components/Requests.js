@@ -7,20 +7,25 @@ import classes from "./Requests.module.css";
 const Requests = () => {
   const { userData } = useContext(AuthContext);
   const allRequests = getAllRequests(userData.id);
+  console.log(allRequests);
 
   return (
     <div className={classes.mainDiv}>
       <div className={classes.followersDiv}>
-        {allRequests.map((user) => (
-          <Follower
-            name={user.firstName + " " + user.lastName}
-            id={user.id}
-            key={user.id}
-            avatarUrl={user.profilePicUrl}
-            action="requests"
-            username={user.username}
-          />
-        ))}
+        {!allRequests.length === 0 ? (
+          allRequests.map((user) => (
+            <Follower
+              name={user.firstName + " " + user.lastName}
+              id={user.id}
+              key={user.id}
+              avatarUrl={user.profilePicUrl}
+              action="requests"
+              username={user.username}
+            />
+          ))
+        ) : (
+          <span>No new requests.</span>
+        )}
       </div>
     </div>
   );

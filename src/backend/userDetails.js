@@ -37,8 +37,8 @@ export const userDetails = [
     username: "snipcik",
     profilePicUrl:
       "https://media.licdn.com/dms/image/C4D03AQG49xwlRDBHKg/profile-displayphoto-shrink_800_800/0/1660820217146?e=1688601600&v=beta&t=xaQhkXi9hML6PNO0Xuhg4O7DpMSrEmFIG9rE1aTl46A",
-    followers: [3],
-    following: [3],
+    followers: [3, 1],
+    following: [3, 1],
     requests: [],
   },
   {
@@ -48,9 +48,19 @@ export const userDetails = [
     username: "MrBanana",
     profilePicUrl:
       "https://scontent-vie1-1.xx.fbcdn.net/v/t1.15752-9/41390543_1883943278581391_7366941941499428864_n.jpg?stp=dst-jpg_p1080x2048&_nc_cat=103&ccb=1-7&_nc_sid=ae9488&_nc_ohc=PomCRlmUTXYAX971H31&_nc_ht=scontent-vie1-1.xx&oh=03_AdRnZx10zdfsqccRCymMSzVzD15d3w8sLeGGJvz1PtMDiA&oe=647B65AD",
-    followers: [4],
-    following: [4],
+    followers: [4, 6],
+    following: [4, 6],
     requests: [],
+  },
+  {
+    id: 6,
+    firstName: "Dino",
+    lastName: "Perić",
+    username: "dangerous999",
+    profilePicUrl:
+      "https://scontent.fzag1-2.fna.fbcdn.net/v/t1.18169-9/22450036_10209857687823604_1995083471894238086_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=174925&_nc_ohc=egn7HK1x9VkAX9cFB0h&_nc_ht=scontent.fzag1-2.fna&oh=00_AfA3vcPVHStlh0bf83I-YoK7SA-vlmsFWYi3ov2Sx8jcvQ&oe=647C4D94",
+    followers: [5],
+    following: [5],
   },
 ];
 

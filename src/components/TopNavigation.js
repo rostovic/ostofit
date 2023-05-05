@@ -34,7 +34,7 @@ const TopNavigation = () => {
   return (
     <div className={classes.mainDiv}>
       <div className={classes.buttonDiv}>
-        <Button
+        {/* <Button
           sx={{
             "&:hover": {
               backgroundColor: "transparent",
@@ -46,7 +46,15 @@ const TopNavigation = () => {
           }}
         >
           Home
-        </Button>
+        </Button> */}
+        <button
+          className={classes.buttonHomeStyle}
+          onClick={() => {
+            navigation("home");
+          }}
+        >
+          Home
+        </button>
       </div>
       <div className={classes.searchDiv}>
         <TextField

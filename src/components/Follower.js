@@ -48,7 +48,7 @@ const Follower = ({ name, id, action, avatarUrl, username }) => {
           navigation(`/profile/${username}`);
         }}
       >
-        {name}
+        {username}
       </p>
       <div
         className={

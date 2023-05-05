@@ -16,6 +16,7 @@ const VideoCard = ({
   avatarUrl,
   username,
   isCompact = false,
+  isSubscribed = false,
 }) => {
   const navigation = useNavigate();
   const videoRef = useRef();
@@ -114,8 +115,8 @@ const VideoCard = ({
           <PlayArrowIcon
             sx={{
               color: "white",
-              height: isCompact ? "25px" : "100px",
-              width: isCompact ? "25px" : "100px",
+              height: isCompact ? "45px" : "100px",
+              width: isCompact ? "45px" : "100px",
               backgroundColor: "transparent",
               backdropFilter: "blur(10px)",
               borderRadius: "50%",
@@ -189,7 +190,7 @@ const VideoCard = ({
                 />
               )}{" "}
             </div>
-            {isCompact ? null : <SubscribeButton />}
+            {isCompact ? null : <SubscribeButton isSubscribed={isSubscribed} />}
           </div>
         </div>
       </div>

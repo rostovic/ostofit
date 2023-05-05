@@ -49,17 +49,20 @@ const Homepage = () => {
         }}
         ref={videoRef}
       >
-        {followerVideos.map((user) => (
-          <VideoCard
-            videoDetails={user.videos[0]}
-            key={user.videos[0].url}
-            name={user.firstName + " " + user.lastName}
-            id={user.id}
-            username={user.username}
-            avatarUrl={user.profilePicUrl}
-            observerRef={observerRef}
-          />
-        ))}
+        {followerVideos.map((user) =>
+          user.videos.map((video) => (
+            <VideoCard
+              videoDetails={video}
+              key={video.url}
+              name={user.firstName + " " + user.lastName}
+              id={user.id}
+              username={user.username}
+              avatarUrl={user.profilePicUrl}
+              observerRef={observerRef}
+              isSubscribed="true"
+            />
+          ))
+        )}
       </div>
       <button onClick={logout}>Logout</button>
     </div>

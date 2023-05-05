@@ -20,7 +20,7 @@ const Profile = () => {
   if (!userDetails) {
     return;
   }
-
+  const username = param.username;
   const { firstName, lastName, id: idUser } = userDetails;
   const userVideos = getAllVideosForUser(+idUser);
   const userImageUrl = getUserProfileImage(+idUser);
@@ -31,10 +31,19 @@ const Profile = () => {
       <div className={classes.mainDiv}>
         <Avatar src={userImageUrl} sx={{ height: 150, width: 150 }} />
         <div className={classes.userDiv}>
-          <p className={classes.nameText}>{firstName + " " + lastName}</p>
-          <CheckCircleIcon
-            sx={{ color: "blue", position: "absolute", right: "-30px" }}
-          />
+          <p className={classes.nameText}>{username}</p>
+          <div className={classes.tooltip}>
+            <CheckCircleIcon
+              sx={{
+                color: "blue",
+                position: "absolute",
+                right: "-30px",
+                marginTop: "5px",
+                cursor: "pointer",
+              }}
+            />
+            <span className={classes.tooltiptext}>Verified user!</span>
+          </div>
         </div>
 
         <div style={{ marginTop: "10px" }}>

@@ -2,17 +2,20 @@ import { Avatar } from "@mui/material";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/auth-context";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import classes from "./LayoutLeft.module.css";
 import {
   getNumberOfFollowers,
   getNumberOfFollowing,
   getNumberOfRequests,
+  getUsername,
 } from "../backend/users";
 
 const LayoutLeft = () => {
   const navigation = useNavigate();
   const authContext = useContext(AuthContext);
   const { firstName, lastName, id, profilePicUrl } = authContext.userData;
+  const username = getUsername(id);
   const followers = getNumberOfFollowers(id);
   const following = getNumberOfFollowing(id);
   const requests = getNumberOfRequests(id);
@@ -27,7 +30,13 @@ const LayoutLeft = () => {
           }}
         >
           <Avatar src={profilePicUrl} sx={{ height: 35, width: 35 }} />
-          <p style={{ fontWeight: 500 }}>{firstName + " " + lastName}</p>
+          <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
+            <p style={{ fontWeight: 500 }}>{username}</p>
+            <div className={classes.tooltip}>
+              <CheckCircleIcon sx={{ color: "blue", marginTop: "6px" }} />
+              <span className={classes.tooltiptext}>Verified user!</span>
+            </div>
+          </div>
         </div>
         <div
           style={{

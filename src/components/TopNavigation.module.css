@@ -49,3 +49,15 @@
   width: 300px;
   z-index: 1;
 }
+
+.buttonHomeStyle {
+  border: 0;
+  background-color: transparent;
+}
+
+.buttonHomeStyle:hover {
+  cursor: pointer;
+  background-color: lightblue;
+  height: 50px;
+  width: 100px;
+}

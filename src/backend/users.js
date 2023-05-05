@@ -28,6 +28,11 @@ const users = [
     password: "123",
     id: 5,
   },
+  {
+    username: "dino",
+    password: "123",
+    id: 6,
+  },
 ];
 
 export const login = (username, password) => {
@@ -140,4 +145,10 @@ export const getNumberOfRequests = (userId) => {
   const userDetails = getUserDetailsById(userId);
   const number = userDetails.requests.length;
   return number;
+};
+
+export const getUsername = (userId) => {
+  const userDetails = getUserDetailsById(userId);
+  const username = userDetails.username;
+  return username;
 };

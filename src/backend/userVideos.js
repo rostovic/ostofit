@@ -40,6 +40,10 @@ export const userVideos = [
         url: "https://clips.clippit.tv/rkaklx/360.mp4",
         title: "SOOOON GOOAAAAAAAAAAAALLLLLLLLL!!!",
       },
+      {
+        url: "https://assets.codepen.io/6093409/river.mp4",
+        title: "Swimming in the river",
+      },
     ],
     id: 4,
   },

@@ -8,7 +8,6 @@ const Homepage = () => {
   const [isObserverReady, setIsObserverReady] = useState(false);
   const observerRef = useRef();
   const { userData, logout } = useContext(AuthContext);
-  const { firstName, lastName } = userData;
   const followers = getFollowerVideos(userData.id);
   const videoRef = useRef();
 

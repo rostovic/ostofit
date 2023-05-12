@@ -1,22 +1,37 @@
 import classes from "./MyProfilePage.module.css";
 import { AuthContext } from "../context/auth-context";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Avatar } from "@mui/material";
 import VideoCard from "../components/VideoCard";
-import { getAllVideosForUser } from "../backend/userVideos";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import { getUsername } from "../backend/users";
+import { getMyProfileData } from "../backend/helpers";
 
 const MyProfilePage = () => {
+  const [videoData, setVideoData] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
   const authContext = useContext(AuthContext);
-  const { firstName, lastName, id, profilePicUrl } = authContext.userData;
-  const userVideos = getAllVideosForUser(id);
-  const username = getUsername(id);
+  const { profile_pic, username } = authContext.userData;
+  useEffect(() => {
+    const getData = async (username) => {
+      const data = await getMyProfileData(username);
+      setVideoData(data.videos);
+      setIsLoading(false);
+    };
+    getData(username);
+  }, []);
+
+  if (isLoading) {
+    return (
+      <div className={classes.loaderSpinnerWrapper}>
+        <div className={classes.loaderSpinner}></div>
+      </div>
+    );
+  }
 
   return (
     <div>
       <div className={classes.mainDiv}>
-        <Avatar src={profilePicUrl} sx={{ height: 150, width: 150 }} />
+        <Avatar src={profile_pic} sx={{ height: 150, width: 150 }} />
         <div className={classes.userDiv}>
           <p className={classes.nameText}>{username}</p>
           <div className={classes.tooltip}>
@@ -33,7 +48,7 @@ const MyProfilePage = () => {
         </div>
       </div>
       <div className={classes.contentDiv}>
-        {userVideos.map((video) => (
+        {videoData.map((video) => (
           <div key={video.url} className={classes.videoCardDiv}>
             <VideoCard videoDetails={video} name={"kek"} isCompact={true} />
           </div>

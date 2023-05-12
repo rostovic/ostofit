@@ -34,19 +34,6 @@ const TopNavigation = () => {
   return (
     <div className={classes.mainDiv}>
       <div className={classes.buttonDiv}>
-        {/* <Button
-          sx={{
-            "&:hover": {
-              backgroundColor: "transparent",
-              border: "1px solid lightblue",
-            },
-          }}
-          onClick={() => {
-            navigation("home");
-          }}
-        >
-          Home
-        </Button> */}
         <button
           className={classes.buttonHomeStyle}
           onClick={() => {

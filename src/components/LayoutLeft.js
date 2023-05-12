@@ -1,24 +1,36 @@
 import { Avatar } from "@mui/material";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/auth-context";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import classes from "./LayoutLeft.module.css";
-import {
-  getNumberOfFollowers,
-  getNumberOfFollowing,
-  getNumberOfRequests,
-  getUsername,
-} from "../backend/users";
+import { getAllDataNumbers } from "../backend/helpers";
 
 const LayoutLeft = () => {
+  const [data, setData] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const navigation = useNavigate();
   const authContext = useContext(AuthContext);
-  const { firstName, lastName, id, profilePicUrl } = authContext.userData;
-  const username = getUsername(id);
-  const followers = getNumberOfFollowers(id);
-  const following = getNumberOfFollowing(id);
-  const requests = getNumberOfRequests(id);
+  const { id, profile_pic, username } = authContext.userData;
+
+  useEffect(() => {
+    const getNumbersForProfile = async (id) => {
+      const numberData = await getAllDataNumbers(id);
+      setData(numberData);
+      setIsLoading(false);
+    };
+    getNumbersForProfile(id);
+  }, []);
+
+  const { followers, following, requests } = data || ["", "", ""];
+
+  if (isLoading) {
+    return (
+      <div className={classes.loaderSpinnerWrapper}>
+        <div className={classes.loaderSpinner}></div>
+      </div>
+    );
+  }
 
   return (
     <div className={classes.mainLayout}>
@@ -29,7 +41,7 @@ const LayoutLeft = () => {
             navigation(`profile`);
           }}
         >
-          <Avatar src={profilePicUrl} sx={{ height: 35, width: 35 }} />
+          <Avatar src={profile_pic} sx={{ height: 35, width: 35 }} />
           <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
             <p style={{ fontWeight: 500 }}>{username}</p>
             <div className={classes.tooltip}>
@@ -55,6 +67,7 @@ const LayoutLeft = () => {
             >
               {requests}
             </p>
+
             <p className={classes.followerText}>requests</p>
           </div>
           <div className={classes.followersDiv}>
@@ -66,6 +79,7 @@ const LayoutLeft = () => {
             >
               {followers}
             </p>
+
             <p className={classes.followerText}>followers</p>
           </div>
           <div className={classes.followersDiv}>
@@ -77,6 +91,7 @@ const LayoutLeft = () => {
             >
               {following}
             </p>
+
             <p className={classes.followerText}>following</p>
           </div>
         </div>

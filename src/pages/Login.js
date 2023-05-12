@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 import { login } from "../backend/users";
 import { useContext } from "react";
 import { AuthContext } from "../context/auth-context";
+import { loginUser } from "../backend/helpers";
 const ERRORS = {
   USERNAME: {
     BLANK: "Empty username!",
@@ -26,12 +27,12 @@ const Login = () => {
     setErrorPassword(null);
   };
 
-  const formSubmissionHandler = (event) => {
+  const formSubmissionHandler = async (event) => {
     event.preventDefault();
-    const userName = usernameInputRef.current.value;
+    const username = usernameInputRef.current.value;
     const password = passwordInputRef.current.value;
 
-    if (userName.length === 0) {
+    if (username.length === 0) {
       setErrorUsername(ERRORS.USERNAME.BLANK);
     }
 
@@ -39,18 +40,20 @@ const Login = () => {
       setErrorPassword(ERRORS.PASSWORD.BLANK);
     }
 
-    if (!userName || !password) {
+    if (!username || !password) {
       return;
     }
 
-    const loginResponse = login(userName, password);
+    const userData = await loginUser(username, password);
 
-    if (!loginResponse.data.isValidCredentials) {
+    if (userData === "false") {
       return;
     }
 
-    ctx.login(loginResponse.data.userDetails);
-    navigate(loginResponse.data.redirect);
+    ctx.login(userData);
+    navigate("/home");
+
+    return;
   };
 
   const renderError = (errorType) => {

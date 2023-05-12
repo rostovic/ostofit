@@ -1,37 +1,47 @@
 import { useParams } from "react-router-dom";
 import classes from "./Profile.module.css";
-import {
-  getUserDetailsByUsername,
-  getUserProfileImage,
-  isSubscribed,
-} from "../backend/userDetails";
-import { getAllVideosForUser } from "../backend/userVideos";
 import { Avatar } from "@mui/material";
 import VideoCard from "../components/VideoCard";
 import SubscribeButton from "../components/SubscribeButton";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/auth-context";
+import { getProfileData } from "../backend/helpers";
 
 const Profile = () => {
   const { userData } = useContext(AuthContext);
   const param = useParams();
-  const userDetails = getUserDetailsByUsername(param.username);
-  if (!userDetails) {
-    return;
+  const [profileData, setProfileData] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const getProfileUserData = async (username) => {
+      const profileUserData = await getProfileData(username, userData.id);
+      setProfileData(profileUserData.userData);
+      setIsLoading(false);
+    };
+    getProfileUserData(param.username);
+  }, []);
+
+  const isSubscribedToUser = profileData.isSubscribed === 1 ? true : false;
+
+  if (isLoading) {
+    return (
+      <div className={classes.loaderSpinnerWrapper}>
+        <div className={classes.loaderSpinner}></div>
+      </div>
+    );
   }
-  const username = param.username;
-  const { firstName, lastName, id: idUser } = userDetails;
-  const userVideos = getAllVideosForUser(+idUser);
-  const userImageUrl = getUserProfileImage(+idUser);
-  const isSubscribedToUser = isSubscribed(userData.id, +idUser);
 
   return (
     <div>
       <div className={classes.mainDiv}>
-        <Avatar src={userImageUrl} sx={{ height: 150, width: 150 }} />
+        <Avatar
+          src={profileData.profile_pic}
+          sx={{ height: 150, width: 150 }}
+        />
         <div className={classes.userDiv}>
-          <p className={classes.nameText}>{username}</p>
+          <p className={classes.nameText}>{profileData.username}</p>
           <div className={classes.tooltip}>
             <CheckCircleIcon
               sx={{
@@ -51,7 +61,7 @@ const Profile = () => {
         </div>
       </div>
       <div className={classes.contentDiv}>
-        {userVideos.map((video) => (
+        {profileData.videos.map((video) => (
           <div key={video.url} className={classes.videoCardDiv}>
             <VideoCard videoDetails={video} isCompact={true} />
           </div>

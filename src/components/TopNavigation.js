@@ -1,15 +1,15 @@
-import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import classes from "./TopNavigation.module.css";
 import TextField from "@mui/material/TextField";
 import SearchIcon from "@mui/icons-material/Search";
 import InputAdornment from "@mui/material/InputAdornment";
-import { useContext, useState } from "react";
-import { getAllUsersThatStartWith } from "../backend/userDetails";
+import { useContext, useEffect, useState } from "react";
 import ListItemDropdown from "./ListItemDropdown";
 import { AuthContext } from "../context/auth-context";
+import { findUsers } from "../backend/helpers";
 
 const TopNavigation = () => {
+  const [searchTerm, setSearchTerm] = useState("");
   const { userData } = useContext(AuthContext);
   const navigation = useNavigate();
   const [isSearching, setIsSearching] = useState(false);
@@ -21,15 +21,24 @@ const TopNavigation = () => {
     document.getElementById("search-bar").value = "";
   };
 
-  const handleSearch = (e) => {
-    if (e.target.value.length === 0) {
+  useEffect(() => {
+    if (searchTerm === "") {
       setIsSearching(false);
       setUsers("");
       return;
     }
-    setUsers(getAllUsersThatStartWith(e.target.value, userData.id));
-    setIsSearching(true);
-  };
+
+    const isTyping = setTimeout(() => {
+      const users = async (username, myId) => {
+        const users = await findUsers(username, myId);
+        setUsers(users.data);
+        setIsSearching(true);
+      };
+      users(searchTerm, userData.id);
+    }, 500);
+
+    return () => clearTimeout(isTyping);
+  }, [searchTerm]);
 
   return (
     <div className={classes.mainDiv}>
@@ -57,7 +66,7 @@ const TopNavigation = () => {
           }}
           id="search-bar"
           variant="standard"
-          onChange={handleSearch}
+          onChange={(e) => setSearchTerm(e.target.value)}
           onBlur={() => {
             setIsSearching(false);
           }}
@@ -68,9 +77,9 @@ const TopNavigation = () => {
               <ul className={classes.listStyle}>
                 {users.map((user) => (
                   <ListItemDropdown
-                    key={user.id}
+                    key={user.username}
                     id={user.id}
-                    avatarUrl={user.profilePicUrl}
+                    avatarUrl={user.profile_pic}
                     username={user.username}
                     closeSearchDropdownList={closeSearchDropdownList}
                   />

@@ -107,3 +107,20 @@ export const getMyProfileData = async (username) => {
   }
   return [];
 };
+
+export const findUsers = async (username, id) => {
+  const response = await fetch(
+    `http://localhost:5000/findUsers?username=${username}&id=${id}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-type": "application/json",
+      },
+    }
+  );
+  const data = await response.json();
+  if (data.status === "success") {
+    return data;
+  }
+  return [];
+};

@@ -2,14 +2,24 @@ import classes from "./HomePage.module.css";
 import { AuthContext } from "../context/auth-context";
 import { useContext, useEffect, useRef, useState } from "react";
 import VideoCard from "../components/VideoCard";
-import { getFollowerVideos } from "../backend/users";
+import { getFollowerShorts } from "../backend/helpers";
 
 const Homepage = () => {
   const [isObserverReady, setIsObserverReady] = useState(false);
+  const [shortsData, setShortsData] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
   const observerRef = useRef();
   const { userData, logout } = useContext(AuthContext);
-  const followers = getFollowerVideos(userData.id);
   const videoRef = useRef();
+
+  useEffect(() => {
+    const getData = async (id) => {
+      const profileUserData = await getFollowerShorts(id);
+      setShortsData(profileUserData.data);
+      setIsLoading(false);
+    };
+    getData(userData.id);
+  }, []);
 
   useEffect(() => {
     observerRef.current = new IntersectionObserver(
@@ -30,38 +40,30 @@ const Homepage = () => {
     };
   }, []);
 
+  if (isLoading) {
+    return (
+      <div className={classes.loaderSpinnerWrapper}>
+        <div className={classes.loaderSpinner}></div>
+      </div>
+    );
+  }
+
   return (
     <div className={classes.container}>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          width: "400px",
-        }}
-      ></div>
-      <div
-        style={{
-          width: "400px",
-          gap: "24px",
-          display: "flex",
-          flexDirection: "column",
-        }}
-        ref={videoRef}
-      >
-        {followers.map((user) =>
-          user.videos.map((video) => (
-            <VideoCard
-              videoDetails={video}
-              key={video.url}
-              name={user.firstName + " " + user.lastName}
-              id={user.id}
-              username={user.username}
-              avatarUrl={user.profilePicUrl}
-              observerRef={observerRef}
-              isSubscribed="true"
-            />
-          ))
-        )}
+      <div className={classes.mainLayout}></div>
+      <div className={classes.shortsLayout} ref={videoRef}>
+        {shortsData.map((short) => (
+          <VideoCard
+            videoDetails={short}
+            key={short.url}
+            id={short.id}
+            username={short.username}
+            name={short.username}
+            avatarUrl={short.profilePicUrl}
+            observerRef={observerRef}
+            isSubscribed="true"
+          />
+        ))}
       </div>
       <button onClick={logout}>Logout</button>
     </div>

@@ -33,6 +33,16 @@ const Profile = () => {
     );
   }
 
+  if (profileData.length === 0) {
+    return (
+      <div className={classes.errorDiv}>
+        <div className={classes.errorDivBorder}>
+          <p>Error! User not found!</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div>
       <div className={classes.mainDiv}>
@@ -42,20 +52,23 @@ const Profile = () => {
         />
         <div className={classes.userDiv}>
           <p className={classes.nameText}>{profileData.username}</p>
-          <div className={classes.tooltip}>
-            <CheckCircleIcon
-              sx={{
-                color: "blue",
-                position: "absolute",
-                right: "-30px",
-                marginTop: "5px",
-                cursor: "pointer",
-              }}
-            />
-            <span className={classes.tooltiptext}>Verified user!</span>
-          </div>
+          {profileData.isVerified === 1 ? (
+            <div className={classes.tooltip}>
+              <CheckCircleIcon
+                sx={{
+                  color: "blue",
+                  position: "absolute",
+                  right: "-30px",
+                  marginTop: "5px",
+                  cursor: "pointer",
+                }}
+              />
+              <span className={classes.tooltiptext}>Verified user!</span>
+            </div>
+          ) : (
+            ""
+          )}
         </div>
-
         <div style={{ marginTop: "10px" }}>
           <SubscribeButton isSubscribed={isSubscribedToUser} />
         </div>

@@ -51,6 +51,14 @@ const TopNavigation = () => {
         >
           Home
         </button>
+        <button
+          className={classes.buttonHomeStyle}
+          onClick={() => {
+            navigation("profile");
+          }}
+        >
+          My Profile
+        </button>
       </div>
       <div className={classes.searchDiv}>
         <TextField

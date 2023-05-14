@@ -48,6 +48,17 @@ const Homepage = () => {
     );
   }
 
+  if (shortsData.length === 0) {
+    return (
+      <div className={classes.noContentDiv}>
+        <div className={classes.noContentDivBorder}>
+          <p>No new content!</p>
+          <button onClick={logout}>Logout</button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className={classes.container}>
       <div className={classes.mainLayout}></div>

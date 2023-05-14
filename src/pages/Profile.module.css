@@ -33,6 +33,23 @@
   align-items: center;
   position: relative;
 }
+
+.errorDiv {
+  display: flex;
+  padding: 24px;
+  justify-content: center;
+}
+
+.errorDivBorder {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: center;
+  border: 3px solid lightblue;
+  border-radius: 25px;
+  padding: 24px;
+}
+
 .tooltip {
   position: relative;
   display: flex;

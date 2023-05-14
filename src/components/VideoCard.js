@@ -83,7 +83,14 @@ const VideoCard = ({
 
   return (
     <div className={classes.videoCard}>
-      <div style={{ display: "flex", flex: 1, position: "relative" }}>
+      <div
+        style={{
+          display: "flex",
+          flex: 1,
+          position: "relative",
+          cursor: "pointer",
+        }}
+      >
         <video
           className={classes.videoClip}
           loop

@@ -1,11 +1,13 @@
 export const loginUser = async (username, password) => {
-  const response = await fetch(`http://localhost:5000/login`, {
-    method: "POST",
-    headers: {
-      "Content-type": "application/json",
-    },
-    body: JSON.stringify({ username, password }),
-  });
+  const response = await fetch(
+    `http://localhost:5000/login?username=${username}&password=${password}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-type": "application/json",
+      },
+    }
+  );
 
   const data = await response.json();
   if (data.status === "success") {

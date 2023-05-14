@@ -1,0 +1,15 @@
+.container {
+  display: flex;
+  padding: 24px;
+  justify-content: center;
+}
+
+.contentDiv {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: center;
+  border: 3px solid lightblue;
+  border-radius: 25px;
+  padding: 24px;
+}

@@ -11,7 +11,7 @@ const LayoutLeft = () => {
   const [isLoading, setIsLoading] = useState(true);
   const navigation = useNavigate();
   const authContext = useContext(AuthContext);
-  const { id, profile_pic, username } = authContext.userData;
+  const { id, profile_pic, username, isVerified } = authContext.userData;
 
   useEffect(() => {
     const getNumbersForProfile = async (id) => {
@@ -44,10 +44,15 @@ const LayoutLeft = () => {
           <Avatar src={profile_pic} sx={{ height: 35, width: 35 }} />
           <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
             <p style={{ fontWeight: 500 }}>{username}</p>
-            <div className={classes.tooltip}>
-              <CheckCircleIcon sx={{ color: "blue", marginTop: "6px" }} />
-              <span className={classes.tooltiptext}>Verified user!</span>
-            </div>
+
+            {isVerified === 1 ? (
+              <div className={classes.tooltip}>
+                <CheckCircleIcon sx={{ color: "blue", marginTop: "6px" }} />
+                <span className={classes.tooltiptext}>Verified user!</span>
+              </div>
+            ) : (
+              ""
+            )}
           </div>
         </div>
         <div

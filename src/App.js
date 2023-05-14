@@ -21,6 +21,7 @@ import Following from "./components/Following";
 import Profile from "./pages/Profile";
 import MyProfilePage from "./pages/MyProfilePage";
 import Requests from "./components/Requests";
+import EditMyProfilePage from "./components/EditMyProfilePage";
 
 export const MainLayout = () => {
   const navigate = useNavigate();
@@ -114,6 +115,10 @@ const authRouter = createBrowserRouter([
       {
         path: "profile",
         element: <MyProfilePage />,
+      },
+      {
+        path: "profile/edit",
+        element: <EditMyProfilePage />,
       },
       {
         path: "profile/:username",

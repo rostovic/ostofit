@@ -58,6 +58,6 @@
 .buttonHomeStyle:hover {
   cursor: pointer;
   background-color: lightblue;
-  height: 50px;
-  width: 100px;
+  height: 40px;
+  width: 80px;
 }

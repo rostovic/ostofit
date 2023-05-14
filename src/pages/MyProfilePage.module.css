@@ -34,6 +34,10 @@
   position: relative;
 }
 
+.avatarDiv {
+  display: flex;
+}
+
 .tooltip {
   position: relative;
   display: flex;

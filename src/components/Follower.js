@@ -4,6 +4,7 @@ import classes from "./Follower.module.css";
 import { useState } from "react";
 import ClearIcon from "@mui/icons-material/Clear";
 import { useNavigate } from "react-router-dom";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 
 const Follower = ({ name, id, action, avatarUrl, username }) => {
   const navigation = useNavigate();

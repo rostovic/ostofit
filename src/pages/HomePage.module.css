@@ -36,6 +36,22 @@
   height: 500px;
 }
 
+.noContentDiv {
+  display: flex;
+  padding: 24px;
+  justify-content: center;
+}
+
+.noContentDivBorder {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: center;
+  border: 3px solid lightblue;
+  border-radius: 25px;
+  padding: 24px;
+}
+
 .loaderSpinnerWrapper {
   display: flex;
   justify-content: center;

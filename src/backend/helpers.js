@@ -140,3 +140,72 @@ export const getFollowerShorts = async (id) => {
   }
   return [];
 };
+
+export const updateUserData = async (username, profilePic, id) => {
+  const response = await fetch(`http://localhost:5000/updateUserData`, {
+    method: "POST",
+    headers: {
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify({ username, profilePic, id }),
+  });
+
+  const data = await response.json();
+  if (data.status === "success") {
+    return "success";
+  }
+  return "error!";
+};
+
+export const updateUserDataWithoutUsername = async (profilePic, id) => {
+  const response = await fetch(
+    `http://localhost:5000/updateUserDataWithoutUsername`,
+    {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify({ profilePic, id }),
+    }
+  );
+
+  const data = await response.json();
+  if (data.status === "success") {
+    return "success";
+  }
+  return "error!";
+};
+
+export const checkIfUsernameIsNotTaken = async (username) => {
+  const response = await fetch(
+    `http://localhost:5000/checkIfUsernameIsNotTaken?username=${username}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-type": "application/json",
+      },
+    }
+  );
+
+  const data = await response.json();
+  if (data.status === "success") {
+    return "success";
+  }
+  return "error";
+};
+
+// example post
+// export const getAllFollowerRequests = async (id) => {
+//   const response = await fetch(`http://localhost:5000/requests`, {
+//     method: "POST",
+//     headers: {
+//       "Content-type": "application/json",
+//     },
+//     body: JSON.stringify({ id }),
+//   });
+//   const data = await response.json();
+//   if (data.status === "success") {
+//     console.log("kek");
+//   }
+//   return;
+// };

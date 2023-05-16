@@ -44,7 +44,7 @@ const TopNavigation = () => {
     <div className={classes.mainDiv}>
       <div className={classes.buttonDiv}>
         <button
-          className={classes.buttonHomeStyle}
+          className={classes.buttonStyle}
           onClick={() => {
             navigation("home");
           }}
@@ -52,13 +52,15 @@ const TopNavigation = () => {
           Home
         </button>
         <button
-          className={classes.buttonHomeStyle}
+          className={classes.buttonStyle}
           onClick={() => {
             navigation("profile");
           }}
         >
           My Profile
         </button>
+        <div className={classes.test}></div>
+        <div className={classes.test}></div>
       </div>
       <div className={classes.searchDiv}>
         <TextField

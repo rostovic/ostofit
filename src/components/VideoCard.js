@@ -7,6 +7,7 @@ import VolumeUpIcon from "@mui/icons-material/VolumeUp";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import { useNavigate } from "react-router-dom";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 
 const VideoCard = ({
   videoDetails,
@@ -15,6 +16,7 @@ const VideoCard = ({
   observerRef,
   avatarUrl,
   username,
+  isVerified,
   isCompact = false,
   isSubscribed = false,
 }) => {
@@ -156,8 +158,22 @@ const VideoCard = ({
                     navigation(`/profile/${username}`);
                   }}
                 >
-                  {name}
+                  {username}
                 </p>
+                {isVerified === 1 ? (
+                  <CheckCircleIcon
+                    sx={{
+                      color: "blue",
+                      height: "15px",
+                      width: "15px",
+                      marginTop: "2px",
+                      backgroundColor: "transparent",
+                      borderRadius: "25px",
+                    }}
+                  />
+                ) : (
+                  ""
+                )}
               </div>
             )}
           </div>

@@ -1,7 +1,6 @@
 import { Form, useNavigate } from "react-router-dom";
 import classes from "./Login.module.css";
 import { useRef, useState } from "react";
-import { login } from "../backend/users";
 import { useContext } from "react";
 import { AuthContext } from "../context/auth-context";
 import { loginUser } from "../backend/helpers";

@@ -6,10 +6,29 @@
 
 .contentDiv {
   display: flex;
+  width: 700px;
   flex-direction: column;
-  gap: 10px;
+  gap: 20px;
   justify-content: center;
   border: 3px solid lightblue;
   border-radius: 25px;
   padding: 24px;
+}
+
+.pictureDiv {
+  display: flex;
+  justify-content: center;
+}
+
+.buttonDiv {
+  display: flex;
+  justify-content: center;
+}
+
+.buttonSave {
+  border: 0;
+  color: white;
+  font-size: large;
+  background-color: lightblue;
+  padding: 10px;
 }

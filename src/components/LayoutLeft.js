@@ -47,7 +47,14 @@ const LayoutLeft = () => {
 
             {isVerified === 1 ? (
               <div className={classes.tooltip}>
-                <CheckCircleIcon sx={{ color: "blue", marginTop: "6px" }} />
+                <CheckCircleIcon
+                  sx={{
+                    color: "blue",
+                    marginTop: "6px",
+                    height: "20px",
+                    width: "20px",
+                  }}
+                />
                 <span className={classes.tooltiptext}>Verified user!</span>
               </div>
             ) : (

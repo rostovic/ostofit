@@ -50,14 +50,20 @@
   z-index: 1;
 }
 
-.buttonHomeStyle {
+.buttonStyle {
   border: 0;
   background-color: transparent;
+  flex: 1;
 }
 
-.buttonHomeStyle:hover {
+.buttonStyle:hover {
   cursor: pointer;
-  background-color: lightblue;
+  border-radius: 25px;
+  border: 2px solid lightblue;
   height: 40px;
   width: 80px;
+}
+
+.test {
+  flex: 1;
 }

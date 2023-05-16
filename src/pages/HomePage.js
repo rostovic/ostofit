@@ -71,6 +71,7 @@ const Homepage = () => {
             username={short.username}
             name={short.username}
             avatarUrl={short.profilePicUrl}
+            isVerified={short.isVerified}
             observerRef={observerRef}
             isSubscribed="true"
           />

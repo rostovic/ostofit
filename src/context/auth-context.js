@@ -23,16 +23,16 @@ const AuthContextProvider = ({ children }) => {
     try {
       const userData = localStorage.getItem("userData");
       if (!userData) {
-        setIsLoadingUserData(false)
+        setIsLoadingUserData(false);
         return;
       }
-      
+
       const userDataParsed = JSON.parse(userData);
       setUserData(userDataParsed);
       setIsLoggedIn(true);
-      setIsLoadingUserData(false)
+      setIsLoadingUserData(false);
     } catch (error) {
-      setIsLoadingUserData(false)
+      setIsLoadingUserData(false);
       logout();
     }
   }, []);
@@ -53,6 +53,12 @@ const AuthContextProvider = ({ children }) => {
     }
   };
 
+  const refreshData = (userData) => {
+    localStorage.setItem("userData", JSON.stringify(userData));
+    setIsLoggedIn(true);
+    setUserData(userData);
+  };
+
   const value = {
     isLoggedIn,
     userData,
@@ -60,7 +66,8 @@ const AuthContextProvider = ({ children }) => {
     setUserData,
     logout,
     login,
-    isLoadingUserData
+    refreshData,
+    isLoadingUserData,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

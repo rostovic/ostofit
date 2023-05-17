@@ -6,12 +6,7 @@ const ListItemDropdown = ({ avatarUrl, username, closeSearchDropdownList }) => {
   const navigation = useNavigate();
   return (
     <li
-      style={{
-        display: "flex",
-        gap: 10,
-        alignItems: "center",
-        paddingLeft: 10,
-      }}
+      className={classes.listItem}
       onMouseDown={() => {
         navigation(`/profile/${username}`);
         closeSearchDropdownList();

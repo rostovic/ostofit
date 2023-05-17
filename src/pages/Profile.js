@@ -21,7 +21,7 @@ const Profile = () => {
       setIsLoading(false);
     };
     getProfileUserData(param.username);
-  }, []);
+  }, [param.username]);
 
   const isSubscribedToUser = profileData.isSubscribed === 1 ? true : false;
 

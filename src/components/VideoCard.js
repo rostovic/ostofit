@@ -8,6 +8,8 @@ import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import { useNavigate } from "react-router-dom";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import CommentIcon from "@mui/icons-material/Comment";
+import StarBorderIcon from "@mui/icons-material/StarBorder";
 
 const VideoCard = ({
   videoDetails,
@@ -85,14 +87,7 @@ const VideoCard = ({
 
   return (
     <div className={classes.videoCard}>
-      <div
-        style={{
-          display: "flex",
-          flex: 1,
-          position: "relative",
-          cursor: "pointer",
-        }}
-      >
+      <div className={classes.videoDiv}>
         <video
           className={classes.videoClip}
           loop
@@ -103,29 +98,75 @@ const VideoCard = ({
           <source src={videoDetails.url} type="video/mp4" />
         </video>
 
+        <div className={classes.iconsDiv}>
+          <div className={classes.singleIconDiv}>
+            <StarBorderIcon
+              sx={{
+                "&:hover": {
+                  color: "red",
+                },
+              }}
+            />
+            <span>589</span>
+          </div>
+          <div className={classes.singleIconDiv}>
+            <CommentIcon
+              sx={{
+                "&:hover": {
+                  color: "red",
+                },
+              }}
+            />
+            <span>589</span>
+          </div>
+          {muted ? (
+            <VolumeOffIcon
+              sx={{
+                cursor: "pointer",
+                alignSelf: "flex-end",
+
+                "&:hover": {
+                  color: "red",
+                },
+              }}
+              onClick={handleMuteUnmute}
+            />
+          ) : (
+            <VolumeUpIcon
+              sx={{
+                cursor: "pointer",
+                alignSelf: "flex-end",
+                "&:hover": {
+                  color: "red",
+                },
+              }}
+              onClick={handleMuteUnmute}
+            />
+          )}
+
+          <RestartAltIcon
+            sx={{
+              cursor: "pointer",
+              "&:hover": {
+                color: "red",
+              },
+            }}
+            onClick={handleRestart}
+          />
+        </div>
+
         <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            position: "absolute",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "100%",
-            pointerEvents: "none",
-          }}
           className={
             playVideo
-              ? `${classes.playVideoClass}`
-              : `${classes.pauseVideoClass}`
+              ? `${classes.playVideoClass} ${classes.videoPlayIconDiv}`
+              : `${classes.pauseVideoClass} ${classes.videoPlayIconDiv}`
           }
         >
           <PlayArrowIcon
             sx={{
               color: "white",
-              height: isCompact ? "45px" : "100px",
-              width: isCompact ? "45px" : "100px",
+              height: isCompact ? "45px" : "90px",
+              width: isCompact ? "45px" : "90px",
               backgroundColor: "transparent",
               backdropFilter: "blur(10px)",
               borderRadius: "50%",
@@ -135,15 +176,13 @@ const VideoCard = ({
         </div>
       </div>
       <div className={classes.videoFooter}>
+        <span
+          className={isCompact ? classes.compactVideoTitle : classes.videoTitle}
+        >
+          {videoDetails.title}
+        </span>
         <div className={classes.footerContainer}>
           <div className={classes.footerLeft}>
-            <p
-              className={
-                isCompact ? classes.compactVideoTitle : classes.videoTitle
-              }
-            >
-              {videoDetails.title}
-            </p>
             {isCompact ? null : (
               <div className={classes.footerUser}>
                 <Avatar
@@ -178,41 +217,6 @@ const VideoCard = ({
             )}
           </div>
           <div className={classes.footerRight}>
-            <div style={{ display: "flex", justifyContent: "right" }}>
-              <RestartAltIcon
-                sx={{
-                  cursor: "pointer",
-                  "&:hover": {
-                    color: "red",
-                  },
-                }}
-                onClick={handleRestart}
-              />
-              {muted ? (
-                <VolumeOffIcon
-                  sx={{
-                    cursor: "pointer",
-                    alignSelf: "flex-end",
-
-                    "&:hover": {
-                      color: "red",
-                    },
-                  }}
-                  onClick={handleMuteUnmute}
-                />
-              ) : (
-                <VolumeUpIcon
-                  sx={{
-                    cursor: "pointer",
-                    alignSelf: "flex-end",
-                    "&:hover": {
-                      color: "red",
-                    },
-                  }}
-                  onClick={handleMuteUnmute}
-                />
-              )}{" "}
-            </div>
             {isCompact ? null : <SubscribeButton isSubscribed={isSubscribed} />}
           </div>
         </div>

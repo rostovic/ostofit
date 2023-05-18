@@ -75,7 +75,7 @@ const MyProfilePage = () => {
       <div className={classes.contentDiv}>
         {videoData.map((video) => (
           <div key={video.url} className={classes.videoCardDiv}>
-            <VideoCard videoDetails={video} name={"kek"} isCompact={true} />
+            <VideoCard videoDetails={video} isCompact={true} />
           </div>
         ))}
       </div>

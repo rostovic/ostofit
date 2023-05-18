@@ -46,11 +46,13 @@ const EditMyProfilePage = () => {
     setIsSaving(true);
     const usernameNewValue = usernameRef.current.value;
     const profilePicNewValue = profilePicRef.current.value;
-    if (usernameNewValue.length === 0) {
+    if (usernameNewValue.length === 0 || profilePicNewValue.length === 0) {
+      setIsSaving(false);
       return;
     }
 
     if (username === usernameNewValue && profile_pic === profilePicNewValue) {
+      setIsSaving(false);
       return;
     }
     if (username === usernameNewValue) {
@@ -151,7 +153,13 @@ const EditMyProfilePage = () => {
             onClick={saveNewData}
             disabled={usernameValidInfo === "Username is taken!" ? true : false}
           >
-            {isSaving ? "Saving..." : "Save"}
+            {isSaving ? (
+              <div className={classes.loaderSpinnerWrapper}>
+                <div className={classes.loaderSpinner}></div>
+              </div>
+            ) : (
+              "Save"
+            )}
           </button>
         </div>
       </div>

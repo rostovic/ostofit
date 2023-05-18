@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CommentIcon from "@mui/icons-material/Comment";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
+import StarIcon from "@mui/icons-material/Star";
 
 const VideoCard = ({
   videoDetails,
@@ -26,6 +27,11 @@ const VideoCard = ({
   const videoRef = useRef();
   const [playVideo, setPlayVideo] = useState(false);
   const [muted, setMuted] = useState(true);
+  const [onHoverStar, setOnHoverStar] = useState(false);
+
+  const changeStarIcon = () => {
+    setOnHoverStar((current) => !current);
+  };
 
   const handlePlayVideo = () => {
     if (!videoRef.current.paused) {
@@ -100,59 +106,108 @@ const VideoCard = ({
 
         <div className={classes.iconsDiv}>
           <div className={classes.singleIconDiv}>
-            <StarBorderIcon
-              sx={{
-                "&:hover": {
-                  color: "red",
-                },
-              }}
-            />
-            <span>589</span>
+            {videoDetails.liked === 1 ? (
+              <StarIcon
+                sx={{
+                  color: "gold",
+                  height: "30px",
+                  width: "30px",
+                  cursor: "pointer",
+                  "&:hover": {
+                    color: "white",
+                  },
+                }}
+                onMouseEnter={() => changeStarIcon()}
+                onMouseLeave={() => changeStarIcon()}
+              />
+            ) : (
+              <StarBorderIcon
+                sx={{
+                  color: "white",
+                  height: "30px",
+                  width: "30px",
+                  cursor: "pointer",
+                  "&:hover": {
+                    color: "gold",
+                  },
+                }}
+                onMouseEnter={() => changeStarIcon()}
+                onMouseLeave={() => changeStarIcon()}
+              />
+            )}
+
+            <span className={classes.boldText}>
+              {videoDetails.videoLikesAmount}
+            </span>
           </div>
           <div className={classes.singleIconDiv}>
             <CommentIcon
               sx={{
+                color: "white",
+                height: "25px",
+                width: "25px",
+                cursor: "pointer",
                 "&:hover": {
-                  color: "red",
+                  color: "darkgrey",
                 },
               }}
             />
-            <span>589</span>
+            <span className={classes.boldText}>
+              {videoDetails.videoCommentsAmount}
+            </span>
           </div>
-          {muted ? (
-            <VolumeOffIcon
+          <div className={classes.singleIconDiv}>
+            {muted ? (
+              <VolumeOffIcon
+                sx={{
+                  color: "white",
+                  height: "25px",
+                  width: "25px",
+                  cursor: "pointer",
+                  "&:hover": {
+                    color: "darkgrey",
+                  },
+                }}
+                onClick={handleMuteUnmute}
+              />
+            ) : (
+              <VolumeUpIcon
+                sx={{
+                  color: "white",
+                  height: "25px",
+                  width: "25px",
+                  cursor: "pointer",
+                  "&:hover": {
+                    color: "darkgrey",
+                  },
+                }}
+                onClick={handleMuteUnmute}
+              />
+            )}
+          </div>
+          <div className={classes.singleIconDiv}>
+            <RestartAltIcon
               sx={{
+                color: "white",
+                height: "25px",
+                width: "25px",
                 cursor: "pointer",
-                alignSelf: "flex-end",
-
                 "&:hover": {
-                  color: "red",
+                  color: "darkgrey",
+                  animation: "spin 2s linear infinite",
+                  "@keyframes spin": {
+                    "0%": {
+                      transform: "rotate(360deg)",
+                    },
+                    "100%": {
+                      transform: "rotate(0deg)",
+                    },
+                  },
                 },
               }}
-              onClick={handleMuteUnmute}
+              onClick={handleRestart}
             />
-          ) : (
-            <VolumeUpIcon
-              sx={{
-                cursor: "pointer",
-                alignSelf: "flex-end",
-                "&:hover": {
-                  color: "red",
-                },
-              }}
-              onClick={handleMuteUnmute}
-            />
-          )}
-
-          <RestartAltIcon
-            sx={{
-              cursor: "pointer",
-              "&:hover": {
-                color: "red",
-              },
-            }}
-            onClick={handleRestart}
-          />
+          </div>
         </div>
 
         <div

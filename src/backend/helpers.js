@@ -194,6 +194,24 @@ export const checkIfUsernameIsNotTaken = async (username) => {
   return "error";
 };
 
+export const getVideoData = async (videoID, myID) => {
+  const response = await fetch(
+    `http://localhost:5000/getVideoData?videoID=${videoID}&myID=${myID}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-type": "application/json",
+      },
+    }
+  );
+
+  const data = await response.json();
+  if (data.status === "success") {
+    return data.data[0];
+  }
+  return "error";
+};
+
 // example post
 // export const getAllFollowerRequests = async (id) => {
 //   const response = await fetch(`http://localhost:5000/requests`, {

@@ -233,6 +233,9 @@ const VideoCard = ({
       <div className={classes.videoFooter}>
         <span
           className={isCompact ? classes.compactVideoTitle : classes.videoTitle}
+          onClick={() => {
+            navigation(`/video/${videoDetails.id}`);
+          }}
         >
           {videoDetails.title}
         </span>

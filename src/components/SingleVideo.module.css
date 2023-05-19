@@ -1,0 +1,82 @@
+.mainDiv {
+  display: flex;
+  gap: 10px;
+}
+
+.content {
+  margin-top: 24px;
+  width: 500px;
+}
+
+.commentsDiv {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  margin-top: 24px;
+  border: 2px solid lightblue;
+}
+
+.singleComment {
+  display: flex;
+  margin: 10px;
+  width: 95%;
+  height: 70px;
+  border: 1px solid black;
+}
+
+.divAvatar {
+  height: 100%;
+  width: 10%;
+}
+
+.divUserComment {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 90%;
+  background-color: pink;
+}
+
+.usernameDate {
+  display: flex;
+  gap: 15px;
+}
+
+.textForComment {
+  font-size: 12px;
+}
+
+.loaderSpinnerWrapper {
+  display: flex;
+  justify-content: center;
+  flex: 1;
+}
+
+.loaderSpinner {
+  border: 8px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 8px solid #3498db;
+  width: 250px;
+  height: 250px;
+  margin-top: 75px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+}
+/* 
+  @-webkit-keyframes spin {
+    0% {
+      -webkit-transform: rotate(0deg);
+    }
+    100% {
+      -webkit-transform: rotate(360deg);
+    }
+  } */
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

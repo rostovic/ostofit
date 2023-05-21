@@ -23,8 +23,6 @@ const Profile = () => {
     getProfileUserData(param.username);
   }, [param.username]);
 
-  const isSubscribedToUser = profileData.isSubscribed === 1 ? true : false;
-
   if (isLoading) {
     return (
       <div className={classes.loaderSpinnerWrapper}>
@@ -32,6 +30,8 @@ const Profile = () => {
       </div>
     );
   }
+
+  const isSubscribedToUser = profileData.isSubscribed === 1 ? true : false;
 
   if (profileData.length === 0) {
     return (

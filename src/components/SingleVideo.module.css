@@ -11,60 +11,20 @@
   width: 400px;
 }
 
+.errorDiv {
+  display: flex;
+  justify-content: center;
+  margin-top: 10%;
+}
+
 .commentsDiv {
   display: flex;
   flex-direction: column;
   flex: 1;
 }
 
-.singleComment {
-  display: flex;
-  margin: 10px;
-  width: 98%;
-  height: 125px;
-  gap: 6px;
-}
-
-.divAvatar {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 50%;
-  width: 5%;
-}
-
-.divUserComment {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  height: 100%;
-  width: 100%;
-}
-
-.usernameDate {
-  display: flex;
-  gap: 15px;
-}
-
-.textUsername {
-  font-weight: bold;
-  font-size: 12px;
-}
-
-.textDate {
-  font-size: 12px;
-}
-
-.textForComment {
-  display: inline-block;
-  flex: 1;
-  font-size: 14px;
-}
-
-.textIcons {
-  display: flex;
-  font-size: 14px;
-  gap: 10px;
+.noCommentsYet {
+  margin-top: 12px;
 }
 
 .writeComment {

@@ -2,32 +2,51 @@ import { useParams } from "react-router-dom";
 import classes from "./SingleVideo.module.css";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/auth-context";
-import { getVideoData } from "../backend/helpers";
+import { getCommentsData, getVideoData } from "../backend/helpers";
 import VideoCard from "./VideoCard";
 import { Avatar, TextField } from "@mui/material";
-import ThumbUpIcon from "@mui/icons-material/ThumbUp";
-import ThumbDownAltIcon from "@mui/icons-material/ThumbDownAlt";
+import Comments from "./Comments";
 
 const SingleVideo = () => {
   const param = useParams();
   const { userData } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(true);
   const [videoData, setVideoData] = useState(null);
+  const [commentsData, setCommentsData] = useState(null);
   const [numCharLeft, setNumCharLeft] = useState(0);
 
   useEffect(() => {
-    const getVideo = async (videoID, id) => {
-      const videoData = await getVideoData(videoID, id);
+    const getVideo = async (videoID, myID) => {
+      const videoData = await getVideoData(videoID, myID);
       setVideoData(videoData);
+    };
+
+    const getComments = async (videoID, myID) => {
+      const comments = await getCommentsData(videoID, myID);
+      setCommentsData(comments);
+    };
+
+    const getData = async () => {
+      await getVideo(param.videoID, userData.id);
+      await getComments(param.videoID, userData.id);
       setIsLoading(false);
     };
-    getVideo(param.videoID, userData.id);
+
+    getData();
   }, [param.videoID]);
 
   if (isLoading) {
     return (
       <div className={classes.loaderSpinnerWrapper}>
         <div className={classes.loaderSpinner}></div>
+      </div>
+    );
+  }
+
+  if (videoData.length === 0) {
+    return (
+      <div className={classes.errorDiv}>
+        <span>Error! Video could not be found!</span>
       </div>
     );
   }
@@ -41,6 +60,7 @@ const SingleVideo = () => {
           name={videoData.username}
           avatarUrl={videoData.profilePicUrl}
           isVerified={videoData.isVerified}
+          isSubscribed={videoData.isSubscribed}
         />
       </div>
       <div className={classes.writeComment}>
@@ -89,47 +109,15 @@ const SingleVideo = () => {
         </div>
       </div>
       <div className={classes.commentsDiv}>
-        <div className={classes.singleComment}>
-          <div className={classes.divAvatar}>
-            <Avatar />
+        {commentsData === "error" ? (
+          <div className={classes.noCommentsYet}>
+            <span>Be first to comment!</span>
           </div>
-          <div className={classes.divUserComment}>
-            <div className={classes.usernameDate}>
-              <span className={classes.textUsername}>@snipcik</span>
-              <span className={classes.textDate}>3 days ago</span>
-            </div>
-
-            <span className={classes.textForComment}>
-              I think this music video is very good. I listen to it everyday. It
-              is very exciting and refreshing. I hope you feel the same :D!
-              Ithink this music video is very good. I listen to it everyday. It
-              is very exciting and refreshing. I hope you feel the same :D! I
-              think this music video is very good. I listen to it everyday. It
-              is very exciting and refreshing. I hope you feel the same :D! I
-              think this music video is very good. I listen to it everyday. It
-              is very exciting and refreshing. I hope you it.
-            </span>
-            <span className={classes.textIcons}>
-              <span>125k</span>
-              <ThumbUpIcon
-                sx={{
-                  "&:hover": {
-                    cursor: "pointer",
-                    color: "green",
-                  },
-                }}
-              />
-              <ThumbDownAltIcon
-                sx={{
-                  "&:hover": {
-                    cursor: "pointer",
-                    color: "red",
-                  },
-                }}
-              />
-            </span>
-          </div>
-        </div>
+        ) : (
+          commentsData.map((comment) => {
+            return <Comments comment={comment} key={comment.username} />;
+          })
+        )}
       </div>
     </div>
   );

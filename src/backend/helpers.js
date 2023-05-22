@@ -212,6 +212,23 @@ export const getVideoData = async (videoID, myID) => {
   return "error";
 };
 
+export const getCommentsData = async (videoID, myID) => {
+  const response = await fetch(
+    `http://localhost:5000/getCommentsData?videoID=${videoID}&myID=${myID}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-type": "application/json",
+      },
+    }
+  );
+
+  const data = await response.json();
+  if (data.status === "success") {
+    return data.data;
+  }
+  return "error";
+};
 // example post
 // export const getAllFollowerRequests = async (id) => {
 //   const response = await fetch(`http://localhost:5000/requests`, {

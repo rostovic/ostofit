@@ -234,7 +234,7 @@ const VideoCard = ({
         <span
           className={isCompact ? classes.compactVideoTitle : classes.videoTitle}
           onClick={() => {
-            navigation(`/video/${videoDetails.id}`);
+            navigation(`/video/${videoDetails.videoID}`);
           }}
         >
           {videoDetails.title}

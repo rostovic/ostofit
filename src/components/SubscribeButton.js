@@ -29,7 +29,7 @@ const SubscribeButton = ({ isSubscribed = false }) => {
           {isHovered ? (
             <ClearIcon sx={{ height: 14, width: 14 }} />
           ) : (
-            <CheckIcon sx={{ height: 14, width: 14 }} />
+            <CheckIcon sx={{ height: 14, width: 14, marginLeft: "4px" }} />
           )}
         </div>
       ) : (

@@ -1,8 +1,8 @@
 import { useParams } from "react-router-dom";
 import classes from "./SingleVideo.module.css";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../context/auth-context";
-import { getCommentsData, getVideoData } from "../backend/helpers";
+import { getCommentsData, getVideoData, postComment } from "../backend/helpers";
 import VideoCard from "./VideoCard";
 import { Avatar, TextField } from "@mui/material";
 import Comments from "./Comments";
@@ -14,6 +14,8 @@ const SingleVideo = () => {
   const [videoData, setVideoData] = useState(null);
   const [commentsData, setCommentsData] = useState(null);
   const [numCharLeft, setNumCharLeft] = useState(0);
+  const commentTextRef = useRef("");
+  const videoID = param.videoID;
 
   useEffect(() => {
     const getVideo = async (videoID, myID) => {
@@ -33,7 +35,17 @@ const SingleVideo = () => {
     };
 
     getData();
-  }, [param.videoID]);
+  }, [videoID]);
+
+  const handlePostComment = async (e) => {
+    const comment = commentTextRef.current.value;
+    postComment(comment, videoID, userData.id);
+    const getComments = async (videoID, myID) => {
+      const comments = await getCommentsData(videoID, myID);
+      setCommentsData(comments);
+    };
+    getComments(param.videoID, userData.id);
+  };
 
   if (isLoading) {
     return (
@@ -81,6 +93,7 @@ const SingleVideo = () => {
               sx={{ width: "100%", height: "100%", borderRadius: "25px" }}
               inputProps={{ maxLength: 500 }}
               onChange={(e) => setNumCharLeft(e.target.value.length)}
+              inputRef={commentTextRef}
             />
           </div>
         </div>
@@ -101,7 +114,10 @@ const SingleVideo = () => {
           >
             <span>{500 - numCharLeft} characters left</span>
             <div className={classes.submitComment}>
-              <button className={classes.buttonSubmitComment}>
+              <button
+                className={classes.buttonSubmitComment}
+                onClick={handlePostComment}
+              >
                 Post comment
               </button>
             </div>
@@ -115,7 +131,14 @@ const SingleVideo = () => {
           </div>
         ) : (
           commentsData.map((comment) => {
-            return <Comments comment={comment} key={comment.username} />;
+            return (
+              <Comments
+                videoID={videoID}
+                setCommentsData={setCommentsData}
+                comment={comment}
+                key={comment.username + " " + comment.comment}
+              />
+            );
           })
         )}
       </div>

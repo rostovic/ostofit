@@ -229,6 +229,35 @@ export const getCommentsData = async (videoID, myID) => {
   }
   return "error";
 };
+
+export const postComment = async (comment, videoID, myID) => {
+  const response = await fetch(`http://localhost:5000/postComment`, {
+    method: "POST",
+    headers: {
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify({ comment, videoID, myID }),
+  });
+  const data = await response.json();
+  if (data.status === "success") {
+  }
+  return;
+};
+
+export const likeComment = async (identifier, status, commentID, myID) => {
+  const response = await fetch(`http://localhost:5000/likeDislikeComment`, {
+    method: "POST",
+    headers: {
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify({ identifier, status, commentID, myID }),
+  });
+  const data = await response.json();
+  if (data.status === "success") {
+  }
+  return;
+};
+
 // example post
 // export const getAllFollowerRequests = async (id) => {
 //   const response = await fetch(`http://localhost:5000/requests`, {

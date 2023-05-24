@@ -67,7 +67,7 @@ const Homepage = () => {
           <VideoCard
             videoDetails={short}
             key={short.url}
-            id={short.id}
+            id={short.videoID}
             username={short.username}
             name={short.username}
             avatarUrl={short.profilePicUrl}

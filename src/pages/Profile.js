@@ -26,7 +26,7 @@ const Profile = () => {
   if (isLoading) {
     return (
       <div className={classes.loaderSpinnerWrapper}>
-        <div className={classes.loaderSpinner}></div>
+        <div className={classes.loaderSpinner} />
       </div>
     );
   }

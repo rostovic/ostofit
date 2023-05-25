@@ -1,7 +1,7 @@
 import { Avatar } from "@mui/material";
 import classes from "./VideoCard.module.css";
 import SubscribeButton from "./SubscribeButton";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 import VolumeOffIcon from "@mui/icons-material/VolumeOff";
 import VolumeUpIcon from "@mui/icons-material/VolumeUp";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
@@ -11,6 +11,8 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CommentIcon from "@mui/icons-material/Comment";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 import StarIcon from "@mui/icons-material/Star";
+import { subUnSubToUser } from "../backend/helpers";
+import { AuthContext } from "../context/auth-context";
 
 const VideoCard = ({
   videoDetails,
@@ -23,14 +25,18 @@ const VideoCard = ({
   isCompact = false,
   isSubscribed = false,
 }) => {
+  const { userData } = useContext(AuthContext);
   const navigation = useNavigate();
   const videoRef = useRef();
   const [playVideo, setPlayVideo] = useState(false);
   const [muted, setMuted] = useState(true);
   const [onHoverStar, setOnHoverStar] = useState(false);
 
-  const changeStarIcon = () => {
-    setOnHoverStar((current) => !current);
+  const handleSubUnSub = (isSubscribed) => {
+    const action = async (isSubscribed, myID, userID) => {
+      const subUnSub = await subUnSubToUser(isSubscribed, myID, userID);
+    };
+    action(isSubscribed, userData.id, videoDetails.userID);
   };
 
   const handlePlayVideo = () => {
@@ -117,8 +123,6 @@ const VideoCard = ({
                     color: "white",
                   },
                 }}
-                onMouseEnter={() => changeStarIcon()}
-                onMouseLeave={() => changeStarIcon()}
               />
             ) : (
               <StarBorderIcon
@@ -131,8 +135,6 @@ const VideoCard = ({
                     color: "gold",
                   },
                 }}
-                onMouseEnter={() => changeStarIcon()}
-                onMouseLeave={() => changeStarIcon()}
               />
             )}
 
@@ -150,6 +152,9 @@ const VideoCard = ({
                 "&:hover": {
                   color: "darkgrey",
                 },
+              }}
+              onClick={() => {
+                navigation(`/video/${videoDetails.videoID}`);
               }}
             />
             <span className={classes.boldText}>
@@ -275,7 +280,12 @@ const VideoCard = ({
             )}
           </div>
           <div className={classes.footerRight}>
-            {isCompact ? null : <SubscribeButton isSubscribed={isSubscribed} />}
+            {isCompact ? null : (
+              <SubscribeButton
+                isSubscribed={isSubscribed}
+                onClick={() => handleSubUnSub(isSubscribed)}
+              />
+            )}
           </div>
         </div>
       </div>

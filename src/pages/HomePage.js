@@ -63,19 +63,24 @@ const Homepage = () => {
     <div className={classes.container}>
       <div className={classes.mainLayout}></div>
       <div className={classes.shortsLayout} ref={videoRef}>
-        {shortsData.map((short) => (
-          <VideoCard
-            videoDetails={short}
-            key={short.url}
-            id={short.videoID}
-            username={short.username}
-            name={short.username}
-            avatarUrl={short.profilePicUrl}
-            isVerified={short.isVerified}
-            observerRef={observerRef}
-            isSubscribed="true"
-          />
-        ))}
+        {shortsData.map(
+          (short) => (
+            console.log(short),
+            (
+              <VideoCard
+                videoDetails={short}
+                key={short.url}
+                id={short.videoID}
+                username={short.username}
+                name={short.username}
+                avatarUrl={short.profilePicUrl}
+                isVerified={short.isVerified}
+                observerRef={observerRef}
+                isSubscribed="true"
+              />
+            )
+          )
+        )}
       </div>
       <button onClick={logout}>Logout</button>
     </div>

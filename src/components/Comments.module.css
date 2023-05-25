@@ -32,6 +32,10 @@
   font-size: 12px;
 }
 
+.textUsername:hover {
+  cursor: pointer;
+}
+
 .textDate {
   font-size: 12px;
 }

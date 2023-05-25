@@ -258,6 +258,25 @@ export const likeComment = async (identifier, status, commentID, myID) => {
   return;
 };
 
+export const subUnSubToUser = async (
+  isSubscribed,
+  myID,
+  userUsername,
+  requestSent
+) => {
+  const response = await fetch(`http://localhost:5000/subUnSubToUser`, {
+    method: "POST",
+    headers: {
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify({ isSubscribed, myID, userUsername, requestSent }),
+  });
+  const data = await response.json();
+  if (data.status === "success") {
+  }
+  return;
+};
+
 // example post
 // export const getAllFollowerRequests = async (id) => {
 //   const response = await fetch(`http://localhost:5000/requests`, {

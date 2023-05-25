@@ -6,7 +6,7 @@ import SubscribeButton from "../components/SubscribeButton";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/auth-context";
-import { getProfileData } from "../backend/helpers";
+import { getProfileData, subUnSubToUser } from "../backend/helpers";
 
 const Profile = () => {
   const { userData } = useContext(AuthContext);
@@ -23,6 +23,27 @@ const Profile = () => {
     getProfileUserData(param.username);
   }, [param.username]);
 
+  const handleSubUnSub = () => {
+    const action = async (isSubscribed, myID, username, requestSent) => {
+      await subUnSubToUser(isSubscribed, myID, username, requestSent);
+    };
+
+    const getProfileUserData = async (username) => {
+      const profileUserData = await getProfileData(username, userData.id);
+      setProfileData(profileUserData.userData);
+    };
+    const update = async () => {
+      action(
+        profileData.isSubscribed,
+        userData.id,
+        profileData.username,
+        profileData.requestSent
+      );
+      getProfileUserData(param.username);
+    };
+    update();
+  };
+
   if (isLoading) {
     return (
       <div className={classes.loaderSpinnerWrapper}>
@@ -30,8 +51,6 @@ const Profile = () => {
       </div>
     );
   }
-
-  const isSubscribedToUser = profileData.isSubscribed === 1 ? true : false;
 
   if (profileData.length === 0) {
     return (
@@ -70,7 +89,11 @@ const Profile = () => {
           )}
         </div>
         <div style={{ marginTop: "10px" }}>
-          <SubscribeButton isSubscribed={isSubscribedToUser} />
+          <SubscribeButton
+            isSubscribed={profileData.isSubscribed}
+            requestSent={profileData.requestSent}
+            handleSubUnSub={handleSubUnSub}
+          />
         </div>
       </div>
       <div className={classes.contentDiv}>

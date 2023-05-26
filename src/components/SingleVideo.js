@@ -2,7 +2,12 @@ import { useParams } from "react-router-dom";
 import classes from "./SingleVideo.module.css";
 import { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../context/auth-context";
-import { getCommentsData, getVideoData, postComment } from "../backend/helpers";
+import {
+  getCommentsData,
+  getVideoData,
+  postComment,
+  subUnSubToUser,
+} from "../backend/helpers";
 import VideoCard from "./VideoCard";
 import { Avatar, TextField } from "@mui/material";
 import Comments from "./Comments";
@@ -36,6 +41,12 @@ const SingleVideo = () => {
 
     getData();
   }, [videoID]);
+
+  const handleSubUnSub = () => {
+    const action = async (isSubscribed, myID, username, requestSent) => {
+      await subUnSubToUser(isSubscribed, myID, username, requestSent);
+    };
+  };
 
   const handlePostComment = async (e) => {
     const comment = commentTextRef.current.value;
@@ -73,6 +84,7 @@ const SingleVideo = () => {
           avatarUrl={videoData.profilePicUrl}
           isVerified={videoData.isVerified}
           isSubscribed={videoData.isSubscribed}
+          handleSubUnSub={handleSubUnSub}
         />
       </div>
       <div className={classes.writeComment}>

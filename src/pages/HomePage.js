@@ -2,7 +2,11 @@ import classes from "./HomePage.module.css";
 import { AuthContext } from "../context/auth-context";
 import { useContext, useEffect, useRef, useState } from "react";
 import VideoCard from "../components/VideoCard";
-import { getFollowerShorts } from "../backend/helpers";
+import {
+  getFollowerShorts,
+  likeDislikeVideo,
+  subUnSubToUser,
+} from "../backend/helpers";
 
 const Homepage = () => {
   const [isObserverReady, setIsObserverReady] = useState(false);
@@ -12,12 +16,18 @@ const Homepage = () => {
   const { userData, logout } = useContext(AuthContext);
   const videoRef = useRef();
 
+  const getData = async (id) => {
+    const profileUserData = await getFollowerShorts(id);
+    setShortsData(profileUserData.data);
+    setIsLoading(false);
+  };
+
+  const handleLikeDisLikeVideo = async (videoID, myID, liked) => {
+    await likeDislikeVideo(videoID, myID, liked);
+    getData(userData.id);
+  };
+
   useEffect(() => {
-    const getData = async (id) => {
-      const profileUserData = await getFollowerShorts(id);
-      setShortsData(profileUserData.data);
-      setIsLoading(false);
-    };
     getData(userData.id);
   }, []);
 
@@ -63,24 +73,21 @@ const Homepage = () => {
     <div className={classes.container}>
       <div className={classes.mainLayout}></div>
       <div className={classes.shortsLayout} ref={videoRef}>
-        {shortsData.map(
-          (short) => (
-            console.log(short),
-            (
-              <VideoCard
-                videoDetails={short}
-                key={short.url}
-                id={short.videoID}
-                username={short.username}
-                name={short.username}
-                avatarUrl={short.profilePicUrl}
-                isVerified={short.isVerified}
-                observerRef={observerRef}
-                isSubscribed="true"
-              />
-            )
-          )
-        )}
+        {shortsData.map((short) => (
+          <VideoCard
+            videoDetails={short}
+            key={short.url}
+            id={short.videoID}
+            username={short.username}
+            name={short.username}
+            avatarUrl={short.profilePicUrl}
+            isVerified={short.isVerified}
+            observerRef={observerRef}
+            handleLikeDisLikeVideo={handleLikeDisLikeVideo}
+            refreshHomePage={getData}
+            isSubscribed="true"
+          />
+        ))}
       </div>
       <button onClick={logout}>Logout</button>
     </div>

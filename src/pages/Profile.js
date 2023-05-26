@@ -6,7 +6,11 @@ import SubscribeButton from "../components/SubscribeButton";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/auth-context";
-import { getProfileData, subUnSubToUser } from "../backend/helpers";
+import {
+  getProfileData,
+  likeDislikeVideo,
+  subUnSubToUser,
+} from "../backend/helpers";
 
 const Profile = () => {
   const { userData } = useContext(AuthContext);
@@ -14,12 +18,13 @@ const Profile = () => {
   const [profileData, setProfileData] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
+  const getProfileUserData = async (username) => {
+    const profileUserData = await getProfileData(username, userData.id);
+    setProfileData(profileUserData.userData);
+    setIsLoading(false);
+  };
+
   useEffect(() => {
-    const getProfileUserData = async (username) => {
-      const profileUserData = await getProfileData(username, userData.id);
-      setProfileData(profileUserData.userData);
-      setIsLoading(false);
-    };
     getProfileUserData(param.username);
   }, [param.username]);
 
@@ -28,10 +33,6 @@ const Profile = () => {
       await subUnSubToUser(isSubscribed, myID, username, requestSent);
     };
 
-    const getProfileUserData = async (username) => {
-      const profileUserData = await getProfileData(username, userData.id);
-      setProfileData(profileUserData.userData);
-    };
     const update = async () => {
       action(
         profileData.isSubscribed,
@@ -42,6 +43,11 @@ const Profile = () => {
       getProfileUserData(param.username);
     };
     update();
+  };
+
+  const handleLikeDisLikeVideo = async (videoID, myID, liked) => {
+    await likeDislikeVideo(videoID, myID, liked);
+    getProfileUserData(param.username);
   };
 
   if (isLoading) {
@@ -99,7 +105,11 @@ const Profile = () => {
       <div className={classes.contentDiv}>
         {profileData.videos.map((video) => (
           <div key={video.url} className={classes.videoCardDiv}>
-            <VideoCard videoDetails={video} isCompact={true} />
+            <VideoCard
+              videoDetails={video}
+              isCompact={true}
+              handleLikeDisLikeVideo={handleLikeDisLikeVideo}
+            />
           </div>
         ))}
       </div>

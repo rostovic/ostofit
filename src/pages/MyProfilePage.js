@@ -4,7 +4,11 @@ import { useContext, useEffect, useState } from "react";
 import { Avatar } from "@mui/material";
 import VideoCard from "../components/VideoCard";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import { getMyProfileData } from "../backend/helpers";
+import {
+  getMyProfileData,
+  likeDislikeVideo,
+  subUnSubToUser,
+} from "../backend/helpers";
 import EditIcon from "@mui/icons-material/Edit";
 import { useNavigate } from "react-router-dom";
 
@@ -14,12 +18,19 @@ const MyProfilePage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const authContext = useContext(AuthContext);
   const { profile_pic, username, isVerified } = authContext.userData;
+
+  const getData = async (username) => {
+    const data = await getMyProfileData(username);
+    setVideoData(data.videos);
+    setIsLoading(false);
+  };
+
+  const handleLikeDisLikeVideo = async (videoID, myID, liked) => {
+    await likeDislikeVideo(videoID, myID, liked);
+    getData(username);
+  };
+
   useEffect(() => {
-    const getData = async (username) => {
-      const data = await getMyProfileData(username);
-      setVideoData(data.videos);
-      setIsLoading(false);
-    };
     getData(username);
   }, []);
 
@@ -75,7 +86,11 @@ const MyProfilePage = () => {
       <div className={classes.contentDiv}>
         {videoData.map((video) => (
           <div key={video.url} className={classes.videoCardDiv}>
-            <VideoCard videoDetails={video} isCompact={true} />
+            <VideoCard
+              videoDetails={video}
+              isCompact={true}
+              handleLikeDisLikeVideo={handleLikeDisLikeVideo}
+            />
           </div>
         ))}
       </div>

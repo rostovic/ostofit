@@ -245,6 +245,7 @@ export const postComment = async (comment, videoID, myID) => {
 };
 
 export const likeComment = async (identifier, status, commentID, myID) => {
+  console.log("kek");
   const response = await fetch(`http://localhost:5000/likeDislikeComment`, {
     method: "POST",
     headers: {
@@ -270,6 +271,20 @@ export const subUnSubToUser = async (
       "Content-type": "application/json",
     },
     body: JSON.stringify({ isSubscribed, myID, userUsername, requestSent }),
+  });
+  const data = await response.json();
+  if (data.status === "success") {
+  }
+  return;
+};
+
+export const likeDislikeVideo = async (videoID, myID, liked) => {
+  const response = await fetch(`http://localhost:5000/likeDislikeVideo`, {
+    method: "POST",
+    headers: {
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify({ videoID, myID, liked }),
   });
   const data = await response.json();
   if (data.status === "success") {

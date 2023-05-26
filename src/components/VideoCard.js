@@ -11,32 +11,45 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CommentIcon from "@mui/icons-material/Comment";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 import StarIcon from "@mui/icons-material/Star";
-import { subUnSubToUser } from "../backend/helpers";
+import { likeDislikeVideo, subUnSubToUser } from "../backend/helpers";
 import { AuthContext } from "../context/auth-context";
 
 const VideoCard = ({
   videoDetails,
-  name,
-  id,
   observerRef,
   avatarUrl,
   username,
   isVerified,
   isCompact = false,
   isSubscribed = false,
+  handleLikeDisLikeVideo,
 }) => {
   const { userData } = useContext(AuthContext);
   const navigation = useNavigate();
   const videoRef = useRef();
   const [playVideo, setPlayVideo] = useState(false);
   const [muted, setMuted] = useState(true);
-  const [onHoverStar, setOnHoverStar] = useState(false);
+  const [isSubmittingData, setIsSubmittingData] = useState(false);
 
   const handleSubUnSub = (isSubscribed) => {
-    const action = async (isSubscribed, myID, userID) => {
-      const subUnSub = await subUnSubToUser(isSubscribed, myID, userID);
+    setIsSubmittingData(true);
+    const requestSent = 0;
+    const action = async (isSubscribed, myID, userUsername, requestSent) => {
+      await subUnSubToUser(isSubscribed, myID, userUsername, requestSent);
+      setIsSubmittingData(false);
     };
-    action(isSubscribed, userData.id, videoDetails.userID);
+    action(isSubscribed, userData.id, videoDetails.username, requestSent);
+  };
+
+  const handleLikeDisLike = async () => {
+    setIsSubmittingData(true);
+    await handleLikeDisLikeVideo(
+      videoDetails.videoID,
+      userData.id,
+      videoDetails.liked
+    );
+    setIsSubmittingData(false);
+    window.location.reload();
   };
 
   const handlePlayVideo = () => {
@@ -123,6 +136,9 @@ const VideoCard = ({
                     color: "white",
                   },
                 }}
+                onClick={() => {
+                  !isSubmittingData && handleLikeDisLike();
+                }}
               />
             ) : (
               <StarBorderIcon
@@ -134,6 +150,9 @@ const VideoCard = ({
                   "&:hover": {
                     color: "gold",
                   },
+                }}
+                onClick={() => {
+                  !isSubmittingData && handleLikeDisLike();
                 }}
               />
             )}
@@ -283,7 +302,7 @@ const VideoCard = ({
             {isCompact ? null : (
               <SubscribeButton
                 isSubscribed={isSubscribed}
-                onClick={() => handleSubUnSub(isSubscribed)}
+                handleSubUnSub={handleSubUnSub}
               />
             )}
           </div>

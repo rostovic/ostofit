@@ -26,9 +26,7 @@ const SubscribeButton = ({
       }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      onClick={() => {
-        handleSubUnSub();
-      }}
+      onClick={() => handleSubUnSub(isSubscribed)}
     >
       {!isHovered && requestSent === 1 ? <span>Request sent! </span> : null}
       {isHovered && requestSent === 1 ? <span>Remove request? </span> : null}

@@ -5,6 +5,7 @@ import { AuthContext } from "../context/auth-context";
 import {
   getCommentsData,
   getVideoData,
+  likeDislikeVideo,
   postComment,
   subUnSubToUser,
 } from "../backend/helpers";
@@ -22,34 +23,43 @@ const SingleVideo = () => {
   const commentTextRef = useRef("");
   const videoID = param.videoID;
 
+  const getVideo = async (videoID, myID) => {
+    const videoData = await getVideoData(videoID, myID);
+    setVideoData(videoData);
+  };
+
+  const getComments = async (videoID, myID) => {
+    const comments = await getCommentsData(videoID, myID);
+    setCommentsData(comments);
+  };
+
+  const getData = async () => {
+    await getVideo(param.videoID, userData.id);
+    await getComments(param.videoID, userData.id);
+    setIsLoading(false);
+  };
+
   useEffect(() => {
-    const getVideo = async (videoID, myID) => {
-      const videoData = await getVideoData(videoID, myID);
-      setVideoData(videoData);
-    };
-
-    const getComments = async (videoID, myID) => {
-      const comments = await getCommentsData(videoID, myID);
-      setCommentsData(comments);
-    };
-
-    const getData = async () => {
-      await getVideo(param.videoID, userData.id);
-      await getComments(param.videoID, userData.id);
-      setIsLoading(false);
-    };
-
     getData();
   }, [videoID]);
 
   const handleSubUnSub = () => {
     const action = async (isSubscribed, myID, username, requestSent) => {
       await subUnSubToUser(isSubscribed, myID, username, requestSent);
+      getData();
     };
+  };
+
+  const handleLikeDisLikeVideo = async (videoID, myID, liked) => {
+    await likeDislikeVideo(videoID, myID, liked);
+    getData();
   };
 
   const handlePostComment = async (e) => {
     const comment = commentTextRef.current.value;
+    if (comment.length === 0) {
+      return;
+    }
     postComment(comment, videoID, userData.id);
     const getComments = async (videoID, myID) => {
       const comments = await getCommentsData(videoID, myID);
@@ -85,6 +95,7 @@ const SingleVideo = () => {
           isVerified={videoData.isVerified}
           isSubscribed={videoData.isSubscribed}
           handleSubUnSub={handleSubUnSub}
+          handleLikeDisLikeVideo={handleLikeDisLikeVideo}
         />
       </div>
       <div className={classes.writeComment}>

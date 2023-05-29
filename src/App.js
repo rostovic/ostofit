@@ -33,6 +33,7 @@ export const MainLayout = () => {
       navigate("home");
     }
   }, [pathname]);
+
   return (
     <div
       style={{
@@ -96,10 +97,6 @@ const authRouter = createBrowserRouter([
       {
         path: "home",
         element: <HomePage />,
-      },
-      {
-        path: "home/page1",
-        element: <div>Page 1</div>,
       },
       {
         path: "followers",

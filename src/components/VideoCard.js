@@ -49,7 +49,6 @@ const VideoCard = ({
       videoDetails.liked
     );
     setIsSubmittingData(false);
-    window.location.reload();
   };
 
   const handlePlayVideo = () => {

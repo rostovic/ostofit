@@ -4,8 +4,8 @@ import classes from "./EditMyProfilePage.module.css";
 import { Avatar, TextField } from "@mui/material";
 import {
   checkIfUsernameIsNotTaken,
+  refreshUserData,
   updateUserData,
-  updateUserDataWithoutUsername,
 } from "../backend/helpers";
 
 const EditMyProfilePage = () => {
@@ -13,12 +13,19 @@ const EditMyProfilePage = () => {
   const [checkUsername, setCheckUsername] = useState("");
   const [usernameValidInfo, setUsernameValidInfo] = useState(false);
   const authContext = useContext(AuthContext);
-  const logout = authContext.logout;
-  const { profile_pic, username, firstName, lastName, dateCreated, id } =
-    authContext.userData;
+  const {
+    profile_pic,
+    username,
+    firstName,
+    lastName,
+    dateCreated,
+    id,
+    description,
+  } = authContext.userData;
 
   const usernameRef = useRef("");
   const profilePicRef = useRef("");
+  const descRef = useRef("");
 
   useEffect(() => {
     if (checkUsername === "" || checkUsername === username) {
@@ -37,42 +44,36 @@ const EditMyProfilePage = () => {
       };
       checkIfValid(checkUsername);
     }, 500);
-
     return () => clearTimeout(checkTimeout);
   }, [checkUsername]);
 
   const saveNewData = async (event) => {
     event.preventDefault();
     setIsSaving(true);
-    const usernameNewValue = usernameRef.current.value;
-    const profilePicNewValue = profilePicRef.current.value;
-    if (usernameNewValue.length === 0 || profilePicNewValue.length === 0) {
-      setIsSaving(false);
-      return;
-    }
+    setTimeout(async () => {
+      if (usernameValidInfo != "Username is taken!") {
+        const usernameNewValue = usernameRef.current.value;
+        const profilePicNewValue = profilePicRef.current.value;
+        const descriptionNewValue = descRef.current.value;
+        if (usernameNewValue.length === 0) {
+          setIsSaving(false);
+          return;
+        }
 
-    if (username === usernameNewValue && profile_pic === profilePicNewValue) {
-      setIsSaving(false);
-      return;
-    }
-    if (username === usernameNewValue) {
-      const response = await updateUserDataWithoutUsername(
-        profilePicNewValue,
-        id
-      );
-      authContext.userData.profile_pic = profilePicRef.current.value;
-      authContext.refreshData(authContext.userData);
-      setIsSaving(false);
-      window.location.reload();
-      return;
-    }
-    const response = await updateUserData(
-      usernameNewValue,
-      profilePicNewValue,
-      id
-    );
-    setIsSaving(false);
-    logout();
+        await updateUserData(
+          usernameNewValue,
+          profilePicNewValue,
+          descriptionNewValue,
+          id
+        );
+
+        const refreshData = await refreshUserData(usernameNewValue);
+        authContext.refreshData(refreshData);
+        setIsSaving(false);
+      } else {
+        setIsSaving(false);
+      }
+    }, 1000);
   };
 
   return (
@@ -92,6 +93,16 @@ const EditMyProfilePage = () => {
           multiline
           inputRef={profilePicRef}
         />
+
+        <TextField
+          required
+          id="outlined-required"
+          label="Description"
+          defaultValue={description}
+          multiline
+          inputRef={descRef}
+        />
+
         <TextField
           error={
             checkUsername != username &&

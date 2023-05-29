@@ -58,6 +58,11 @@
   left: 105%;
 }
 
+.dateText {
+  font-size: 14px;
+  margin-top: 4px;
+}
+
 .tooltip:hover .tooltiptext {
   visibility: visible;
   color: white;

@@ -1,35 +1,49 @@
 import { AuthContext } from "../context/auth-context";
 import { useContext, useEffect, useState } from "react";
-import { getAllRequests } from "../backend/users";
 import Follower from "./Follower";
 import classes from "./Requests.module.css";
-import { getAllFollowerRequests } from "../backend/helpers";
+import { actionRequest, getAllFollowerRequests } from "../backend/helpers";
 
 const Requests = () => {
-  const [data, setData] = useState(false);
+  const [data, setData] = useState(null);
   const { userData } = useContext(AuthContext);
-  const allRequests = getAllRequests(userData.id);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const getFollowerRequests = async (id) => {
+    const followerRequests = await getAllFollowerRequests(id);
+    setData(followerRequests.data);
+    setIsLoading(false);
+  };
+
+  const acceptDeclineRequest = async (action, myID, userID) => {
+    await actionRequest(action, myID, userID);
+    getFollowerRequests(userData.id);
+  };
 
   useEffect(() => {
-    const getFollowerRequests = async (id) => {
-      const followerRequests = await getAllFollowerRequests(id);
-      setData(followerRequests);
-    };
     getFollowerRequests(userData.id);
   }, []);
+
+  if (isLoading) {
+    return (
+      <div className={classes.loaderSpinnerWrapper}>
+        <div className={classes.loaderSpinner}></div>
+      </div>
+    );
+  }
 
   return (
     <div className={classes.mainDiv}>
       <div className={classes.followersDiv}>
-        {!allRequests.length === 0 ? (
-          allRequests.map((user) => (
+        {data.length >= 1 ? (
+          data.map((user) => (
             <Follower
-              name={user.firstName + " " + user.lastName}
               id={user.id}
-              key={user.id}
+              key={user.username}
               avatarUrl={user.profilePicUrl}
               action="requests"
               username={user.username}
+              acceptDeclineRequest={acceptDeclineRequest}
             />
           ))
         ) : (

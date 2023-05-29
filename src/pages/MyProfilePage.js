@@ -17,7 +17,14 @@ const MyProfilePage = () => {
   const [videoData, setVideoData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const authContext = useContext(AuthContext);
-  const { profile_pic, username, isVerified } = authContext.userData;
+  const {
+    profile_pic,
+    username,
+    isVerified,
+    dateCreated,
+    shortDate,
+    description,
+  } = authContext.userData;
 
   const getData = async (username) => {
     const data = await getMyProfileData(username);
@@ -82,6 +89,17 @@ const MyProfilePage = () => {
             ""
           )}
         </div>
+        <span className={classes.dateText}>joined {shortDate}</span>
+        <span
+          style={{
+            wordBreak: "break-all",
+            maxWidth: "75%",
+            fontSize: "12px",
+            marginTop: "4px",
+          }}
+        >
+          {description}
+        </span>
       </div>
       <div className={classes.contentDiv}>
         {videoData.map((video) => (

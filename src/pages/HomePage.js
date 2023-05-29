@@ -89,7 +89,6 @@ const Homepage = () => {
           />
         ))}
       </div>
-      <button onClick={logout}>Logout</button>
     </div>
   );
 };

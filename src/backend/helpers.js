@@ -17,6 +17,25 @@ export const loginUser = async (username, password) => {
   return "false";
 };
 
+export const refreshUserData = async (username) => {
+  const response = await fetch(
+    `http://localhost:5000/refreshUserData?username=${username}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-type": "application/json",
+      },
+    }
+  );
+
+  const data = await response.json();
+  if (data.status === "success") {
+    const userData = data.data.userData;
+    return userData;
+  }
+  return;
+};
+
 export const getAllDataNumbers = async (id) => {
   const response = await fetch(`http://localhost:5000/home?id=${id}`, {
     method: "GET",
@@ -34,18 +53,32 @@ export const getAllDataNumbers = async (id) => {
 };
 
 export const getAllFollowerRequests = async (id) => {
-  const response = await fetch(`http://localhost:5000/requests`, {
+  const response = await fetch(`http://localhost:5000/requests?id=${id}`, {
+    method: "GET",
+    headers: {
+      "Content-type": "application/json",
+    },
+  });
+  const data = await response.json();
+  if (data.status === "success") {
+    return data;
+  }
+  return;
+};
+
+export const actionRequest = async (action, myID, userID) => {
+  const response = await fetch(`http://localhost:5000/acceptDeclineRequest`, {
     method: "POST",
     headers: {
       "Content-type": "application/json",
     },
-    body: JSON.stringify({ id }),
+    body: JSON.stringify({ action, myID, userID }),
   });
   const data = await response.json();
   if (data.status === "success") {
-    console.log("kek");
+    return "success";
   }
-  return;
+  return "error";
 };
 
 export const getAllFollowersForUser = async (id) => {
@@ -141,13 +174,13 @@ export const getFollowerShorts = async (id) => {
   return [];
 };
 
-export const updateUserData = async (username, profilePic, id) => {
+export const updateUserData = async (username, profilePic, description, id) => {
   const response = await fetch(`http://localhost:5000/updateUserData`, {
     method: "POST",
     headers: {
       "Content-type": "application/json",
     },
-    body: JSON.stringify({ username, profilePic, id }),
+    body: JSON.stringify({ username, profilePic, description, id }),
   });
 
   const data = await response.json();
@@ -245,7 +278,6 @@ export const postComment = async (comment, videoID, myID) => {
 };
 
 export const likeComment = async (identifier, status, commentID, myID) => {
-  console.log("kek");
   const response = await fetch(`http://localhost:5000/likeDislikeComment`, {
     method: "POST",
     headers: {

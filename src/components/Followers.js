@@ -13,7 +13,8 @@ const Followers = () => {
   useEffect(() => {
     const getAllFollowers = async (id) => {
       const allFollowers = await getAllFollowersForUser(id);
-      if (allFollowers.length === 0) {
+      if (allFollowers.data.length === 0) {
+        setIsLoading(false);
         return setData(false);
       }
       if (data.status != "success") {

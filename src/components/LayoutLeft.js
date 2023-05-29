@@ -5,20 +5,23 @@ import { AuthContext } from "../context/auth-context";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import classes from "./LayoutLeft.module.css";
 import { getAllDataNumbers } from "../backend/helpers";
+import LogoutIcon from "@mui/icons-material/Logout";
 
 const LayoutLeft = () => {
   const [data, setData] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const navigation = useNavigate();
   const authContext = useContext(AuthContext);
+  const { logout } = useContext(AuthContext);
   const { id, profile_pic, username, isVerified } = authContext.userData;
 
+  const getNumbersForProfile = async (id) => {
+    const numberData = await getAllDataNumbers(id);
+    setData(numberData);
+    setIsLoading(false);
+  };
+
   useEffect(() => {
-    const getNumbersForProfile = async (id) => {
-      const numberData = await getAllDataNumbers(id);
-      setData(numberData);
-      setIsLoading(false);
-    };
     getNumbersForProfile(id);
   }, []);
 
@@ -35,18 +38,37 @@ const LayoutLeft = () => {
   return (
     <div className={classes.mainLayout}>
       <div className={classes.contentDiv}>
-        <div
-          className={classes.userDiv}
-          onClick={() => {
-            navigation(`profile`);
-          }}
-        >
-          <Avatar src={profile_pic} sx={{ height: 35, width: 35 }} />
-          <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
-            <p style={{ fontWeight: 500 }}>{username}</p>
+        <div className={classes.userDiv}>
+          <Avatar
+            src={profile_pic}
+            sx={{
+              height: 35,
+              width: 35,
+              cursor: "pointer",
+              "&:hover": { scale: "1.05" },
+            }}
+            onClick={() => {
+              navigation(`profile`);
+            }}
+          />
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: 5,
+            }}
+          >
+            <p
+              className={classes.username}
+              onClick={() => {
+                navigation(`profile`);
+              }}
+            >
+              {username}
+            </p>
 
             {isVerified === 1 ? (
-              <div className={classes.tooltip}>
+              <div className={classes.circleIcon}>
                 <CheckCircleIcon
                   sx={{
                     color: "blue",
@@ -55,12 +77,18 @@ const LayoutLeft = () => {
                     width: "20px",
                   }}
                 />
-                <span className={classes.tooltiptext}>Verified user!</span>
               </div>
             ) : (
               ""
             )}
           </div>
+
+          <LogoutIcon
+            sx={{
+              "&:hover": { scale: "1.1", cursor: "pointer" },
+            }}
+            onClick={logout}
+          />
         </div>
         <div
           style={{

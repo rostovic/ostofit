@@ -33,7 +33,7 @@ const Following = () => {
                 id={user.id}
                 key={user.id}
                 avatarUrl={user.profile_pic}
-                action="followers"
+                action="following"
                 username={user.username}
               />
             ))

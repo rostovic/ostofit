@@ -4,15 +4,16 @@ import SubscribeButton from "./SubscribeButton";
 import { useState, useEffect, useRef, useContext } from "react";
 import VolumeOffIcon from "@mui/icons-material/VolumeOff";
 import VolumeUpIcon from "@mui/icons-material/VolumeUp";
-import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import { useNavigate } from "react-router-dom";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CommentIcon from "@mui/icons-material/Comment";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 import StarIcon from "@mui/icons-material/Star";
-import { likeDislikeVideo, subUnSubToUser } from "../backend/helpers";
+import { refreshUserData, subUnSubToUser } from "../backend/helpers";
 import { AuthContext } from "../context/auth-context";
+import Forward5Icon from "@mui/icons-material/Forward5";
+import Replay5Icon from "@mui/icons-material/Replay5";
 
 const VideoCard = ({
   videoDetails,
@@ -24,6 +25,7 @@ const VideoCard = ({
   isSubscribed = false,
   handleLikeDisLikeVideo,
 }) => {
+  const authContext = useContext(AuthContext);
   const { userData } = useContext(AuthContext);
   const navigation = useNavigate();
   const videoRef = useRef();
@@ -36,6 +38,8 @@ const VideoCard = ({
     const requestSent = 0;
     const action = async (isSubscribed, myID, userUsername, requestSent) => {
       await subUnSubToUser(isSubscribed, myID, userUsername, requestSent);
+      const refreshData = await refreshUserData(userData.username);
+      authContext.refreshData(refreshData);
       setIsSubmittingData(false);
     };
     action(isSubscribed, userData.id, videoDetails.username, requestSent);
@@ -69,8 +73,12 @@ const VideoCard = ({
     setMuted((current) => !current);
   };
 
-  const handleRestart = () => {
-    videoRef.current.currentTime = 0;
+  const handleShortVideoTime = (time) => {
+    if (time === "+5") {
+      videoRef.current.currentTime += 5;
+    } else {
+      videoRef.current.currentTime -= 5;
+    }
   };
 
   useEffect(() => {
@@ -119,7 +127,10 @@ const VideoCard = ({
           ref={videoRef}
           muted
         >
-          <source src={videoDetails.url} type="video/mp4" />
+          <source
+            src={`http://localhost:5000/video?videoID=${videoDetails.videoID}`}
+            type="video/mp4"
+          />
         </video>
 
         <div className={classes.iconsDiv}>
@@ -208,8 +219,9 @@ const VideoCard = ({
               />
             )}
           </div>
+
           <div className={classes.singleIconDiv}>
-            <RestartAltIcon
+            <Forward5Icon
               sx={{
                 color: "white",
                 height: "25px",
@@ -217,10 +229,10 @@ const VideoCard = ({
                 cursor: "pointer",
                 "&:hover": {
                   color: "darkgrey",
-                  animation: "spin 2s linear infinite",
-                  "@keyframes spin": {
+                  animation: "spin_1 2s linear infinite",
+                  "@keyframes spin_1": {
                     "0%": {
-                      transform: "rotate(360deg)",
+                      transform: "rotate(-360deg)",
                     },
                     "100%": {
                       transform: "rotate(0deg)",
@@ -228,7 +240,31 @@ const VideoCard = ({
                   },
                 },
               }}
-              onClick={handleRestart}
+              onClick={() => handleShortVideoTime("+5")}
+            />
+          </div>
+
+          <div className={classes.singleIconDiv}>
+            <Replay5Icon
+              sx={{
+                color: "white",
+                height: "25px",
+                width: "25px",
+                cursor: "pointer",
+                "&:hover": {
+                  color: "darkgrey",
+                  animation: "spin_2 2s linear infinite",
+                  "@keyframes spin_2": {
+                    "0%": {
+                      transform: "rotate(0eg)",
+                    },
+                    "100%": {
+                      transform: "rotate(-360deg)",
+                    },
+                  },
+                },
+              }}
+              onClick={() => handleShortVideoTime("-5")}
             />
           </div>
         </div>

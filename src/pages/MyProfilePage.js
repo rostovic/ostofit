@@ -4,13 +4,10 @@ import { useContext, useEffect, useState } from "react";
 import { Avatar } from "@mui/material";
 import VideoCard from "../components/VideoCard";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import {
-  getMyProfileData,
-  likeDislikeVideo,
-  subUnSubToUser,
-} from "../backend/helpers";
+import { getMyProfileData, likeDislikeVideo } from "../backend/helpers";
 import EditIcon from "@mui/icons-material/Edit";
 import { useNavigate } from "react-router-dom";
+import AddVideoCard from "../components/AddVideoCard";
 
 const MyProfilePage = () => {
   const navigation = useNavigate();
@@ -101,7 +98,12 @@ const MyProfilePage = () => {
           {description}
         </span>
       </div>
+
       <div className={classes.contentDiv}>
+        {videoData.length % 3 === 0 ? <AddVideoCard /> : null}
+        {videoData.length % 3 === 0 ? <AddVideoCard /> : null}
+        {videoData.length % 3 === 1 ? <AddVideoCard /> : null}
+        <AddVideoCard />
         {videoData.map((video) => (
           <div key={video.url} className={classes.videoCardDiv}>
             <VideoCard

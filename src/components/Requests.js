@@ -2,9 +2,14 @@ import { AuthContext } from "../context/auth-context";
 import { useContext, useEffect, useState } from "react";
 import Follower from "./Follower";
 import classes from "./Requests.module.css";
-import { actionRequest, getAllFollowerRequests } from "../backend/helpers";
+import {
+  actionRequest,
+  getAllFollowerRequests,
+  refreshUserData,
+} from "../backend/helpers";
 
 const Requests = () => {
+  const authContext = useContext(AuthContext);
   const [data, setData] = useState(null);
   const { userData } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(true);
@@ -17,6 +22,8 @@ const Requests = () => {
 
   const acceptDeclineRequest = async (action, myID, userID) => {
     await actionRequest(action, myID, userID);
+    const refreshData = await refreshUserData(userData.username);
+    authContext.refreshData(refreshData);
     getFollowerRequests(userData.id);
   };
 

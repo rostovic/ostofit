@@ -11,6 +11,9 @@ const ERRORS = {
   PASSWORD: {
     BLANK: "Empty password!",
   },
+  USER: {
+    BLANK: "User does not exist!",
+  },
 };
 
 const Login = () => {
@@ -18,12 +21,14 @@ const Login = () => {
   const navigate = useNavigate();
   const [errorUsername, setErrorUsername] = useState(null);
   const [errorPassword, setErrorPassword] = useState(null);
+  const [errorUser, setErrorUser] = useState(null);
   const usernameInputRef = useRef("");
   const passwordInputRef = useRef("");
 
   const resetErrors = () => {
     setErrorUsername(null);
     setErrorPassword(null);
+    setErrorUser(null);
   };
 
   const formSubmissionHandler = async (event) => {
@@ -45,7 +50,8 @@ const Login = () => {
 
     const userData = await loginUser(username, password);
 
-    if (userData === "false") {
+    if (userData === "User does not exist!") {
+      setErrorUser(ERRORS.USER.BLANK);
       return;
     }
 
@@ -63,7 +69,7 @@ const Login = () => {
 
       return (
         <div>
-          <p>{errorUsername}</p>
+          <span>{errorUsername}</span>
         </div>
       );
     }
@@ -75,10 +81,21 @@ const Login = () => {
 
       return (
         <div>
-          <p>{errorPassword}</p>
+          <span>{errorPassword}</span>
         </div>
       );
     }
+
+    if (errorType === "User does not exist!")
+      if (!errorUser) {
+        return;
+      }
+
+    return (
+      <div>
+        <span>{errorUser}</span>
+      </div>
+    );
   };
 
   return (
@@ -109,6 +126,7 @@ const Login = () => {
               onFocus={resetErrors}
             ></input>
             {renderError("password")}
+            {renderError("User does not exist!")}
             <button className={`${classes.button}`}>Log In</button>
           </Form>
         </div>

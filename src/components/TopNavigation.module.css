@@ -3,6 +3,7 @@
   height: 75px;
   width: 100%;
   align-items: center;
+  border-bottom: 4px solid lightblue;
 }
 
 .buttonDiv {

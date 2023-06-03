@@ -23,6 +23,7 @@ import MyProfilePage from "./pages/MyProfilePage";
 import Requests from "./components/Requests";
 import EditMyProfilePage from "./components/EditMyProfilePage";
 import SingleVideo from "./components/SingleVideo";
+import AddNewVideo from "./components/AddNewVideo";
 
 export const MainLayout = () => {
   const navigate = useNavigate();
@@ -129,6 +130,10 @@ const authRouter = createBrowserRouter([
       {
         path: "video/:videoID",
         element: <SingleVideo />,
+      },
+      {
+        path: "addNewVideo",
+        element: <AddNewVideo />,
       },
     ],
   },

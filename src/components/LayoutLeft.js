@@ -23,7 +23,7 @@ const LayoutLeft = () => {
 
   useEffect(() => {
     getNumbersForProfile(id);
-  }, []);
+  }, [authContext.userData]);
 
   const { followers, following, requests } = data || ["", "", ""];
 

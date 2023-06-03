@@ -10,7 +10,6 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  gap: 10;
 }
 
 .contentDiv {
@@ -24,8 +23,8 @@
   display: flex;
   aspect-ratio: 9 / 16;
   width: 30%;
-  padding-inline: 12px;
-  padding-bottom: 24px;
+  padding-inline: 8px;
+  padding-bottom: 16px;
 }
 
 .userDiv {

@@ -63,7 +63,6 @@ const Homepage = () => {
       <div className={classes.noContentDiv}>
         <div className={classes.noContentDivBorder}>
           <p>No new content!</p>
-          <button onClick={logout}>Logout</button>
         </div>
       </div>
     );

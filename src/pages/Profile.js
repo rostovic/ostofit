@@ -34,7 +34,7 @@ const Profile = () => {
     };
 
     const update = async () => {
-      action(
+      await action(
         profileData.isSubscribed,
         userData.id,
         profileData.username,

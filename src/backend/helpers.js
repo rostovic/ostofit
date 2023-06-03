@@ -14,7 +14,7 @@ export const loginUser = async (username, password) => {
     const userData = data.data.userData;
     return userData;
   }
-  return "false";
+  return "User does not exist!";
 };
 
 export const refreshUserData = async (username) => {
@@ -317,6 +317,21 @@ export const likeDislikeVideo = async (videoID, myID, liked) => {
       "Content-type": "application/json",
     },
     body: JSON.stringify({ videoID, myID, liked }),
+  });
+  const data = await response.json();
+  if (data.status === "success") {
+  }
+  return;
+};
+
+export const uploadVideo = async (formData, username, title) => {
+  const response = await fetch(`http://localhost:5000/uploadVideo`, {
+    method: "POST",
+    body: formData,
+    headers: {
+      token: username,
+      title: title,
+    },
   });
   const data = await response.json();
   if (data.status === "success") {

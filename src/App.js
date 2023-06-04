@@ -24,6 +24,7 @@ import Requests from "./components/Requests";
 import EditMyProfilePage from "./components/EditMyProfilePage";
 import SingleVideo from "./components/SingleVideo";
 import AddNewVideo from "./components/AddNewVideo";
+import CreateAccount from "./components/CreateAccount";
 
 export const MainLayout = () => {
   const navigate = useNavigate();
@@ -78,6 +79,7 @@ const UserPage = () => {
 
 const nonAuthRouter = createBrowserRouter([
   { path: "/login", element: <Login /> },
+  { path: "/signup", element: <CreateAccount /> },
   {
     path: "/otherRoute",
     element: (

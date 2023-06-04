@@ -64,3 +64,19 @@ Form {
   border-radius: 25px;
   border: 3px solid;
 }
+
+.createAccountButton {
+  color: white;
+  background-color: lightblue;
+  border: 0;
+  border-radius: 25px;
+  width: 140px;
+  padding: 12px;
+  align-self: center;
+}
+
+.createAccountButton:hover {
+  cursor: pointer;
+  scale: 1.2;
+  transition: all 0.25s ease-in-out;
+}

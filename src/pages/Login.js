@@ -127,7 +127,15 @@ const Login = () => {
             ></input>
             {renderError("password")}
             {renderError("User does not exist!")}
-            <button className={`${classes.button}`}>Log In</button>
+            <button className={classes.button}>Log In</button>
+            <button
+              className={classes.createAccountButton}
+              onClick={() => {
+                navigate("/signup");
+              }}
+            >
+              Create account!
+            </button>
           </Form>
         </div>
       </div>

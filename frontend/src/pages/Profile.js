@@ -103,7 +103,7 @@ const Profile = () => {
         </div>
       </div>
       <div className={classes.contentDiv}>
-        {profileData.videos.map((video) => (
+        {profileData.videos?.map((video) => (
           <div key={video.url} className={classes.videoCardDiv}>
             <VideoCard
               videoDetails={video}

@@ -224,7 +224,7 @@ exports.getProfileData = async (username, id) => {
 
 
   FROM user_details ud
-  INNER JOIN user_videos uv ON uv.id_user = ud.id
+  LEFT JOIN user_videos uv ON uv.id_user = ud.id
   WHERE ud.username = :username`;
 
   const [data] = await ostofitDB.query(query, {
@@ -233,7 +233,7 @@ exports.getProfileData = async (username, id) => {
   });
 
   if (data.length === 0) {
-    return [];
+    return false;
   }
 
   return {
@@ -242,16 +242,18 @@ exports.getProfileData = async (username, id) => {
     isVerified: data[0].isVerified,
     isSubscribed: data[0].isSubscribed,
     requestSent: data[0].requestSent,
-    videos: data.map((video) => {
-      return {
-        videoID: video.videoID,
-        title: video.title,
-        url: video.video_url,
-        videoLikesAmount: video.videoLikesAmount,
-        liked: video.liked,
-        videoCommentsAmount: video.videoCommentsAmount,
-      };
-    }),
+    videos: data
+      .map((video) => {
+        return {
+          videoID: video.videoID,
+          title: video.title,
+          url: video.video_url,
+          videoLikesAmount: video.videoLikesAmount,
+          liked: video.liked,
+          videoCommentsAmount: video.videoCommentsAmount,
+        };
+      })
+      .filter((video) => video.url !== null),
   };
 };
 

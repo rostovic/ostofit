@@ -30,7 +30,7 @@ const SubscribeButton = ({
     >
       {!isHovered && requestSent === 1 ? <span>Request sent! </span> : null}
       {isHovered && requestSent === 1 ? <span>Remove request? </span> : null}
-      {isSubscribed && requestSent != 1 ? (
+      {isSubscribed && requestSent !== 1 ? (
         <div className={classes.subscribedButtonStyle}>
           {isHovered ? <p>UNSUBSCRIBE?</p> : <p>SUBSCRIBED</p>}
           {isHovered ? (
@@ -40,7 +40,7 @@ const SubscribeButton = ({
           )}
         </div>
       ) : null}
-      {!isSubscribed && requestSent != 1 ? (
+      {!isSubscribed && requestSent !== 1 ? (
         <div className={classes.notSubcribedButtonStyle}>
           <p>SUBSCRIBE</p>
         </div>

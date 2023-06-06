@@ -26,6 +26,7 @@ const {
   test,
   getPath,
   createNewAccount,
+  deleteVideo,
 } = require("./services/userService");
 const multer = require("multer");
 const fs = require("fs");
@@ -258,6 +259,11 @@ app.get("/video", async (req, res) => {
   const videoStream = fs.createReadStream(videoPath, { start, end });
 
   videoStream.pipe(res);
+});
+
+app.post("/deleteVideo", async (req, res) => {
+  const { videoID } = req.body;
+  const response = await deleteVideo(videoID, userID);
 });
 
 http: testDb();

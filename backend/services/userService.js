@@ -717,3 +717,26 @@ exports.getPath = async (videoID) => {
 
   return data[0].video_path;
 };
+
+exports.deleteVideo = async (videoID) => {
+  const query = `
+  SELECT video_path FROM user_videos WHERE id = :videoID
+
+  DELETE FROM user_videos WHERE id = :videoID
+  DELETE FROM liked_comments WHERE id_comment IN ((SELECT vc.id FROM video_comments vc INNER JOIN liked_comments lc ON lc.id_comment = vc.id WHERE vc.id_video = :videoID))
+  DELETE FROM video_comments WHERE id_video = :videoID
+  DELETE FROM video_likes WHERE id_video = :videoID
+`;
+
+  const [data] = await ostofitDB.query(query, {
+    replacements: { videoID },
+    type: QueryTypes.RAW,
+  });
+
+  const videoPath = data[0].video_path;
+  if (fs.existsSync(videoPath)) {
+    fs.rmSync(videoPath);
+  } else {
+    console.log("Does not exists.");
+  }
+};

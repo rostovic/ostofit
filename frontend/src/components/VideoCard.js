@@ -10,10 +10,16 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CommentIcon from "@mui/icons-material/Comment";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 import StarIcon from "@mui/icons-material/Star";
-import { refreshUserData, subUnSubToUser } from "../backend/helpers";
+import {
+  deleteVideo,
+  refreshUserData,
+  subUnSubToUser,
+} from "../backend/helpers";
 import { AuthContext } from "../context/auth-context";
 import Forward5Icon from "@mui/icons-material/Forward5";
 import Replay5Icon from "@mui/icons-material/Replay5";
+import CancelIcon from "@mui/icons-material/Cancel";
+import DeleteVideoWindow from "./DeleteVideoWindow";
 
 const VideoCard = ({
   videoDetails,
@@ -24,6 +30,7 @@ const VideoCard = ({
   isCompact = false,
   isSubscribed = false,
   handleLikeDisLikeVideo,
+  myVideo = false,
 }) => {
   const authContext = useContext(AuthContext);
   const { userData } = useContext(AuthContext);
@@ -32,6 +39,7 @@ const VideoCard = ({
   const [playVideo, setPlayVideo] = useState(false);
   const [muted, setMuted] = useState(true);
   const [isSubmittingData, setIsSubmittingData] = useState(false);
+  const [windowRemove, setWindowRemove] = useState(false);
 
   const handleSubUnSub = (isSubscribed) => {
     setIsSubmittingData(true);
@@ -53,6 +61,15 @@ const VideoCard = ({
       videoDetails.liked
     );
     setIsSubmittingData(false);
+  };
+
+  const removeVideoPopUp = async () => {
+    setWindowRemove(true);
+  };
+
+  const removeVideo = async () => {
+    const response = await deleteVideo(videoDetails.videoID);
+    setWindowRemove(false);
   };
 
   const handlePlayVideo = () => {
@@ -119,6 +136,12 @@ const VideoCard = ({
 
   return (
     <div className={classes.videoCard}>
+      {windowRemove ? (
+        <DeleteVideoWindow
+          setWindowRemove={setWindowRemove}
+          removeVideo={removeVideo}
+        />
+      ) : null}
       <div className={classes.videoDiv}>
         <video
           className={classes.videoClip}
@@ -132,6 +155,22 @@ const VideoCard = ({
             type="video/mp4"
           />
         </video>
+
+        {myVideo ? (
+          <div className={classes.removeVideo}>
+            <CancelIcon
+              sx={{
+                width: "35px",
+                height: "35px",
+                "&:hover": {
+                  color: "red",
+                  cursor: "pointer",
+                },
+              }}
+              onClick={removeVideoPopUp}
+            />
+          </div>
+        ) : null}
 
         <div className={classes.iconsDiv}>
           <div className={classes.singleIconDiv}>

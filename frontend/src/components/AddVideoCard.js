@@ -19,10 +19,10 @@ const AddVideoCard = () => {
             position: "absolute",
             top: "45%",
             left: "45%",
+            transition: "all 0.35s",
             "&:hover": {
               cursor: "pointer",
               scale: "1.25",
-              transition: "all 0.1s ease-in-out",
             },
           }}
           onClick={() => {

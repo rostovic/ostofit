@@ -361,6 +361,19 @@ export const uploadVideo = async (formData, username, title) => {
   return;
 };
 
+export const deleteVideo = async (videoID) => {
+  const response = await fetch(`http://localhost:5000/deleteVideo`, {
+    method: "POST",
+    headers: {
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify({ videoID }),
+  });
+
+  const data = await response.json();
+  return;
+};
+
 // example post
 // export const getAllFollowerRequests = async (id) => {
 //   const response = await fetch(`http://localhost:5000/requests`, {

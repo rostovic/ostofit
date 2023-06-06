@@ -56,10 +56,10 @@ const MyProfilePage = () => {
               position: "absolute",
               marginTop: "25px",
               marginLeft: "160px",
+              transition: "all 0.35s ease",
               "&:hover": {
                 height: "30px",
                 width: "30px",
-                transition: "all 0.35s ease",
                 cursor: "pointer",
               },
             }}
@@ -105,11 +105,12 @@ const MyProfilePage = () => {
         {videoData.length % 3 === 1 ? <AddVideoCard /> : null}
         <AddVideoCard />
         {videoData.map((video) => (
-          <div key={video.url} className={classes.videoCardDiv}>
+          <div key={video.videoID} className={classes.videoCardDiv}>
             <VideoCard
               videoDetails={video}
               isCompact={true}
               handleLikeDisLikeVideo={handleLikeDisLikeVideo}
+              myVideo={true}
             />
           </div>
         ))}

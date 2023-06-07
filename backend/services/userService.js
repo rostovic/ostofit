@@ -672,7 +672,7 @@ exports.insertVideoDataIntoDB = async (username, title) => {
   const query = `
     DECLARE @userID int = (SELECT TOP 1 ud.id FROM user_details ud WHERE username = :username)
 
-    INSERT INTO user_videos (id_user, video_url, title) values (@userID, 'https://assets.codepen.io/6093409/river.mp4', :title)
+    INSERT INTO user_videos (id_user, video_url, title, date_posted) values (@userID, 'https://assets.codepen.io/6093409/river.mp4', :title, GETDATE())
 
     SELECT SCOPE_IDENTITY() 'id'
   `;
@@ -734,9 +734,12 @@ exports.deleteVideo = async (videoID) => {
   });
 
   const videoPath = data[0].video_path;
+
   if (fs.existsSync(videoPath)) {
     fs.rmSync(videoPath);
   } else {
     console.log("Does not exists.");
+    return "error";
   }
+  return "error";
 };

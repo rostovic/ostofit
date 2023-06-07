@@ -357,8 +357,9 @@ export const uploadVideo = async (formData, username, title) => {
   });
   const data = await response.json();
   if (data.status === "success") {
+    return "success";
   }
-  return;
+  return "error";
 };
 
 export const deleteVideo = async (videoID) => {

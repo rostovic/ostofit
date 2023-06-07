@@ -111,6 +111,7 @@ const MyProfilePage = () => {
               isCompact={true}
               handleLikeDisLikeVideo={handleLikeDisLikeVideo}
               myVideo={true}
+              getData={getData}
             />
           </div>
         ))}

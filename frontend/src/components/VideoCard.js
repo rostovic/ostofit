@@ -31,6 +31,7 @@ const VideoCard = ({
   isSubscribed = false,
   handleLikeDisLikeVideo,
   myVideo = false,
+  getData,
 }) => {
   const authContext = useContext(AuthContext);
   const { userData } = useContext(AuthContext);
@@ -70,6 +71,7 @@ const VideoCard = ({
   const removeVideo = async () => {
     const response = await deleteVideo(videoDetails.videoID);
     setWindowRemove(false);
+    await getData(userData.username);
   };
 
   const handlePlayVideo = () => {

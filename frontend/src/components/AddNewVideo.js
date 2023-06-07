@@ -1,7 +1,7 @@
 import { useContext, useRef, useState } from "react";
 import classes from "./AddNewVideo.module.css";
 import { AuthContext } from "../context/auth-context";
-import { test, uploadVideo } from "../backend/helpers";
+import { uploadVideo } from "../backend/helpers";
 
 const AddNewVideo = () => {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -11,13 +11,25 @@ const AddNewVideo = () => {
 
   const handleUpload = async (e) => {
     e.preventDefault();
+    setIsUploading(true);
     const title = titleRef.current.value;
     if (title.length === 0 || selectedFile === null) {
       return;
     }
     const data = new FormData();
     data.append("file", selectedFile, selectedFile.name);
-    await uploadVideo(data, userData.username, title);
+    const response = await uploadVideo(data, userData.username, title);
+    if (response === "success") {
+      setTimeout(() => {
+        setIsUploading(false);
+        // modal window success
+      }, 1000);
+    } else {
+      setTimeout(() => {
+        setIsUploading(false);
+        // modal window error
+      }, 1000);
+    }
   };
 
   return (

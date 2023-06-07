@@ -224,12 +224,18 @@ const storage = multer.diskStorage({
       "_" +
       file.originalname;
     await updatePath(insertIntoDBAndGetID, fullPath);
+    return;
   },
 });
 
 const upload = multer({ storage: storage });
 
-app.post("/uploadVideo", upload.single("file"), async (req, res) => {});
+app.post("/uploadVideo", upload.single("file"), async (req, res) => {
+  console.log(
+    "*****************************************************************************"
+  );
+  return res.json({ status: "success" });
+});
 
 app.get("/video", async (req, res) => {
   const { videoID } = req.query;
@@ -263,7 +269,12 @@ app.get("/video", async (req, res) => {
 
 app.post("/deleteVideo", async (req, res) => {
   const { videoID } = req.body;
-  const response = await deleteVideo(videoID, userID);
+  const response = await deleteVideo(videoID);
+
+  if (response === "success") {
+    return res.json({ status: "success" });
+  }
+  return res.json({ status: "error" });
 });
 
 http: testDb();

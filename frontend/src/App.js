@@ -25,6 +25,7 @@ import EditMyProfilePage from "./components/EditMyProfilePage";
 import SingleVideo from "./components/SingleVideo";
 import AddNewVideo from "./components/AddNewVideo";
 import CreateAccount from "./components/CreateAccount";
+import Community from "./components/Community";
 
 export const MainLayout = () => {
   const navigate = useNavigate();
@@ -136,6 +137,11 @@ const authRouter = createBrowserRouter([
       {
         path: "addNewVideo",
         element: <AddNewVideo />,
+      },
+
+      {
+        path: "community",
+        element: <Community />,
       },
     ],
   },

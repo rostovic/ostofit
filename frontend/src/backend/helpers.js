@@ -36,7 +36,7 @@ export const loginUser = async (username, password) => {
     const userData = data.data.userData;
     return userData;
   }
-  return "User does not exist!";
+  return "Invalid credentials!";
 };
 
 export const refreshUserData = async (username) => {
@@ -373,6 +373,24 @@ export const deleteVideo = async (videoID) => {
 
   const data = await response.json();
   return;
+};
+
+export const getCommunityVideos = async (myID, filterNum) => {
+  const response = await fetch(
+    `http://localhost:5000/getCommunityVideos?myID=${myID}&filterNum=${filterNum}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-type": "application/json",
+      },
+    }
+  );
+
+  const data = await response.json();
+  if (data.status === "success") {
+    return data.data;
+  }
+  return [];
 };
 
 // example post

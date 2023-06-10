@@ -71,7 +71,7 @@ const Homepage = () => {
         {shortsData.map((short) => (
           <VideoCard
             videoDetails={short}
-            key={short.url}
+            key={short.videoID}
             id={short.videoID}
             username={short.username}
             name={short.username}

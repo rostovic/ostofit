@@ -27,6 +27,7 @@ const {
   getPath,
   createNewAccount,
   deleteVideo,
+  getCommunityVideos,
 } = require("./services/userService");
 const multer = require("multer");
 const fs = require("fs");
@@ -152,13 +153,13 @@ app.get("/checkIfUsernameIsNotTaken", async (req, res) => {
   return res.json({ status: data });
 });
 
-app.get("/getVideoData?", async (req, res) => {
+app.get("/getVideoData", async (req, res) => {
   const { videoID, myID } = req.query;
   const data = await getVideoData(videoID, myID);
   return res.json({ status: "success", data });
 });
 
-app.get("/getCommentsData?", async (req, res) => {
+app.get("/getCommentsData", async (req, res) => {
   const { videoID, myID } = req.query;
   const data = await getCommentsData(videoID, myID);
   return res.json({ status: "success", data });
@@ -231,9 +232,6 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 app.post("/uploadVideo", upload.single("file"), async (req, res) => {
-  console.log(
-    "*****************************************************************************"
-  );
   return res.json({ status: "success" });
 });
 
@@ -275,6 +273,12 @@ app.post("/deleteVideo", async (req, res) => {
     return res.json({ status: "success" });
   }
   return res.json({ status: "error" });
+});
+
+app.get("/getCommunityVideos", async (req, res) => {
+  const { myID, filterNum } = req.query;
+  const data = await getCommunityVideos(myID, filterNum);
+  return res.json({ status: "success", data });
 });
 
 http: testDb();

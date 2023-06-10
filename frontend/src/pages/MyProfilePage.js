@@ -14,14 +14,8 @@ const MyProfilePage = () => {
   const [videoData, setVideoData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const authContext = useContext(AuthContext);
-  const {
-    profile_pic,
-    username,
-    isVerified,
-    dateCreated,
-    shortDate,
-    description,
-  } = authContext.userData;
+  const { profile_pic, username, isVerified, shortDate, description } =
+    authContext.userData;
 
   const getData = async (username) => {
     const data = await getMyProfileData(username);
@@ -36,7 +30,7 @@ const MyProfilePage = () => {
 
   useEffect(() => {
     getData(username);
-  }, []);
+  }, [username]);
 
   if (isLoading) {
     return (

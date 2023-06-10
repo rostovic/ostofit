@@ -12,7 +12,7 @@ const ERRORS = {
     BLANK: "Empty password!",
   },
   USER: {
-    BLANK: "User does not exist!",
+    BLANK: "Invalid credentials!",
   },
 };
 
@@ -50,7 +50,7 @@ const Login = () => {
 
     const userData = await loginUser(username, password);
 
-    if (userData === "User does not exist!") {
+    if (userData === "Invalid credentials!") {
       setErrorUser(ERRORS.USER.BLANK);
       return;
     }

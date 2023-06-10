@@ -51,6 +51,7 @@ const TopNavigation = () => {
         >
           Home
         </button>
+
         <button
           className={classes.buttonStyle}
           onClick={() => {
@@ -59,14 +60,16 @@ const TopNavigation = () => {
         >
           My Profile
         </button>
+
         <button
           className={classes.buttonStyle}
           onClick={() => {
-            navigation("explore");
+            navigation("community");
           }}
         >
           Community
         </button>
+
         <div className={classes.spaceDiv}></div>
         <div className={classes.spaceDiv}></div>
       </div>

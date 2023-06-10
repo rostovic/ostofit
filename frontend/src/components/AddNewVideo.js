@@ -2,12 +2,15 @@ import { useContext, useRef, useState } from "react";
 import classes from "./AddNewVideo.module.css";
 import { AuthContext } from "../context/auth-context";
 import { uploadVideo } from "../backend/helpers";
+import { useNavigate } from "react-router-dom";
 
 const AddNewVideo = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
   const { userData } = useContext(AuthContext);
   const titleRef = useRef();
+
+  const navigation = useNavigate();
 
   const handleUpload = async (e) => {
     e.preventDefault();
@@ -22,6 +25,7 @@ const AddNewVideo = () => {
     if (response === "success") {
       setTimeout(() => {
         setIsUploading(false);
+        navigation("/profile");
         // modal window success
       }, 1000);
     } else {
@@ -35,14 +39,8 @@ const AddNewVideo = () => {
   return (
     <div className={classes.mainDiv}>
       <form className={classes.formUpload}>
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: 10,
-            marginTop: "12px",
-          }}
-        >
+        <span className={classes.formTitleText}>Upload your video!</span>
+        <div className={classes.contentDiv}>
           <label htmlFor="file" className={classes.addFile}>
             Select video
           </label>
@@ -51,14 +49,15 @@ const AddNewVideo = () => {
             {selectedFile ? selectedFile.name : "No file selected."}
           </label>
         </div>
-        <div
-          style={{
-            display: "flex",
-            gap: 10,
-          }}
-        >
-          <span>Title:</span>
-          <input id="text" name="text" type="text" ref={titleRef}></input>
+        <div className={classes.titleDiv}>
+          <span className={classes.titleLabel}>Title:</span>
+          <input
+            id="text"
+            name="text"
+            type="text"
+            ref={titleRef}
+            className={classes.titleInput}
+          ></input>
         </div>
 
         <button className={classes.buttonUpload} onClick={handleUpload}>

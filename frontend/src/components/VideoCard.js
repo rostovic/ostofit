@@ -371,6 +371,9 @@ const VideoCard = ({
                 ) : (
                   ""
                 )}
+                <span className={classes.datePostedText}>
+                  • {videoDetails.date_posted}
+                </span>
               </div>
             )}
           </div>

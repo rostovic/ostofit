@@ -59,6 +59,7 @@
   border: 2px solid lightblue;
   border-radius: 25px;
   transition: all 0.35s;
+  padding: 6px;
 }
 
 .buttonSubmitComment:hover {

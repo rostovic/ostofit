@@ -310,27 +310,68 @@ exports.findUsers = async (username, id) => {
 
 exports.findShorts = async (id) => {
   const query = `
-  SELECT 
-  ud.id 'userID',
-  ud.username,
-  ud.profile_pic as 'profilePicUrl',
-  ud.is_verified as 'isVerified',
-  uv.id 'videoID',
-  uv.video_url as 'url',
-  uv.title,
-  (select count (*) from video_likes v where v.id_video = uv.id) 'videoLikesAmount',
-  ISNULL((select 1 from video_likes vl where vl.id_user = :id and vl.id_video = uv.id), 0) 'liked',
-  (select count (*) from video_comments vic where vic.id_video = uv.id) 'videoCommentsAmount'
+      DECLARE @TempTable TABLE 
+    (
+      userID int,
+      username varchar(MAX),
+      profilePicUrl varchar(max),
+      isVerified smallint,
+      videoID int,
+      url varchar(MAX),
+      title varchar(MAX),
+      seconds bigint,
+      videoLikesAmount int,
+      liked smallint,
+      videoCommentsAmount int
+    )
+
+    INSERT INTO @TempTable
+
+    SELECT 
+      ud.id 'userID',
+      ud.username,
+      ud.profile_pic as 'profilePicUrl',
+      ud.is_verified as 'isVerified',
+      uv.id 'videoID',
+      uv.video_url as 'url',
+      uv.title,
+      (SELECT DATEDIFF(second, date_posted, GETDATE())) AS 'seconds',
+      (select count (*) from video_likes v where v.id_video = uv.id) 'videoLikesAmount',
+      ISNULL((select 1 from video_likes vl where vl.id_user = :id and vl.id_video = uv.id), 0) 'liked',
+      (select count (*) from video_comments vic where vic.id_video = uv.id) 'videoCommentsAmount'
 
 
-  FROM user_details ud
+      FROM user_details ud
 
-  INNER JOIN user_videos uv ON uv.id_user = ud.id
-  INNER JOIN followers f ON f.follows_id_user = ud.id
-  LEFT JOIN video_likes vl ON vl.id_user = ud.id
-  WHERE f.id_user = :id
+      INNER JOIN user_videos uv ON uv.id_user = ud.id
+      INNER JOIN followers f ON f.follows_id_user = ud.id
+      LEFT JOIN video_likes vl ON vl.id_user = ud.id
+      WHERE f.id_user = :id
 
-`;
+
+      select
+      userID
+      ,username 
+      ,profilePicUrl
+      ,isVerified 
+      ,videoID 
+      ,url 
+      ,title 
+      , (CASE
+                WHEN CAST(seconds as int) <3 THEN 'just now'
+                WHEN CAST(seconds as int) BETWEEN 3 AND 59 THEN cast(seconds as varchar) + ' second(s) ago'
+                WHEN CAST(seconds/60 as int) BETWEEN 1 AND 59 THEN cast(seconds/60 as varchar) + ' minute(s) ago'
+                WHEN CAST(seconds/3600 as int) BETWEEN 1 AND 24 THEN cast(seconds/3600 as varchar) + ' hour(s) ago'
+                WHEN CAST(seconds/86400 as int) BETWEEN 1 AND 6 THEN cast(seconds/86400 as varchar) + ' day(s) ago'
+                WHEN CAST(seconds/86400 as int) BETWEEN 7 AND 28 THEN cast(seconds/604800 as varchar) + ' week(s) ago'
+                WHEN CAST(seconds/86400 as int) > 30 THEN cast(seconds/2592000 as varchar) + ' month(s) ago'
+                WHEN CAST(seconds/86400 as int) > 365 THEN cast(seconds/31536000 as varchar) + ' year(s) ago'
+                END) 'date_posted'
+      ,videoLikesAmount 
+      ,liked 
+      ,videoCommentsAmount 
+      from @temptable
+    `;
 
   const [data] = await ostofitDB.query(query, {
     replacements: { id },
@@ -391,31 +432,74 @@ exports.checkIfUsernameIsNotTaken = async (username) => {
 exports.getVideoData = async (videoID, myID) => {
   const query = ` 
   DECLARE @UserID varchar(max) = (SELECT ud.username from user_details ud 
-  INNER JOIN user_videos uv ON uv.id_user = ud.id
-  WHERE uv.id = :videoID)
-     
-  SELECT 
-  ud.id,
-  ud.username,
-  ud.profile_pic as 'profilePicUrl',
-  ud.is_verified as 'isVerified',
-  uv.id as 'videoID',
-  uv.video_url as 'url',
-  uv.title,
-  (  SELECT COUNT (*) FROM user_details ud
-
-  INNER JOIN followers f ON f.follows_id_user = ud.id 
-  WHERE f.id_user = :myID AND ud.username = @UserID) as isSubscribed,
-  (select count (*) from video_likes v where v.id_video = uv.id) 'videoLikesAmount',
-  ISNULL((select 1 from video_likes vl where vl.id_user = :myID and vl.id_video = uv.id), 0) 'liked',
-  (select count (*) from video_comments vic where vic.id_video = uv.id) 'videoCommentsAmount'
-
-
-  FROM user_details ud
-
-  INNER JOIN user_videos uv ON uv.id_user = ud.id
-  LEFT JOIN video_likes vl ON vl.id_user = ud.id
-  WHERE uv.id = :videoID`;
+    INNER JOIN user_videos uv ON uv.id_user = ud.id
+    WHERE uv.id = :videoID)
+  
+     DECLARE @TempTable TABLE 
+      (
+        id int,
+        username varchar(MAX),
+        profilePicUrl varchar(max),
+        isVerified smallint,
+        videoID int,
+        url varchar(MAX),
+        title varchar(MAX),
+        seconds bigint,
+      isSubscribed smallint,
+        videoLikesAmount int,
+        liked smallint,
+        videoCommentsAmount int
+      )
+  
+      INSERT INTO @TempTable
+  
+    SELECT
+    ud.id,
+    ud.username,
+    ud.profile_pic as 'profilePicUrl',
+    ud.is_verified as 'isVerified',
+    uv.id as 'videoID',
+    uv.video_url as 'url',
+    uv.title,
+    (SELECT DATEDIFF(second, date_posted, GETDATE())) AS 'seconds',
+    (  SELECT COUNT (*) FROM user_details ud
+  
+    INNER JOIN followers f ON f.follows_id_user = ud.id
+    WHERE f.id_user = :myID AND ud.username = @UserID) as isSubscribed,
+    (select count (*) from video_likes v where v.id_video = uv.id) 'videoLikesAmount',
+    ISNULL((select 1 from video_likes vl where vl.id_user = :myID and vl.id_video = uv.id), 0) 'liked',
+    (select count (*) from video_comments vic where vic.id_video = uv.id) 'videoCommentsAmount'
+  
+  
+    FROM user_details ud
+  
+    INNER JOIN user_videos uv ON uv.id_user = ud.id
+    LEFT JOIN video_likes vl ON vl.id_user = ud.id
+    WHERE uv.id = :videoID
+  
+    SELECT
+     id,
+     username,
+     profilePicUrl,
+     isVerified,
+     videoID ,
+     url,
+     title,
+      (CASE
+                  WHEN CAST(seconds as int) <3 THEN 'just now'
+                  WHEN CAST(seconds as int) BETWEEN 3 AND 59 THEN cast(seconds as varchar) + ' second(s) ago'
+                  WHEN CAST(seconds/60 as int) BETWEEN 1 AND 59 THEN cast(seconds/60 as varchar) + ' minute(s) ago'
+                  WHEN CAST(seconds/3600 as int) BETWEEN 1 AND 24 THEN cast(seconds/3600 as varchar) + ' hour(s) ago'
+                  WHEN CAST(seconds/86400 as int) BETWEEN 1 AND 6 THEN cast(seconds/86400 as varchar) + ' day(s) ago'
+                  WHEN CAST(seconds/86400 as int) BETWEEN 7 AND 28 THEN cast(seconds/604800 as varchar) + ' week(s) ago'
+                  WHEN CAST(seconds/86400 as int) > 30 THEN cast(seconds/2592000 as varchar) + ' month(s) ago'
+                  WHEN CAST(seconds/86400 as int) > 365 THEN cast(seconds/31536000 as varchar) + ' year(s) ago'
+                  END) 'date_posted',
+     isSubscribed,
+     videoLikesAmount ,
+     liked ,
+     videoCommentsAmount 
+    FROM @TempTable`;
 
   const [data] = await ostofitDB.query(query, {
     replacements: { videoID, myID },
@@ -742,4 +826,27 @@ exports.deleteVideo = async (videoID) => {
     return "error";
   }
   return "error";
+};
+
+exports.getCommunityVideos = async (myID, filterNum) => {
+  const query = `
+  DECLARE @filterNum int = :filterNum
+
+  SELECT
+  uv.id 'videoID'
+  
+  FROM user_details ud
+
+  INNER JOIN user_videos uv ON uv.id_user = ud.id
+  WHERE ud.id <> :myID AND  date_posted >= DATEADD(day, -@filterNum, GETDATE())
+  `;
+  const [data] = await ostofitDB.query(query, {
+    replacements: { myID, filterNum },
+    type: QueryTypes.RAW,
+  });
+
+  if (data.length >= 1) {
+    return data;
+  }
+  return [];
 };

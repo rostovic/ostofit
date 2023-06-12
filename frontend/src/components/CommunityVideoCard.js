@@ -1,22 +1,40 @@
 import { useNavigate } from "react-router-dom";
 import classes from "./CommunityVideoCard.module.css";
-const CommunityVideoCard = ({ videoDetails }) => {
-  const navigation = useNavigate();
+import { useState } from "react";
+
+const CommunityVideoCard = ({ videoDetails, openModal }) => {
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  const handleVideo = (e) => {
+    if (isPlaying === false) {
+      e.target.play();
+      setIsPlaying(true);
+    } else {
+      e.target.pause();
+      setIsPlaying(false);
+    }
+  };
 
   return (
-    <div
-      className={classes.videoCard}
-      onClick={() => {
-        navigation(`/video/${videoDetails.videoID}`);
-      }}
-    >
-      <video className={classes.videoClip} loop autoPlay muted>
-        <source
+    <div className={classes.videoCard}>
+      <div
+        className={classes.videoDiv}
+        onClick={() => openModal(videoDetails.videoID)}
+      >
+        <video
           className={classes.videoClip}
-          src={`http://localhost:5000/video?videoID=${videoDetails.videoID}`}
-          type="video/mp4"
-        />
-      </video>
+          loop
+          muted
+          onMouseEnter={(e) => handleVideo(e)}
+          onMouseLeave={(e) => handleVideo(e)}
+        >
+          <source
+            className={classes.videoClip}
+            src={`http://localhost:5000/video?videoID=${videoDetails.videoID}`}
+            type="video/mp4"
+          />
+        </video>
+      </div>
     </div>
   );
 };

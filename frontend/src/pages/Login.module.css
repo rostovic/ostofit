@@ -7,7 +7,7 @@
   border: 1px solid;
 }
 
-.button {
+.buttonLogIn {
   color: white;
   background-color: blue;
   border-radius: 25px;
@@ -17,7 +17,8 @@
   border: 1px solid;
 }
 
-.button:hover {
+.buttonLogIn:hover {
+  cursor: pointer;
   background-color: darkblue;
 }
 

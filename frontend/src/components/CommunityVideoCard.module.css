@@ -3,7 +3,6 @@
   flex-direction: column;
   width: 194px;
   aspect-ratio: 16/16;
-  border: 1px solid white;
   position: relative;
   overflow: hidden;
   transition: all 0.25s;
@@ -19,4 +18,10 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.videoDiv {
+  display: flex;
+  flex: 1;
+  position: relative;
 }

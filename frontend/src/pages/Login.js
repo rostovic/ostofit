@@ -86,7 +86,7 @@ const Login = () => {
       );
     }
 
-    if (errorType === "User does not exist!")
+    if (errorType === "Invalid credentials!")
       if (!errorUser) {
         return;
       }
@@ -127,7 +127,7 @@ const Login = () => {
             ></input>
             {renderError("password")}
             {renderError("User does not exist!")}
-            <button className={classes.button} type="submit">
+            <button className={classes.buttonLogIn} type="submit">
               Log In
             </button>
             <button

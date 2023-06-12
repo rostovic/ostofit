@@ -4,18 +4,37 @@ import CommunityVideoCard from "./CommunityVideoCard";
 import { useContext } from "react";
 import { AuthContext } from "../context/auth-context";
 import { getCommunityVideos } from "../backend/helpers";
+import CommunityModalVideoWindow from "./CommunityModalVideoWindow";
+import { Portal } from "@mui/material";
 
 const Community = () => {
   const { userData } = useContext(AuthContext);
   const [communityVideos, setCommunityVideos] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [filterNum, setFilterNum] = useState(1);
+  const [filterNum, setFilterNum] = useState(30);
+  const [modalWindow, setModalWindow] = useState(false);
+  const [modalWindowVideoID, setModalWindowVideoID] = useState(null);
 
   const getVideos = async () => {
     setIsLoading(true);
     const videos = await getCommunityVideos(userData.id, filterNum);
     setCommunityVideos(videos);
     setIsLoading(false);
+  };
+
+  const openModal = (videoID) => {
+    if (modalWindow === false) {
+      document.body.style.overflow = "hidden";
+      setModalWindow(true);
+      setModalWindowVideoID(videoID);
+    }
+  };
+
+  const closeModal = () => {
+    if (modalWindow === true) {
+      document.body.style.overflow = "auto";
+      setModalWindow(false);
+    }
   };
 
   useEffect(() => {
@@ -30,21 +49,11 @@ const Community = () => {
     );
   }
 
-  if (communityVideos === null || communityVideos.length === 0) {
-    return (
-      <div className={classes.noContentDiv}>
-        <div className={classes.noContentDivBorder}>
-          <p>No new content!</p>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className={classes.mainDiv}>
       <div className={classes.selectDiv}>
         <select
-          defaultValue={1}
+          defaultValue={filterNum}
           className={classes.selectOption}
           onChange={(e) => setFilterNum(e.target.value)}
         >
@@ -54,8 +63,22 @@ const Community = () => {
         </select>
       </div>
       <div className={classes.contentDiv}>
+        <Portal>
+          {modalWindow === false ? null : (
+            <CommunityModalVideoWindow
+              closeModal={closeModal}
+              videoID={modalWindowVideoID}
+              myID={userData.id}
+            />
+          )}
+        </Portal>
+
         {communityVideos.map((video) => (
-          <CommunityVideoCard videoDetails={video} key={video.videoID} />
+          <CommunityVideoCard
+            videoDetails={video}
+            key={video.videoID}
+            openModal={openModal}
+          />
         ))}
       </div>
     </div>

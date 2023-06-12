@@ -69,12 +69,13 @@ const VideoCard = ({
   };
 
   const removeVideo = async () => {
-    const response = await deleteVideo(videoDetails.videoID);
+    await deleteVideo(videoDetails.videoID);
     setWindowRemove(false);
     await getData(userData.username);
   };
 
-  const handlePlayVideo = () => {
+  const handlePlayVideo = (e) => {
+    e.stopPropagation();
     if (!videoRef.current.paused) {
       videoRef.current.muted = true;
       setPlayVideo(false);

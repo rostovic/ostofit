@@ -392,19 +392,3 @@ export const getCommunityVideos = async (myID, filterNum) => {
   }
   return [];
 };
-
-// example post
-// export const getAllFollowerRequests = async (id) => {
-//   const response = await fetch(`http://localhost:5000/requests`, {
-//     method: "POST",
-//     headers: {
-//       "Content-type": "application/json",
-//     },
-//     body: JSON.stringify({ id }),
-//   });
-//   const data = await response.json();
-//   if (data.status === "success") {
-//     console.log("kek");
-//   }
-//   return;
-// };

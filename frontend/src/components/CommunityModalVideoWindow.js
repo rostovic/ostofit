@@ -37,7 +37,7 @@ const CommunityModalVideoWindow = ({
   }
 
   return (
-    <div className={classes.modalWindow}>
+    <div className={classes.modalWindow} style={{ marginTop: window.scrollY }}>
       <FullscreenExitIcon
         sx={{
           position: "absolute",

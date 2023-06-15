@@ -144,6 +144,7 @@ const VideoCard = ({
     videoRef.current.currentTime = currentTime;
     if (modal === true) {
       setPlayVideo(true);
+      setMuted(false);
     }
   }, []);
 

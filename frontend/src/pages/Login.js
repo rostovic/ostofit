@@ -142,6 +142,7 @@ const Login = () => {
             }}
             onClick={() => handleChangeSlide("previous")}
           />
+
           <img src={sliderData[currentSlide]} alt="test" />
 
           <NavigateNextIcon

@@ -39,7 +39,7 @@ main {
   display: flex;
   justify-content: center;
   align-items: center;
-  flex: 1;
+  flex: 1.5;
   padding: 8px;
 }
 

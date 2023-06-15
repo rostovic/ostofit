@@ -4,13 +4,8 @@ import { useRef, useState } from "react";
 import { useContext } from "react";
 import { AuthContext } from "../context/auth-context";
 import { loginUser } from "../backend/helpers";
-import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
-import NavigateNextIcon from "@mui/icons-material/NavigateNext";
-import picture_1 from "../images/picture_1.jpg";
-import picture_3 from "../images/picture_3.jpg";
-import picture_4 from "../images/picture_4.jpg";
-
-const sliderData = [picture_1, picture_3, picture_4];
+import profile from "../images/profile.jpg";
+import explore from "../images/explore.jpg";
 
 const ERRORS = {
   USERNAME: {
@@ -125,40 +120,20 @@ const Login = () => {
   };
 
   return (
-    <main>
+    <main style={{ display: "flex", flexDirection: "column" }}>
+      <div style={{ display: " flex", width: "100%" }}>
+        <div className={classes.divText}>
+          <span className={classes.textStyle}>Explore community</span>
+        </div>
+
+        <div className={classes.divText}>
+          <span className={classes.textStyle}>Create content</span>
+        </div>
+      </div>
+
       <div className={classes.wrapper}>
         <div className={classes.imageDiv}>
-          <NavigateBeforeIcon
-            sx={{
-              height: "200px",
-              width: "200px",
-              color: "grey",
-              transition: "all 0.5s",
-              "&:hover": {
-                color: "black",
-                cursor: "pointer",
-                scale: "1.1",
-              },
-            }}
-            onClick={() => handleChangeSlide("previous")}
-          />
-
-          <img src={sliderData[currentSlide]} alt="test" />
-
-          <NavigateNextIcon
-            sx={{
-              height: "200px",
-              width: "200px",
-              color: "grey",
-              transition: "all 0.5s",
-              "&:hover": {
-                color: "black",
-                cursor: "pointer",
-                scale: "1.1",
-              },
-            }}
-            onClick={() => handleChangeSlide("next")}
-          />
+          <img src={explore} alt="test" className={classes.imgStyle} />
         </div>
         <div className={classes.loginContainer}>
           <Form onSubmit={formSubmissionHandler}>
@@ -168,7 +143,7 @@ const Login = () => {
               id="email"
               type="text"
               name="email"
-              placeholder="Username or email..."
+              placeholder="Username"
               onFocus={resetErrors}
             ></input>
             {renderError("username")}
@@ -196,6 +171,9 @@ const Login = () => {
               Create account!
             </button>
           </Form>
+        </div>
+        <div className={classes.imageDiv}>
+          <img src={profile} alt="test" className={classes.imgStyle} />
         </div>
       </div>
     </main>

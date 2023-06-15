@@ -23,7 +23,6 @@ const {
   refreshUserData,
   insertVideoDataIntoDB,
   updatePath,
-  test,
   getPath,
   createNewAccount,
   deleteVideo,

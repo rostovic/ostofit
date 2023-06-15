@@ -14,6 +14,8 @@ const Community = () => {
   const [filterNum, setFilterNum] = useState(30);
   const [modalWindow, setModalWindow] = useState(false);
   const [modalWindowVideoID, setModalWindowVideoID] = useState(null);
+  const [selectedVideoCurrentTime, setSelectedVideoCurrentTime] =
+    useState(null);
 
   const getVideos = async () => {
     setIsLoading(true);
@@ -22,7 +24,9 @@ const Community = () => {
     setIsLoading(false);
   };
 
-  const openModal = (videoID) => {
+  const openModal = (videoID, event) => {
+    const videoCurrentTime = event.target.currentTime;
+    setSelectedVideoCurrentTime(videoCurrentTime);
     if (modalWindow === false) {
       document.body.style.overflow = "hidden";
       setModalWindow(true);
@@ -69,6 +73,7 @@ const Community = () => {
               closeModal={closeModal}
               videoID={modalWindowVideoID}
               myID={userData.id}
+              currentTime={selectedVideoCurrentTime}
             />
           )}
         </Portal>

@@ -30,20 +30,24 @@ main {
 }
 
 .wrapper {
+  height: 60%;
   display: flex;
-  width: 700px;
+  width: 80%;
 }
 
 .imageDiv {
   display: flex;
+  justify-content: center;
+  align-items: center;
   flex: 1;
-  aspect-ratio: 10/16;
+  padding: 8px;
 }
 
 img {
   height: 100%;
   width: 100%;
   object-fit: cover;
+  border-radius: 25px;
 }
 
 .loginContainer {

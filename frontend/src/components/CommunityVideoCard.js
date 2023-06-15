@@ -19,7 +19,7 @@ const CommunityVideoCard = ({ videoDetails, openModal }) => {
     <div className={classes.videoCard}>
       <div
         className={classes.videoDiv}
-        onClick={() => openModal(videoDetails.videoID)}
+        onClick={(event) => openModal(videoDetails.videoID, event)}
       >
         <video
           className={classes.videoClip}

@@ -32,6 +32,9 @@ const VideoCard = ({
   handleLikeDisLikeVideo,
   myVideo = false,
   getData,
+  playNow = true,
+  currentTime = 0,
+  modal = false,
 }) => {
   const authContext = useContext(AuthContext);
   const { userData } = useContext(AuthContext);
@@ -137,6 +140,13 @@ const VideoCard = ({
     observerRef.current.observe(videoRef.current);
   }, [observerRef?.current]);
 
+  useEffect(() => {
+    videoRef.current.currentTime = currentTime;
+    if (modal === true) {
+      setPlayVideo(true);
+    }
+  }, []);
+
   return (
     <div className={classes.videoCard}>
       {windowRemove ? (
@@ -151,7 +161,7 @@ const VideoCard = ({
           loop
           onClick={handlePlayVideo}
           ref={videoRef}
-          muted
+          muted={playNow}
         >
           <source
             src={`http://localhost:5000/video?videoID=${videoDetails.videoID}`}

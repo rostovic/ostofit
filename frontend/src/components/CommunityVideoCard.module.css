@@ -6,11 +6,12 @@
   position: relative;
   overflow: hidden;
   transition: all 0.25s;
+  border-radius: 25px;
 }
 
 .videoCard:hover {
   cursor: pointer;
-  scale: 1.1;
+  scale: 1.25;
   z-index: 5;
 }
 

@@ -4,7 +4,12 @@ import FullscreenExitIcon from "@mui/icons-material/FullscreenExit";
 import { getVideoData, likeDislikeVideo } from "../backend/helpers";
 import VideoCard from "./VideoCard";
 
-const CommunityModalVideoWindow = ({ videoID, myID, closeModal }) => {
+const CommunityModalVideoWindow = ({
+  videoID,
+  myID,
+  closeModal,
+  currentTime,
+}) => {
   const [videoData, setVideoData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -59,6 +64,9 @@ const CommunityModalVideoWindow = ({ videoID, myID, closeModal }) => {
           isVerified={videoData.isVerified}
           isSubscribed={videoData.isSubscribed}
           handleLikeDisLikeVideo={handleLikeDisLikeVideo}
+          currentTime={currentTime}
+          playNow={false}
+          modal={true}
         />
       </div>
     </div>

@@ -4,6 +4,14 @@ import { useRef, useState } from "react";
 import { useContext } from "react";
 import { AuthContext } from "../context/auth-context";
 import { loginUser } from "../backend/helpers";
+import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
+import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+import picture_1 from "../images/picture_1.jpg";
+import picture_3 from "../images/picture_3.jpg";
+import picture_4 from "../images/picture_4.jpg";
+
+const sliderData = [picture_1, picture_3, picture_4];
+
 const ERRORS = {
   USERNAME: {
     BLANK: "Empty username!",
@@ -24,6 +32,24 @@ const Login = () => {
   const [errorUser, setErrorUser] = useState(null);
   const usernameInputRef = useRef("");
   const passwordInputRef = useRef("");
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  const handleChangeSlide = (action) => {
+    if (action === "previous") {
+      if (currentSlide === 0) {
+        return;
+      } else {
+        setCurrentSlide(currentSlide - 1);
+      }
+    }
+    if (action === "next") {
+      if (currentSlide === 2) {
+        return;
+      } else {
+        setCurrentSlide(currentSlide + 1);
+      }
+    }
+  };
 
   const resetErrors = () => {
     setErrorUsername(null);
@@ -102,7 +128,36 @@ const Login = () => {
     <main>
       <div className={classes.wrapper}>
         <div className={classes.imageDiv}>
-          <img src="https://media.istockphoto.com/id/1322158059/photo/dumbbell-water-bottle-towel-on-the-bench-in-the-gym.jpg?s=612x612&w=0&k=20&c=CIdh6LPGwU6U6lbvKCdd7LcppidaYwcDawXJI-b0yGE="></img>
+          <NavigateBeforeIcon
+            sx={{
+              height: "200px",
+              width: "200px",
+              color: "grey",
+              transition: "all 0.5s",
+              "&:hover": {
+                color: "black",
+                cursor: "pointer",
+                scale: "1.1",
+              },
+            }}
+            onClick={() => handleChangeSlide("previous")}
+          />
+          <img src={sliderData[currentSlide]} alt="test" />
+
+          <NavigateNextIcon
+            sx={{
+              height: "200px",
+              width: "200px",
+              color: "grey",
+              transition: "all 0.5s",
+              "&:hover": {
+                color: "black",
+                cursor: "pointer",
+                scale: "1.1",
+              },
+            }}
+            onClick={() => handleChangeSlide("next")}
+          />
         </div>
         <div className={classes.loginContainer}>
           <Form onSubmit={formSubmissionHandler}>

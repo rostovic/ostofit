@@ -27,24 +27,6 @@ const Login = () => {
   const [errorUser, setErrorUser] = useState(null);
   const usernameInputRef = useRef("");
   const passwordInputRef = useRef("");
-  const [currentSlide, setCurrentSlide] = useState(0);
-
-  const handleChangeSlide = (action) => {
-    if (action === "previous") {
-      if (currentSlide === 0) {
-        return;
-      } else {
-        setCurrentSlide(currentSlide - 1);
-      }
-    }
-    if (action === "next") {
-      if (currentSlide === 2) {
-        return;
-      } else {
-        setCurrentSlide(currentSlide + 1);
-      }
-    }
-  };
 
   const resetErrors = () => {
     setErrorUsername(null);

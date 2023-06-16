@@ -11,7 +11,7 @@ const DeleteVideoWindow = ({ setWindowRemove, removeVideo }) => {
           <div className={classes.iconsDiv}>
             <CheckCircleIcon
               sx={{
-                color: "green",
+                color: "lime",
                 width: "65px",
                 height: "65px",
                 transition: "all 0.25s",

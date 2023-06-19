@@ -370,7 +370,7 @@ exports.findShorts = async (id) => {
       ,videoLikesAmount 
       ,liked 
       ,videoCommentsAmount 
-      from @temptable
+      from @temptable ORDER by seconds ASC
     `;
 
   const [data] = await ostofitDB.query(query, {

@@ -45,10 +45,10 @@
 .iconStyle {
   color: white;
   border-radius: 25px;
-  transition: all 0.25s;
 }
 
 .iconStyle:hover {
-  scale: 1.25;
+  scale: 1.35;
   cursor: pointer;
+  transition: all 0.25s ease-in-out;
 }

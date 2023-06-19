@@ -92,6 +92,11 @@
   animation: spin 2s linear infinite;
 }
 
+.dateText {
+  font-size: 14px;
+  margin-top: 4px;
+}
+
 /* Safari */
 @-webkit-keyframes spin {
   0% {

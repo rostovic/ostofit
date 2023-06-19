@@ -94,6 +94,17 @@ const Profile = () => {
             ""
           )}
         </div>
+        <span className={classes.dateText}>joined {profileData.shortDate}</span>
+        <span
+          style={{
+            wordBreak: "break-all",
+            maxWidth: "75%",
+            fontSize: "12px",
+            marginTop: "4px",
+          }}
+        >
+          {profileData.description}
+        </span>
         <div style={{ marginTop: "10px" }}>
           <SubscribeButton
             isSubscribed={profileData.isSubscribed}

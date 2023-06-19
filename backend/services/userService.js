@@ -205,10 +205,14 @@ exports.allFollowing = async (id) => {
 exports.getProfileData = async (username, id) => {
   const query = `
   DECLARE @UserID int = (SELECT TOP 1 ud.id FROM user_details ud WHERE ud.username = :username)
+  DECLARE @Year VARCHAR(20) = (SELECT YEAR(date_created) from user_details ud WHERE username = :username)
+	DECLARE @Month VARCHAR(20) = (SELECT SUBSTRING((SELECT DATENAME(month, date_created) from user_details ud WHERE username = :username),1 ,3))
 
   SELECT 
 	ud.profile_pic,
   ud.is_verified 'isVerified',
+  ud.description,
+  @Month + ', ' + @Year 'shortDate',
   uv.id 'videoID',
 	uv.video_url,
 	uv.title,
@@ -240,6 +244,8 @@ exports.getProfileData = async (username, id) => {
     username: username,
     profile_pic: data[0].profile_pic || "",
     isVerified: data[0].isVerified,
+    shortDate: data[0].shortDate,
+    description: data[0].description,
     isSubscribed: data[0].isSubscribed,
     requestSent: data[0].requestSent,
     videos: data

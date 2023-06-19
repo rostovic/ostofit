@@ -357,7 +357,7 @@ exports.findShorts = async (id) => {
       ,videoID 
       ,url 
       ,title 
-      , (CASE
+      ,(CASE
                 WHEN CAST(seconds as int) <3 THEN 'just now'
                 WHEN CAST(seconds as int) BETWEEN 3 AND 59 THEN cast(seconds as varchar) + ' second(s) ago'
                 WHEN CAST(seconds/60 as int) BETWEEN 1 AND 59 THEN cast(seconds/60 as varchar) + ' minute(s) ago'

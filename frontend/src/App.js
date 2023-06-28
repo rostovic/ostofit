@@ -69,27 +69,9 @@ export const MainLayout = () => {
   );
 };
 
-const UserPage = () => {
-  const { id } = useParams();
-  return (
-    <div>
-      User id: {id} <br />
-    </div>
-  );
-};
-
 const nonAuthRouter = createBrowserRouter([
   { path: "/login", element: <Login /> },
   { path: "/signup", element: <CreateAccount /> },
-  {
-    path: "/otherRoute",
-    element: (
-      <div>
-        <div>Some random non auth page.</div>
-        <Link to={"/"}>To login</Link>
-      </div>
-    ),
-  },
   { path: "/*", element: <Navigate to="login" /> },
 ]);
 

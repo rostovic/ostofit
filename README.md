@@ -1,9 +1,6 @@
 # ostofit
 
-Technologies used:
-ReactJS
-NodeJS
-Microsoft SQL Server 
+Technologies used: ReactJS,NodeJS,Microsoft SQL Server
 
 Social media platform - create account, edit profile, upload videos. Follow other users, like and comment and much more! Check out my video about the project: https://www.youtube.com/watch?v=r_vxXj6xh84&amp;ab_channel=RobertOstovic
 

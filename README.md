@@ -2,7 +2,7 @@
 
 Technologies used:
 * ReactJS
-* NodeJS
+* NodeJS (ExpressJS)
 * HTML+CSS
 * Microsoft SQL Server
 
